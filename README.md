@@ -1,3 +1,5 @@
 # EventSG
-EventSG is a group project for Software Engineering course in NTU
-<iframe style="border: none;" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FvuZk1jsc9zCfgahoaXrLXG%2FUI-Mockup%3Fnode-id%3D1%253A2%26scaling%3Dscale-down" allowfullscreen></iframe>
+
+We have currently finished **functional & non-functional requirement analysis**, **use cases and use case diagrams**, **data dictionary** and a intial **UI design**.
+
+Our UI mockup can be found here: https://www.figma.com/proto/vuZk1jsc9zCfgahoaXrLXG/UI-Mockup?node-id=1%3A2&scaling=scale-down
