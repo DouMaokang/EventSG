@@ -216,12 +216,12 @@ class _EventDetailsState extends State<EventDetails> {
                           alignment: Alignment.topLeft,
                         ),
                         SizedBox(height: 16),
-//                        Align(
-//                          child: Text(
-//                            "xxx road xxx street xxx house",
-//                          ),
-//                          alignment: Alignment.topLeft,
-//                        ),
+                        Align(
+                          child: Text(
+                            "xxx road xxx street xxx house",
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
                       ],
                     ),
                   ),
