@@ -23,7 +23,6 @@ class NotificationsState extends State<Notifications> {
     MyNotification("test headline", "test content", "assets/default.png", false),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

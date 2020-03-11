@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'myFeedback.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FeedbackView extends StatefulWidget {
   @override
@@ -9,26 +10,30 @@ class FeedbackView extends StatefulWidget {
 
 // the random state should extends xx
 class FeedbackViewState extends State<FeedbackView> {
+  // list of feedbacks
   final List<MyFeedback> feedbacks = [
-    MyFeedback("test headline", "test content", "assets/default.png", 1),
-    MyFeedback("test headline", "test content", "assets/default.png", 5),
-    MyFeedback("test headline", "test content", "assets/default.png", 3),
-    MyFeedback("test headline", "test content", "assets/default.png", 4),
-    MyFeedback("test headline", "test content", "assets/default.png", 4),
-    MyFeedback("test headline", "test content", "assets/default.png", 3),
-    MyFeedback("test headline", "test content", "assets/default.png", 5),
-    MyFeedback("test headline", "test content", "assets/default.png", 4),
-    MyFeedback("test headline", "test content", "assets/default.png", 3),
-    MyFeedback("test headline", "test content", "assets/default.png", 2),
-    MyFeedback("test headline", "test content", "assets/default.png", 4),
+    MyFeedback("test headline1", "test content test content test content test content test content test content test content test content test content test content test content test content test content", "assets/default.png", 1),
+    MyFeedback("test headline2", "test content", "assets/default.png", 5),
+    MyFeedback("test headline3", "test content", "assets/default.png", 3),
+    MyFeedback("test headline4", "test content", "assets/default.png", 4),
+    MyFeedback("test headline5", "test content", "assets/default.png", 4),
+    MyFeedback("test headline6", "test content", "assets/default.png", 3),
+    MyFeedback("test headline7", "test content", "assets/default.png", 5),
+    MyFeedback("test headline8", "test content", "assets/default.png", 4),
+    MyFeedback("test headline9", "test content", "assets/default.png", 3),
+    MyFeedback("test headline10", "test content", "assets/default.png", 2),
+    MyFeedback("test headline11", "test content", "assets/default.png", 4),
   ];
 
+  List<int> _countRating() {
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.dehaze),
+        leading: Icon(Icons.arrow_back),
         title: Text('Feedbacks'),
         actions: <Widget>[
           IconButton(
@@ -40,59 +45,196 @@ class FeedbackViewState extends State<FeedbackView> {
           )
         ],
       ),
-      //body: _buildSuggestions(), //todo create a new build function
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        backgroundColor: Colors.blue,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem> [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home')
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline),
-              title: Text('Create')
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              title: Text('Notifications')
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text('Profile')
-          )
-        ],
+      body: _buildWholeView(),
+    );
+  }
+
+  Widget _buildWholeView() {
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            // child 1
+            DecoratedBox(
+              decoration: BoxDecoration(color: Colors.grey[200]),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [BoxShadow(
+                      color: Colors.grey[400],
+                      blurRadius: 10.0, // has the effect of softening the shadow
+                      spreadRadius: 5.0, // has the effect of extending the shadow
+                      offset: Offset(
+                        5.0, // horizontal, move right 10
+                        2.0, // vertical, move down 10
+                      ),
+                    )],
+                  image: DecorationImage(
+                    image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                    fit: BoxFit.cover
+                  ),
+                  ),
+                  height: 200,
+                ),
+              ),
+            ),
+
+            // child 2 ---------------------------------------------
+            Padding(
+              padding: const EdgeInsets.only(bottom: 0, left: 12, top: 12),
+              child: Container(
+                child: Text(
+                  "My Awsome & Beautiful Event Name",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+
+            // child 3 ---the card------------------------------------------
+            SizedBox(height: 12,),
+            Container(
+              width: 375,
+              child: Card(
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /*2*/
+                              Container(
+                                padding: const EdgeInsets.only(bottom: 0, left: 12, top: 12),
+                                child: Text(
+                                  'Overall Rating',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(bottom: 8, left: 14),
+                                child: Text(
+                                  '6.0',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 44,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                      ),
+                      Container( //
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(5, (index) {
+//                            return Icon(
+////                              index < feedback.rating ? Icons.star : Icons.star_border,
+////                              size: 14,
+////                              color: Colors.amber,
+//                            ); // todo add the histogram
+                          }),
+                        ),
+                      )
+
+                    ],
+                  )
+              ),
+            ),
+
+            // child 4 -------------------------------
+            Container(
+              child: _buildFeedbacks(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildFeedbacks() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
+    return ListView.separated(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(8),
         itemCount: feedbacks.length,
-        itemBuilder: (context, index) {
-          return _buildRow(feedbacks[index]);
-        });
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            height: 80,
+            color: Colors.white,
+            child: Center(child: _buildRow(feedbacks[index])),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+    );
   }
-
-  final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.black);
 
   Widget _buildRow(MyFeedback feedback) {
     int _act = 1;
-    return Card(
-        child: ListTile(
-          leading: Image.asset(feedback.image),
-          title: Text(
-            feedback.username,
-            style: _biggerFont,
-          ),
-          subtitle: Text(feedback.content),
-          isThreeLine: true,
-          enabled: _act == 2,
-          onTap: () {},
-        )
+    return Container( // todo customize height of list tile according to length of text
+      child: ListTile(
+        leading: Image.asset(feedback.image),
+        title: Container(
+          child: Row(
+            children: <Widget>[
+              // rating with stars ========================
+              Container(
+                child: Text(
+                  feedback.username + "   ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18
+                  ),
+                ),
+              ),
+              // rating with stars ========================
+              Container( //
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(5, (index) {
+                    return Icon(
+                      index < feedback.rating ? Icons.star : Icons.star_border,
+                      size: 14,
+                      color: Colors.amber,
+                    );
+                  }),
+                ),
+              )
+            ],
+          )
+        ),
+        subtitle: Text(feedback.content),
+        isThreeLine: true,
+        enabled: _act == 2,
+        onTap: () {},
+      )
     );
+  }
+}
+
+class Sky extends CustomPainter {
+  final double _width;
+  final double _rectHeight;
+  Sky(this._width, this._rectHeight);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawRect(
+      new Rect.fromLTRB(
+          0.0, 0.0, this._width, _rectHeight
+      ),
+      new Paint()..color = new Color(0xFF0099FF),
+    );
+  }
+
+  @override
+  bool shouldRepaint(Sky oldDelegate) {
+    return false;
   }
 }
