@@ -24,7 +24,7 @@ class FeedbackViewState extends State<FeedbackView> {
     MyFeedback("test headline10", "test content", "assets/default.png", 2),
     MyFeedback("test headline11", "test content", "assets/default.png", 4),
   ];
-
+ // help!
   List<int> _countRating() {
 
   }
