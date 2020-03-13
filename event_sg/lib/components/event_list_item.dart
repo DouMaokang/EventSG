@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../event_details.dart';
+
 class EventListItem extends StatelessWidget {
   EventListItem({
     Key key,
@@ -16,7 +18,9 @@ class EventListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //TODO Routing goes to event info page
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EventDetails()));
       },
 //      child: Container(
 //        height: 50.0,

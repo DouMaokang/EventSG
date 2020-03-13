@@ -1,8 +1,7 @@
 import 'package:event_sg/components/event_list.dart';
 import 'package:event_sg/components/event_list_item.dart';
+import 'package:event_sg/search_page.dart';
 import 'package:flutter/material.dart';
-
-import 'event_details.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({Key key, this.title}) : super(key: key);
@@ -55,7 +54,12 @@ class _HomepageState extends State<Homepage> {
                             border: InputBorder.none,
                             prefixIcon: Icon(Icons.search),
                             hintText: 'Enter a search term'
-                        )),
+                        ),
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SearchPage()));
+                    },),
                     new RichText(
                       text: TextSpan(
                         children: [
