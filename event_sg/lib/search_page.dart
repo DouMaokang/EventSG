@@ -1,7 +1,9 @@
 import 'package:event_sg/components/multi_select_chip.dart';
+import 'package:event_sg/search_results.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
+import 'main.dart';
 
 class SearchPage extends StatefulWidget {
   SearchPage({Key key}) : super(key: key);
@@ -38,11 +40,16 @@ class _SearchPageState extends State<SearchPage> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Homepage()));
+                      MaterialPageRoute(builder: (context) => MyBottomNavBar()));
                 }),
                 hintText: 'Enter a search term',
             ),
-          autofocus: true,),
+          autofocus: true,
+          onEditingComplete: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchResultsPage()));
+            }),
         _buildContainer("Categories", interestList),
         _buildContainer("Distance", distanceList),
         _buildContainer("Date", dateList),
