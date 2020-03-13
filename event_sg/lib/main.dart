@@ -4,9 +4,10 @@ import 'event_details.dart';
 import 'homepage.dart';
 
 void main() => runApp(MaterialApp(
+  initialRoute: '/event_details', // '/' is the default initialRoute.
   routes: {
     '/': (context) => MyBottomNavBar(), // This is the base route.
-    '/event_details': (context) => EventDetails(),
+    '/event_details': (context) => EventDetailsPage(),
   },
 
 ));
@@ -82,3 +83,4 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     );
   }
 }
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../event_details.dart';
+import '../event_details.dart';
 
 class EventListItem extends StatelessWidget {
   EventListItem({
@@ -20,7 +21,7 @@ class EventListItem extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EventDetails()));
+            MaterialPageRoute(builder: (context) => EventDetailsPage()));
       },
 //      child: Container(
 //        height: 50.0,
