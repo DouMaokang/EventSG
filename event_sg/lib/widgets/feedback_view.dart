@@ -12,7 +12,7 @@ class FeedbackView extends StatefulWidget {
 class FeedbackViewState extends State<FeedbackView> {
   // list of feedbacks
   final List<MyFeedback> feedbacks = [
-    MyFeedback("test headline1", "test content test content test content test content test content test content test content test content test content test content test content test content test content", "assets/default.png", 1),
+    MyFeedback("extremely long uername username", "test content test co!ntent test long! long long long content t conte!nt test content test long long! long long content t co!ntent test content test lon!g long long long content test conten!t test content test content test content test !content test content test content test content test content test content", "assets/default.png", 1),
     MyFeedback("test headline2", "test content", "assets/default.png", 5),
     MyFeedback("test headline3", "test content", "assets/default.png", 3),
     MyFeedback("test headline4", "test content", "assets/default.png", 4),
@@ -24,10 +24,10 @@ class FeedbackViewState extends State<FeedbackView> {
     MyFeedback("test headline10", "test content", "assets/default.png", 2),
     MyFeedback("test headline11", "test content", "assets/default.png", 4),
   ];
- // help!
-  List<int> _countRating() {
-
-  }
+  // help!
+//  List<int> _countRating() {
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,18 +129,18 @@ class FeedbackViewState extends State<FeedbackView> {
                             ],
                           )
                       ),
-                      Container( //
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: List.generate(5, (index) {
+//                      Container( //
+//                        child: Row(
+//                          mainAxisSize: MainAxisSize.min,
+//                          children: List.generate(5, (index) {
 //                            return Icon(
-////                              index < feedback.rating ? Icons.star : Icons.star_border,
-////                              size: 14,
-////                              color: Colors.amber,
+//                              index < feedbacks[index].rating ? Icons.star : Icons.star_border,
+//                              size: 14,
+//                              color: Colors.amber,
 //                            ); // todo add the histogram
-                          }),
-                        ),
-                      )
+//                          }),
+//                        ),
+//                      )
 
                     ],
                   )
@@ -166,7 +166,7 @@ class FeedbackViewState extends State<FeedbackView> {
         itemCount: feedbacks.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            height: 80,
+            height: 120,
             color: Colors.white,
             child: Center(child: _buildRow(feedbacks[index])),
           );
@@ -177,46 +177,100 @@ class FeedbackViewState extends State<FeedbackView> {
 
   Widget _buildRow(MyFeedback feedback) {
     int _act = 1;
-    return Container( // todo customize height of list tile according to length of text
-      child: ListTile(
-        leading: Image.asset(feedback.image),
-        title: Container(
-          child: Row(
-            children: <Widget>[
-              // rating with stars ========================
-              Container(
-                child: Text(
-                  feedback.username + "   ",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                          fit: BoxFit.fill,
+                          image: new NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              // rating with stars ========================
-              Container( //
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(5, (index) {
-                    return Icon(
-                      index < feedback.rating ? Icons.star : Icons.star_border,
-                      size: 14,
-                      color: Colors.amber,
-                    );
-                  }),
-                ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children:
+                        List.generate(5, (index) {
+                          return Icon(
+                            index < feedback.rating ? Icons.star : Icons.star_border,
+                            size: 14,
+                            color: Colors.amber,
+                          );
+                      }),
+                    )
+                  )
+                ],
               )
-            ],
-          )
-        ),
-        subtitle: Text(feedback.content),
-        isThreeLine: true,
-        enabled: _act == 2,
-        onTap: () {},
-      )
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Flexible(
+                      child: new Container(
+                        padding: new EdgeInsets.only(right: 13.0),
+                        child: new Text(
+                          feedback.username,
+                          overflow: TextOverflow.ellipsis,
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: 'Roboto',
+                            color: new Color(0xFF212121),
+                          ),
+                        ),
+                      )
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+                  new Flexible(
+                    child: new Container(
+                      padding: new EdgeInsets.only(right: 13.0),
+                      child: new Text(
+                        feedback.content,
+                        overflow: TextOverflow.visible,
+                        maxLines: 5,
+                        style: new TextStyle(
+                          fontSize: 13.0,
+                          fontFamily: 'Roboto',
+                          color: new Color(0xFF212121),
+                        ),
+                      ),
+                    )
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+                ],
+              ),
+            )
+          ),
+          const Icon(
+            Icons.more_vert,
+            size: 16.0,
+          ),
+        ],
+      ),
     );
   }
 }
+
+
 
 class Sky extends CustomPainter {
   final double _width;
