@@ -70,10 +70,10 @@ class FeedbackViewState extends State<FeedbackView> {
                         2.0, // vertical, move down 10
                       ),
                     )],
-                  image: DecorationImage(
-                    image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                    fit: BoxFit.cover
-                  ),
+                    image: DecorationImage(
+                        image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                        fit: BoxFit.cover
+                    ),
                   ),
                   height: 200,
                 ),
@@ -159,19 +159,19 @@ class FeedbackViewState extends State<FeedbackView> {
 
   Widget _buildFeedbacks() {
     return ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(8),
-        itemCount: feedbacks.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            height: 120,
-            color: Colors.white,
-            child: Center(child: _buildRow(feedbacks[index])),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(8),
+      itemCount: feedbacks.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          height: 120,
+          color: Colors.white,
+          child: Center(child: _buildRow(feedbacks[index])),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 
@@ -179,109 +179,94 @@ class FeedbackViewState extends State<FeedbackView> {
     int _act = 1;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // ----------------- upper part -----------------------------------------------------------------------------------------
           Expanded(
-            flex: 3,
+            flex: 1,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-              // ---------------- avatar ----------------------------------
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: 40.0,
-                            height: 40.0,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+                padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                // ---------------- avatar ----------------------------------
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 40.0,
+                      height: 40.0,
+                      decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')
+                        ),
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
+                    // ---------------- rating ---------------------------------
+                    Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children:
+                          List.generate(5, (index) {
+                            return Icon(
+                              index < feedback.rating ? Icons.star : Icons.star_border,
+                              size: 14,
+                              color: Colors.amber,
+                            );
+                          }),
+                        )
                     )
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Flexible(
-                              child: new Container(
-                                padding: new EdgeInsets.only(right: 13.0),
-                                child: new Text(
-                                  feedback.username,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: new TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'Roboto',
-                                    color: new Color(0xFF212121),
-                                  ),
-                                ),
-                              )
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children:
-                              List.generate(5, (index) {
-                                return Icon(
-                                  index < feedback.rating ? Icons.star : Icons.star_border,
-                                  size: 14,
-                                  color: Colors.amber,
-                                );
-                              }),
-                            ),
-                          )
-                        ],
-                      )
-                    )
-                  )
-                ],
-              )
+                  ],
+                )
             ),
           ),
           // ----------------- lower part ------------------------------------------------------------------------
           Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Flexible(
-                    child: new Container(
-                      padding: new EdgeInsets.only(left: 13.0, bottom: 13.0),
-                      child: new Text(
-                        feedback.content,
-                        overflow: TextOverflow.visible,
-                        maxLines: 4,
-                        style: new TextStyle(
-                          fontSize: 13.0,
-                          fontFamily: 'Roboto',
-                          color: new Color(0xFF212121),
-                        ),
-                      ),
-                    )
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
-                ],
-              ),
-            )
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Flexible(
+                        child: new Container(
+                          padding: new EdgeInsets.only(right: 13.0),
+                          child: new Text(
+                            feedback.username,
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: 'Roboto',
+                              color: new Color(0xFF212121),
+                            ),
+                          ),
+                        )
+                    ),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+                    new Flexible(
+                        child: new Container(
+                          padding: new EdgeInsets.only(right: 13.0),
+                          child: new Text(
+                            feedback.content,
+                            overflow: TextOverflow.visible,
+                            maxLines: 5,
+                            style: new TextStyle(
+                              fontSize: 13.0,
+                              fontFamily: 'Roboto',
+                              color: new Color(0xFF212121),
+                            ),
+                          ),
+                        )
+                    ),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+                  ],
+                ),
+              )
+          ),
+          const Icon(
+            Icons.more_vert,
+            size: 16.0,
           ),
         ],
       ),
