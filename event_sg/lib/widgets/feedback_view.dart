@@ -166,6 +166,7 @@ class FeedbackViewState extends State<FeedbackView> {
         itemCount: feedbacks.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
+            //height: _dynamicHeight(feedbacks[index]),
             height: 120,
             color: Colors.white,
             child: Center(child: _buildRow(feedbacks[index])),
@@ -175,6 +176,12 @@ class FeedbackViewState extends State<FeedbackView> {
     );
   }
 
+//  double _dynamicHeight(MyFeedback feedback) {
+//    String text = feedback.content;
+//    int length = text.length;
+//    return (80 + length / 20 * 40);
+//  }
+
   Widget _buildRow(MyFeedback feedback) {
     int _act = 1;
     return Padding(
@@ -182,11 +189,11 @@ class FeedbackViewState extends State<FeedbackView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // ----------------- upper part -----------------------------------------------------------------------------------------
+          // ----------------- upper part --------------------------------------
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
               // ---------------- avatar ----------------------------------
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,6 +236,7 @@ class FeedbackViewState extends State<FeedbackView> {
                                   style: new TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
                                     color: new Color(0xFF212121),
                                   ),
                                 ),
@@ -255,11 +263,11 @@ class FeedbackViewState extends State<FeedbackView> {
               )
             ),
           ),
-          // ----------------- lower part ------------------------------------------------------------------------
+          // ----------------- lower part --------------------------------------
           Expanded(
             flex: 4,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 0.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -268,10 +276,10 @@ class FeedbackViewState extends State<FeedbackView> {
                       padding: new EdgeInsets.only(left: 13.0, bottom: 13.0),
                       child: new Text(
                         feedback.content,
-                        overflow: TextOverflow.visible,
-                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                         style: new TextStyle(
-                          fontSize: 13.0,
+                          fontSize: 16.0,
                           fontFamily: 'Roboto',
                           color: new Color(0xFF212121),
                         ),
