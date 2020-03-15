@@ -8,6 +8,8 @@ class FeedbackView extends StatefulWidget {
   FeedbackViewState createState() => FeedbackViewState();
 }
 
+// todo ! calculate no.ratings and average
+
 // the random state should extends xx
 class FeedbackViewState extends State<FeedbackView> {
   // list of feedbacks
@@ -54,7 +56,7 @@ class FeedbackViewState extends State<FeedbackView> {
       child: Center(
         child: Column(
           children: <Widget>[
-            // child 1
+            // child 1 head image ----------------------------------------------------------------
             DecoratedBox(
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: Padding(
@@ -80,7 +82,7 @@ class FeedbackViewState extends State<FeedbackView> {
               ),
             ),
 
-            // child 2 ---------------------------------------------
+            // child 2 --event headline-------------------------------------------
             Padding(
               padding: const EdgeInsets.only(bottom: 0, left: 12, top: 12),
               child: Container(
@@ -100,13 +102,14 @@ class FeedbackViewState extends State<FeedbackView> {
             Container(
               width: 375,
               child: Card(
-                  child: Row(
-                    children: [
+                  child: Row(  // first tier row
+                    children: <Widget>[
+                      // ----------------------------- column 1 -------------------------------
                       Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          flex: 5,
+                          child: Column( // left
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              /*2*/
                               Container(
                                 padding: const EdgeInsets.only(bottom: 0, left: 12, top: 12),
                                 child: Text(
@@ -129,18 +132,44 @@ class FeedbackViewState extends State<FeedbackView> {
                             ],
                           )
                       ),
-//                      Container( //
-//                        child: Row(
-//                          mainAxisSize: MainAxisSize.min,
-//                          children: List.generate(5, (index) {
-//                            return Icon(
-//                              index < feedbacks[index].rating ? Icons.star : Icons.star_border,
-//                              size: 14,
-//                              color: Colors.amber,
-//                            ); // todo add the histogram
-//                          }),
-//                        ),
-//                      )
+                      // ----------------------------- column 2 -------------------------------
+                      Expanded(
+                        flex:3,
+                        child: Row(
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                _stars(5),
+                                _stars(4),
+                                _stars(3),
+                                _stars(2),
+                                _stars(1)
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      // ----------------------------- column 3 -------------------------------
+                      Expanded(
+                        flex:3,
+                        child: Row(
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                _numbers(5),
+                                _numbers(4),
+                                _numbers(3),
+                                _numbers(2),
+                                _numbers(1)
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
 
                     ],
                   )
@@ -156,6 +185,46 @@ class FeedbackViewState extends State<FeedbackView> {
       ),
     );
   }
+  
+  Widget _stars(int number) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Row(
+              children:
+                List.generate(5, (index) {
+                  return Icon(
+                    index < number ? Icons.star : Icons.star_border,
+                    size: 12,
+                    color: Colors.amber,
+                  );
+                }),
+            ),
+          )
+        ]
+      )
+    );
+  }
+
+  Widget _numbers(int number) {
+    return Container(
+        child: Column(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  number.toString() + " Reviews",
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontFamily: "Roboto",
+                    color: Colors.grey
+                  ),
+                ),
+              )
+            ]
+        )
+    );
+  }
 
   Widget _buildFeedbacks() {
     return ListView.separated(
@@ -167,7 +236,7 @@ class FeedbackViewState extends State<FeedbackView> {
         itemBuilder: (BuildContext context, int index) {
           return Container(
             //height: _dynamicHeight(feedbacks[index]),
-            height: 120,
+            height: 140,
             color: Colors.white,
             child: Center(child: _buildRow(feedbacks[index])),
           );
@@ -191,7 +260,7 @@ class FeedbackViewState extends State<FeedbackView> {
         children: <Widget>[
           // ----------------- upper part --------------------------------------
           Expanded(
-            flex: 4,
+            flex: 3,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
               // ---------------- avatar ----------------------------------
@@ -274,16 +343,35 @@ class FeedbackViewState extends State<FeedbackView> {
                   new Flexible(
                     child: new Container(
                       padding: new EdgeInsets.only(left: 13.0, bottom: 13.0),
-                      child: new Text(
-                        feedback.content,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: new TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: 'Roboto',
-                          color: new Color(0xFF212121),
+//                      child: new Text(
+//                        feedback.content,
+//                        overflow: TextOverflow.ellipsis,
+//                        maxLines: 2,
+//                        style: new TextStyle(
+//                          fontSize: 16.0,
+//                          fontFamily: 'Roboto',
+//                          color: new Color(0xFF212121),
+//                        ),
+//                      ),
+                        child: Container(
+                          child: new ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: 300.0,
+                            ),
+                            child: new Scrollbar(
+                              child: new SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                reverse: false,
+                                child: new Text(
+                                  feedback.content,
+                                  style: new TextStyle(
+                                    fontSize: 16.0
+                                  )
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
                     )
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
@@ -294,28 +382,5 @@ class FeedbackViewState extends State<FeedbackView> {
         ],
       ),
     );
-  }
-}
-
-
-
-class Sky extends CustomPainter {
-  final double _width;
-  final double _rectHeight;
-  Sky(this._width, this._rectHeight);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(
-      new Rect.fromLTRB(
-          0.0, 0.0, this._width, _rectHeight
-      ),
-      new Paint()..color = new Color(0xFF0099FF),
-    );
-  }
-
-  @override
-  bool shouldRepaint(Sky oldDelegate) {
-    return false;
   }
 }
