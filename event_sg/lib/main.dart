@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'event_details.dart';
 import 'homepage.dart';
 
-
-
 void main() => runApp(MaterialApp(
+  initialRoute: '/event_details', // '/' is the default initialRoute.
   routes: {
     '/': (context) => MyBottomNavBar(), // This is the base route.
     '/event_details': (context) => EventDetailsPage(),
@@ -36,7 +35,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    Homepage(),
     Text("2"),
     Text("3"),
     Text("4"),
