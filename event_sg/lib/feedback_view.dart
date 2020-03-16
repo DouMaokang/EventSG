@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'myFeedback.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'components/myFeedback.dart';
 
 class FeedbackView extends StatefulWidget {
   @override

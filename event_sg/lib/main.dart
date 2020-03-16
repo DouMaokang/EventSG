@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/notification_listview.dart';
-import 'widgets/feedback_view.dart';
+import 'notification_listview.dart';
+import 'feedback_view.dart';
 // We can import files from its package.
 import 'event_details.dart';
 import 'homepage.dart';
