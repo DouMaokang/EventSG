@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'widgets/notification_listview.dart';
+import 'widgets/feedback_view.dart';
 // We can import files from its package.
 import 'event_details.dart';
 import 'homepage.dart';
+
 
 void main() => runApp(MaterialApp(
   initialRoute: '/event_details', // '/' is the default initialRoute.
@@ -15,6 +18,12 @@ void main() => runApp(MaterialApp(
 
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Welcome to Flutter',
+//       home: Notifications(),
+
   static const String _title = 'Flutter Code Sample';
 
   @override
@@ -25,6 +34,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 class MyBottomNavBar extends StatefulWidget {
   @override
@@ -83,4 +93,3 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     );
   }
 }
-
