@@ -10,4 +10,4 @@ We have currently finished:
 
 We are currently doing:
 1. Front-end development using Flutter framework with the [Bloc pattern](https://bloclibrary.dev/#/);
-2. Back-end development using Spring Boot with a layered architecture.
+2. Back-end ([here](https://github.com/DouMaokang/EventSG-backend)) development using Spring Boot with a layered architecture.
