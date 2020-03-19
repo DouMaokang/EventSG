@@ -1,6 +1,7 @@
+import 'package:event_sg/widgets/feedback_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'components/myNotification.dart';
+import 'myNotification.dart';
 
 class Notifications extends StatefulWidget {
   @override
@@ -10,17 +11,17 @@ class Notifications extends StatefulWidget {
 // the random state should extends xx
 class NotificationsState extends State<Notifications> {
   final List<MyNotification> notifications = [
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", false),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
+    MyNotification("test headline", "test content", "assets/default.png", ),
   ];
 
   @override
@@ -79,9 +80,8 @@ class NotificationsState extends State<Notifications> {
   final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.black);
 
   Widget _buildRow(MyNotification notification) {
-    int _act = 1;
     return Card(
-      color: notification.read ? Colors.grey[50] : Colors.grey[300],
+      color: Colors.white,
       child: ListTile(
         leading: Image.asset(notification.image),
         title: Text(
@@ -95,8 +95,12 @@ class NotificationsState extends State<Notifications> {
             mainAxisSize: MainAxisSize.min
         ),
         isThreeLine: true,
-        enabled: _act == 2,
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FeedbackView()),
+          );
+        },
       )
     );
   }

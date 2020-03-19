@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'components/myFeedback.dart';
+import 'myFeedback.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'notification_listview.dart';
+import 'package:expandable/expandable.dart';
 
 class FeedbackView extends StatefulWidget {
   @override
@@ -34,7 +37,13 @@ class FeedbackViewState extends State<FeedbackView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back),
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Notifications()),
+        );}),
         title: Text('Feedbacks'),
         actions: <Widget>[
           IconButton(
@@ -226,21 +235,15 @@ class FeedbackViewState extends State<FeedbackView> {
   }
 
   Widget _buildFeedbacks() {
-    return ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(8),
-        itemCount: feedbacks.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            //height: _dynamicHeight(feedbacks[index]),
-            height: 140,
-            color: Colors.white,
-            child: Center(child: _buildRow(feedbacks[index])),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+    List<Widget> feedbackList = new List<Widget>();
+    for(var i = 0; i < feedbacks.length; i++){
+      feedbackList.add(_buildRow(feedbacks[i]));
+      feedbackList.add(Divider());
+    }
+    return Container(
+      child: Column(
+          children: feedbackList
+      ),
     );
   }
 
@@ -256,84 +259,11 @@ class FeedbackViewState extends State<FeedbackView> {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // ----------------- upper part --------------------------------------
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
-              // ---------------- avatar ----------------------------------
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: 40.0,
-                            height: 40.0,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    )
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Flexible(
-                              child: new Container(
-                                padding: new EdgeInsets.only(right: 13.0),
-                                child: new Text(
-                                  feedback.username,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: new TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.bold,
-                                    color: new Color(0xFF212121),
-                                  ),
-                                ),
-                              )
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children:
-                              List.generate(5, (index) {
-                                return Icon(
-                                  index < feedback.rating ? Icons.star : Icons.star_border,
-                                  size: 14,
-                                  color: Colors.amber,
-                                );
-                              }),
-                            ),
-                          )
-                        ],
-                      )
-                    )
-                  )
-                ],
-              )
-            ),
-          ),
           // ----------------- lower part --------------------------------------
-          Expanded(
-            flex: 4,
+          Flexible(
+            fit: FlexFit.loose,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 0.0),
               child: Row(
@@ -352,34 +282,133 @@ class FeedbackViewState extends State<FeedbackView> {
 //                          color: new Color(0xFF212121),
 //                        ),
 //                      ),
-                        child: Container(
-                          child: new ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: 300.0,
-                            ),
-                            child: new Scrollbar(
-                              child: new SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                reverse: false,
-                                child: new Text(
+                        child: ExpandableNotifier(
+                          child: ScrollOnExpand(
+                            child: ExpandablePanel(
+                              header: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Container(
+                                  height: 60,
+                                  child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
+                                      // ---------------- avatar ----------------------------------
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Expanded(
+                                              flex: 1,
+                                              child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Container(
+                                                        width: 40.0,
+                                                        height: 40.0,
+                                                        decoration: new BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          image: new DecorationImage(
+                                                              fit: BoxFit.fill,
+                                                              image: new NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                              )
+                                          ),
+                                          Expanded(
+                                              flex: 5,
+                                              child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      new Flexible(
+                                                          child: new Container(
+                                                            padding: new EdgeInsets.only(right: 13.0),
+                                                            child: new Text(
+                                                              feedback.username,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: new TextStyle(
+                                                                fontSize: 20.0,
+                                                                fontFamily: 'Roboto',
+                                                                fontWeight: FontWeight.bold,
+                                                                color: new Color(0xFF212121),
+                                                              ),
+                                                            ),
+                                                          )
+                                                      ),
+                                                      Container(
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children:
+                                                          List.generate(5, (index) {
+                                                            return Icon(
+                                                              index < feedback.rating ? Icons.star : Icons.star_border,
+                                                              size: 14,
+                                                              color: Colors.amber,
+                                                            );
+                                                          }),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                              )
+                                          )
+                                        ],
+                                      )
+                                  ),
+                                ),
+                              ),
+                              expanded: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Text(
                                   feedback.content,
-                                  style: new TextStyle(
-                                    fontSize: 16.0
-                                  )
+                                  softWrap: true,
+                                ),
+                              ),
+                              collapsed: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Text(
+                                  feedback.content,
+                                  maxLines: 2,
+                                  softWrap: true,
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        )
+
+//                        Container(
+//                          child: new ConstrainedBox(
+//                            constraints: BoxConstraints(
+//                              maxHeight: 300.0,
+//                            ),
+//                            child: new Scrollbar(
+//                              child: new SingleChildScrollView(
+//                                scrollDirection: Axis.vertical,
+//                                reverse: false,
+//                                child: new Text(
+//                                  feedback.content,
+//                                  style: new TextStyle(
+//                                    fontSize: 16.0
+//                                  )
+//                                ),
+//                              ),
+//                            ),
+//                          ),
+//                        ),
                     )
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
                 ],
               ),
-            )
+            ),
           ),
         ],
       ),
     );
   }
 }
+
