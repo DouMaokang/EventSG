@@ -15,18 +15,15 @@ class _EventSavedState extends State<EventSaved> {
   final TextStyle textstyle =
   TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
   final InputDecoration decoration = InputDecoration(border: OutlineInputBorder(),);
-  @override
+  
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           tooltip: 'Return to previous page',
-          onPressed: () {
-            Navigator.pop(
-              context,
-            );
-          },
+          onPressed: () {},
         ),
         title: Align(
             alignment: Alignment.centerLeft,
@@ -47,7 +44,7 @@ class _EventSavedState extends State<EventSaved> {
                 child: Container(
                   width: double.infinity,
                   child: Text(
-                    "Personal Information",
+                    "Events Saved",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 30,
@@ -58,181 +55,253 @@ class _EventSavedState extends State<EventSaved> {
               ),
               SizedBox(height: 20),
               new Container(
+
                 padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage:
-                      NetworkImage('https://silentmouth.com/wp-content/uploads/2010/11/facebook-generic-profile-pic-i.jpg'),
-                      backgroundColor: Colors.blue,
-
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new NetworkImage(
+                              'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
+
+
                     SizedBox(
                       width: 20.0,
                     ),
+                    Container(
 
-                    ButtonBar(
-                        children: [
-                          FlatButton(
-                            child: Text(
-                              "Change photo",
+                      width: 150,
+                      height: 150,
+                      padding: const EdgeInsets.all(5.0),
+
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: " Event 1\n \n",
                               style: TextStyle(
-                                color: Colors.white,
-                              ),
+                                  color: Colors.black, fontSize: 14),
+
                             ),
-                            onPressed: () {},
-                            color: Colors.blue,
-                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                          ),
+                            WidgetSpan(
+                              child: Icon(Icons.location_on, color: Colors.blue,
+                                  size: 14),
 
-                        ]
+
+                            ),
+                            TextSpan(
+                              text: " Marina Bay Sands\n\n",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            ),
+                            TextSpan(
+                              text: " 5 April, 2020\n 15:00 - 18:30",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            )
+
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: 20),
+              Divider(height: 1, indent: 16, endIndent: 16,),
 
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'User Name(*)'
-                  ),
-
-                ),
-
-
-              ),
-              SizedBox(height: 10),
 
               new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
+
+                padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-
-                          border: OutlineInputBorder(),
-                          labelText: 'Current Password(*)',
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new NetworkImage(
+                              'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
 
 
-                    SizedBox(width: 10.0,),
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
-                          labelText: 'New Password(*)',
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Container(
+
+                      width: 150,
+                      height: 150,
+                      padding: const EdgeInsets.all(5.0),
+
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: " Event 2\n \n",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.location_on, color: Colors.blue,
+                                  size: 14),
+
+
+                            ),
+                            TextSpan(
+                              text: " Marina Bay Sands\n\n",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            ),
+                            TextSpan(
+                              text: " 6 April, 2020\n 15:00 - 18:30",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            )
+
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
-
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
+              Divider(height: 1, indent: 16, endIndent: 16,),
 
 
               new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
 
-
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email Address(*)'
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Contact Number(*)'
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
+                padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-
-                          border: OutlineInputBorder(),
-                          labelText: 'Occupation',
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new NetworkImage(
+                              'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
 
 
-                    SizedBox(width: 10.0,),
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
-                          labelText: 'Organization',
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Container(
+
+                      width: 150,
+                      height: 150,
+                      padding: const EdgeInsets.all(5.0),
+
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: " Event 3\n \n",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.location_on, color: Colors.blue,
+                                  size: 14),
+
+
+                            ),
+                            TextSpan(
+                              text: " Marina Bay Sands\n\n",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            ),
+                            TextSpan(
+                              text: " 7 April, 2020\n 15:00 - 18:30",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14),
+                            )
+
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
-
               ),
-              SizedBox(height: 10),
 
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 40.0),
-                      border: OutlineInputBorder(),
-                      labelText: '  Interests'
-                  ),
 
-                ),
-              ),
-              SizedBox(height: 30),
-
-              ButtonBar(
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        "Save changes",
-                        style: TextStyle(
-                          color: Colors.white,
+              /*  new Container(
+                      height: MediaQuery.of(context).size.height / 2,
+                      margin: const EdgeInsets.only(right: 10, left: 100),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'User Name(*)'
                         ),
+
                       ),
-                      onPressed: () {},
-                      color: Colors.blue,
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    ),
-                  ]
-              )
+
+
+                    ),*/
+
+
+              Divider(height: 1, indent: 16, endIndent: 16,),
+
+
             ],
           ),
+        ),
+      ),
+
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.lightBlue,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home, color: Colors.white),
+              onPressed: () {},
+
+            ),
+
+            IconButton(
+              icon: Icon(Icons.add_box, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.notifications, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.account_circle, color: Colors.white),
+              onPressed: () {},
+            ),
+
+
+          ],
         ),
       ),
     );
   }
 }
-
