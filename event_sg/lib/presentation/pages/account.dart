@@ -1,24 +1,20 @@
-
-import 'package:event_sg/events_registered.dart';
-import 'package:event_sg/my_venues.dart';
-import 'package:event_sg/personal_info.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:expandable/expandable.dart';
 
-import 'events_created.dart';
-import 'events_saved.dart';
-
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+import '../sub_pages/events_created.dart';
+import '../sub_pages/events_saved.dart';
 
 /// This is the stateful widget that the main application instantiates.
-class ProfileDetails extends StatefulWidget {
+class UserAccount extends StatefulWidget {
+  const UserAccount({Key key}) : super(key: key);
+
 
   @override
-  _ProfileDetailsState createState() => _ProfileDetailsState();
+  _UserAccountState createState() => _UserAccountState();
 }
 
 
-class _ProfileDetailsState extends State<ProfileDetails> {
+class _UserAccountState extends State<UserAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,9 +148,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   ],
                 ),
               ),
-
-
-
             ],
           ),
         ),

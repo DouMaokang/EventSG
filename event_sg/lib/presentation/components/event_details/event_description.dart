@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 
 class EventDescription extends StatelessWidget {
+
+  final String description;
+
+  EventDescription({Key key, @required this.description})
+    : assert(description != null),
+      super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ExpandableNotifier(
@@ -20,12 +27,16 @@ class EventDescription extends StatelessWidget {
           ),
           collapsed: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text("This is a wonderful event that you and your friends will enjoy. You should definately not miss this opportunity to join us!",
-              softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,),
+            child: Text(
+              this.description,
+              softWrap: true,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,),
           ),
           expanded: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text("This is a wonderful event that you and your friends will enjoy. You should definately not miss this opportunity to join us! We have prepared various actities, food and drinks for you. Come and join us! You'll never regret your decision!",
+            child: Text(
+              this.description,
               softWrap: true, ),
           ),
         ),

@@ -1,48 +1,95 @@
-import 'package:event_sg/event_post.dart';
-import 'package:event_sg/profile_details.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
+import 'package:event_sg/presentation/pages/home.dart';
+import 'package:event_sg/presentation/pages/notification.dart';
+import 'package:event_sg/presentation/pages/pages.dart';
+import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
-// We can import files from its package.
-import 'event_details.dart';
-import 'homepage.dart';
-import 'notification_listview.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
-void main() => runApp(MaterialApp(
-  initialRoute: '/event_details', // '/' is the default initialRoute.
-  routes: {
-    '/': (context) => MyBottomNavBar(), // This is the base route.
-    '/event_details': (context) => EventDetailsPage(),
-  },
-
-));
+import 'blocs/blocs.dart';
 
 
-/// This Widget is the main application widget.
-class MyApp extends StatelessWidget {
-  static const String _title = 'Flutter Code Sample';
+void main() {
 
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
+
+  runApp(EventSG(eventRepository: eventRepository,));
+}
+
+class EventSG extends StatelessWidget {
+  final EventRepository eventRepository;
+
+  EventSG({ Key key,
+    @required this.eventRepository,
+  })
+      : assert(eventRepository != null),
+        super(key: key);
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
-      home: MyBottomNavBar(),
+      home: App(),
     );
   }
 }
 
-class MyBottomNavBar extends StatefulWidget {
+class App extends StatefulWidget {
   @override
-  _MyBottomNavBarState createState() => _MyBottomNavBarState();
+  _AppState createState() => _AppState();
 }
 
-class _MyBottomNavBarState extends State<MyBottomNavBar> {
+class _AppState
+    extends State<App> {
+  final List<Widget> pages = [
+    Homepage(
+      key: PageStorageKey('home'),
+
+    ),
+    EventPost(
+        key: PageStorageKey('post')
+    ),
+    Notifications(
+      key: PageStorageKey('notification'),
+    ),
+    UserAccount(
+        key: PageStorageKey('account')
+    )
+  ];
+
+  final PageStorageBucket bucket = PageStorageBucket();
+
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    Homepage(),
-    EventPost(),
-    Notifications(),
-    ProfileDetails()
-  ];
+  Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
+    items: const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        title: Text('Home'),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.add_box),
+        title: Text('Post'),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.notifications),
+        title: Text('Notification'),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.account_circle),
+        title: Text('Profile'),
+      ),
+
+    ],
+    currentIndex: _selectedIndex,
+    selectedItemColor: Colors.amber[800],
+    onTap: _onItemTapped,
+    type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
+  );
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,39 +97,31 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     });
   }
 
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+    return Scaffold(
+      bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<SingleEventBloc>(
+            create: (contextA) => SingleEventBloc(eventRepository: eventRepository),
+          ),
+          BlocProvider<EventListBloc>(
+            create: (contextB) => EventListBloc(eventRepository: eventRepository),
+          ),
+        ],
+        child: PageStorage(
+          child: pages[_selectedIndex],
+          bucket: bucket,
         ),
-        bottomNavigationBar:
-        BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
+      ),
 
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_box),
-              title: Text('Post'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              title: Text('Notification'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              title: Text('Profile'),
-            ),
 
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
-        )
     );
   }
 }

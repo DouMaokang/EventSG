@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class EventRegistration extends StatelessWidget {
+  final DateTime startTime;
+  final DateTime endTime;
+  final DateTime registrationDeadline;
+
+  EventRegistration({Key key, @required this.startTime,
+    @required this.endTime,
+    @required this.registrationDeadline});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,16 +29,16 @@ class EventRegistration extends StatelessWidget {
             ),
           ),
           SizedBox(height: 4,),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.timer),
             title: Text('Event Date & Time'),
-            subtitle: Text('Sat, 7 Mar 2020 3:30 PM - 5:30 PM'),
+            subtitle: Text("${this.startTime.toString()} - ${this.endTime.toString()}"),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.location_on),
             title: Text('Registration Deadline'),
-            subtitle: Text('Sat, 7 Mar 2020 3:30 PM'),
+            subtitle: Text(this.registrationDeadline.toString()),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           const ListTile(

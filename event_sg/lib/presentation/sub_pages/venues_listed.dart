@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
 /// This is the stateful widget that the main application instantiates.
 class MyVenues extends StatefulWidget {
 

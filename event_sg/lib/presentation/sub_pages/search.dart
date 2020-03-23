@@ -1,9 +1,8 @@
-import 'package:event_sg/components/multi_select_chip.dart';
-import 'package:event_sg/search_results.dart';
+
+import 'package:event_sg/presentation/components/components.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
-import 'homepage.dart';
-import 'main.dart';
 
 class SearchPage extends StatefulWidget {
   SearchPage({Key key}) : super(key: key);
@@ -38,9 +37,7 @@ class _SearchPageState extends State<SearchPage> {
               suffixIcon: IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyBottomNavBar()));
+                    Navigator.pop(context);
                   }),
               hintText: 'Enter a search term',
             ),

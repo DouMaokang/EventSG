@@ -1,19 +1,14 @@
-
 import 'package:flutter/material.dart';
 
 
-
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
 /// This is the stateful widget that the main application instantiates.
-class UserInfo extends StatefulWidget {
+class EventSaved extends StatefulWidget {
 
   @override
-  _UserInfoState createState() => _UserInfoState();
+  _EventSavedState createState() => _EventSavedState();
 }
 
-
-class _UserInfoState extends State<UserInfo> {
+class _EventSavedState extends State<EventSaved> {
   final TextStyle textstyle =
   TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
   final InputDecoration decoration = InputDecoration(border: OutlineInputBorder(),);
@@ -228,11 +223,8 @@ class _UserInfoState extends State<UserInfo> {
                       color: Colors.blue,
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                     ),
-
                   ]
               )
-
-
             ],
           ),
         ),

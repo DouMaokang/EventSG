@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
 /// This is the stateful widget that the main application instantiates.
 class EventsRegistered extends StatefulWidget {
 

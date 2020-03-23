@@ -22,7 +22,7 @@ class EventTopBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         title: Align (
             alignment: Alignment.centerLeft,
-            child: const Text('Event Name')
+            child: const Text('Event Details')
         ),
         actions: <Widget>[
           IconButton(

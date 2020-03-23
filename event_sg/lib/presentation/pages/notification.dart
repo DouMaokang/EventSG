@@ -1,8 +1,13 @@
+import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/presentation/components/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'components/myNotification.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../components/myNotification.dart';
 
 class Notifications extends StatefulWidget {
+  const Notifications({Key key}) : super(key: key);
+
   @override
   NotificationsState createState() => NotificationsState();
 }
@@ -27,19 +32,41 @@ class NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.dehaze),
         title: Text('Notifications'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-                Icons.done_all,
-                color: Colors.white
-            ),
-            onPressed: () {},
+            icon: Icon(Icons.search),
+            onPressed: () async {
+                BlocProvider.of<EventListBloc>(context)
+                    .add(GetAllEvents());
+            },
           )
+
         ],
       ),
-      body: _buildSuggestions(),
+      // body: _buildSuggestions(),
+
+      body: Center(
+        child: BlocBuilder<EventListBloc, EventListState>(
+          // ignore: missing_return
+          builder: (context, state) {
+            if (state is EventListLoaded) {
+              return ListView.builder(
+                itemBuilder: (context, int index) {
+                  return new ListTile(
+                    title: new Text('${state.eventList[index].title}'),
+                  );
+                },
+                itemCount: state.eventList.length,
+              );
+            } else {
+              return Text("GetAllEvents() Failed");
+            }
+          },
+        ),
+      ),
+
+      backgroundColor: Colors.white,
     );
   }
 
@@ -59,7 +86,7 @@ class NotificationsState extends State<Notifications> {
     return Card(
         color: notification.read ? Colors.grey[50] : Colors.grey[300],
         child: ListTile(
-          leading: Image.asset(notification.image),
+          leading: Image.network("https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg"),
           title: Text(
             notification.title,
             style: _biggerFont,

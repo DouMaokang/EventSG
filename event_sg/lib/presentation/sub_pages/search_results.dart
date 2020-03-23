@@ -1,6 +1,6 @@
-import 'package:event_sg/components/event_list.dart';
-import 'package:event_sg/components/event_list_item.dart';
-import 'package:event_sg/search_page.dart';
+
+import 'package:event_sg/presentation/components/components.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -15,10 +15,10 @@ class SearchResultsPage extends StatefulWidget {
 class _SearchResultsPageState extends State<SearchResultsPage> {
   @override
   Widget build(BuildContext context) {
-    for (var i = 0; i < 5; i++) {
-      widget.resultsList.add(EventListItem(
-        eventVenue: "NTU", eventDate: "May 1", eventName: "Event1",));
-    }
+//    for (var i = 0; i < 5; i++) {
+//      widget.resultsList.add(EventListItem(
+//        eventVenue: "NTU", eventDate: "May 1", eventName: "Event1",));
+//    }
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +42,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
               hintText: 'Enter a search term'
           ),
           onTap: (){
-            Navigator.push(
+            Navigator.pop(
                 context,
                 MaterialPageRoute(builder: (context) => SearchPage()));
           },),
@@ -52,7 +52,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             color: Colors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 22)),
-        EventList(itemList: widget.resultsList),
+        // EventList(itemList: widget.resultsList),
       ],
     );
   }

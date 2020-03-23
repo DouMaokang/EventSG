@@ -1,7 +1,7 @@
-import 'package:event_sg/feedback_view.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
 
 /// This is the stateful widget that the main application instantiates.
 class EventsCreated extends StatefulWidget {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:expandable/expandable.dart';
-
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 /// This is the stateful widget that the main application instantiates.
 class EventPost extends StatefulWidget {
+  const EventPost({Key key}) : super(key: key);
+
 
   @override
   _EventPostState createState() => _EventPostState();
