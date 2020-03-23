@@ -48,7 +48,7 @@ class _EventPostState extends State<EventPost> {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Organizer (*)',
@@ -63,7 +63,7 @@ class _EventPostState extends State<EventPost> {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Organization Name',
@@ -96,7 +96,7 @@ class _EventPostState extends State<EventPost> {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Contact Number (*)',
@@ -111,7 +111,7 @@ class _EventPostState extends State<EventPost> {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Email Address (*)',
@@ -236,7 +236,7 @@ class _EventPostStateSe extends StatelessWidget {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Event Name (*)',
@@ -320,7 +320,7 @@ class _EventPostStateSe extends StatelessWidget {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Event Date (*)',
@@ -340,7 +340,7 @@ class _EventPostStateSe extends StatelessWidget {
                       width: 175,
                       height: 48,
                       child: TextField(
-                        obscureText:true,
+                        obscureText:false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Starts (*)',
@@ -352,7 +352,7 @@ class _EventPostStateSe extends StatelessWidget {
                       width: 175,
                       height: 48,
                       child: TextField(
-                        obscureText:true,
+                        obscureText:false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Ends (*)',
@@ -367,7 +367,7 @@ class _EventPostStateSe extends StatelessWidget {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Maximum Capacity',
@@ -383,7 +383,7 @@ class _EventPostStateSe extends StatelessWidget {
                 child: Container(
                   height: 48,
                   child: TextField(
-                    obscureText:true,
+                    obscureText:false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Registration Deadline',
