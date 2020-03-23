@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../components/myNotification.dart';
+import '../sub_pages/event_feedback.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key key}) : super(key: key);
@@ -15,17 +16,17 @@ class Notifications extends StatefulWidget {
 // the random state should extends xx
 class NotificationsState extends State<Notifications> {
   final List<MyNotification> notifications = [
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", true),
-    MyNotification("test headline", "test content", "assets/default.png", false),
-    MyNotification("test headline", "test content", "assets/default.png", false),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
+  MyNotification("test headline", "test content", "assets/default.png", ),
   ];
 
   @override
@@ -37,8 +38,8 @@ class NotificationsState extends State<Notifications> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () async {
-                BlocProvider.of<EventListBloc>(context)
-                    .add(GetAllEvents());
+              BlocProvider.of<EventListBloc>(context)
+                  .add(GetAllEvents());
             },
           )
 
@@ -65,7 +66,6 @@ class NotificationsState extends State<Notifications> {
           },
         ),
       ),
-
       backgroundColor: Colors.white,
     );
   }
@@ -82,11 +82,10 @@ class NotificationsState extends State<Notifications> {
   final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.black);
 
   Widget _buildRow(MyNotification notification) {
-    int _act = 1;
     return Card(
-        color: notification.read ? Colors.grey[50] : Colors.grey[300],
+        color: Colors.white,
         child: ListTile(
-          leading: Image.network("https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg"),
+          leading: Image.asset(notification.image),
           title: Text(
             notification.title,
             style: _biggerFont,
@@ -98,8 +97,12 @@ class NotificationsState extends State<Notifications> {
               mainAxisSize: MainAxisSize.min
           ),
           isThreeLine: true,
-          enabled: _act == 2,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FeedbackView()),
+            );
+          },
         )
     );
   }
