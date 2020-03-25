@@ -1,3 +1,4 @@
+import 'package:event_sg/presentation/sub_pages/events_created.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components/myFeedback.dart';
@@ -147,7 +148,6 @@ class FeedbackViewState extends State<FeedbackView> {
                           ],
                         ),
                       ),
-
                     ],
                   )
               ),
@@ -170,10 +170,10 @@ class FeedbackViewState extends State<FeedbackView> {
         leading: new IconButton(
             icon: new Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.push(
+              Navigator.pop(
                 context,
-                MaterialPageRoute(builder: (context) => Notifications()),
-              );}),
+              );}
+        ),
         title: Text('Feedbacks'),
         actions: <Widget>[
           IconButton(
@@ -242,12 +242,6 @@ class FeedbackViewState extends State<FeedbackView> {
     );
   }
 
-//  double _dynamicHeight(MyFeedback feedback) {
-//    String text = feedback.content;
-//    int length = text.length;
-//    return (80 + length / 20 * 40);
-//  }
-
   Widget _buildRow(MyFeedback feedback) {
     int _act = 1;
     return Padding(
@@ -267,16 +261,6 @@ class FeedbackViewState extends State<FeedbackView> {
                   new Flexible(
                       child: new Container(
                           padding: new EdgeInsets.only(left: 13.0, bottom: 13.0),
-//                      child: new Text(
-//                        feedback.content,
-//                        overflow: TextOverflow.ellipsis,
-//                        maxLines: 2,
-//                        style: new TextStyle(
-//                          fontSize: 16.0,
-//                          fontFamily: 'Roboto',
-//                          color: new Color(0xFF212121),
-//                        ),
-//                      ),
                           child: ExpandableNotifier(
                             child: ScrollOnExpand(
                               child: ExpandablePanel(
@@ -374,26 +358,6 @@ class FeedbackViewState extends State<FeedbackView> {
                               ),
                             ),
                           )
-
-//                        Container(
-//                          child: new ConstrainedBox(
-//                            constraints: BoxConstraints(
-//                              maxHeight: 300.0,
-//                            ),
-//                            child: new Scrollbar(
-//                              child: new SingleChildScrollView(
-//                                scrollDirection: Axis.vertical,
-//                                reverse: false,
-//                                child: new Text(
-//                                  feedback.content,
-//                                  style: new TextStyle(
-//                                    fontSize: 16.0
-//                                  )
-//                                ),
-//                              ),
-//                            ),
-//                          ),
-//                        ),
                       )
                   ),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
@@ -405,6 +369,4 @@ class FeedbackViewState extends State<FeedbackView> {
       ),
     );
   }
-
-
 }
