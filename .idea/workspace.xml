@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d58986a7-8e20-4fd6-8d50-af8c814c2cc9" name="Default Changelist" comment="solve the input * issue">
+      <change afterPath="$PROJECT_DIR$/.idea/EventSG.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event_sg/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/event_sg/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,10 +19,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="37" />
-    <option name="width" value="1440" />
-    <option name="height" value="900" />
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1ZVt0XMyrXuDHsSYklG8zxklWay" />
   <component name="ProjectViewState">
@@ -32,13 +42,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/event_sg" />
+    <property name="node.js.detected.package.jscs" value="true" />
+    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="node.js.selected.package.jscs" value="" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.jscs" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -55,6 +68,9 @@
       <workItem from="1583399077434" duration="33000" />
       <workItem from="1584935875631" duration="477000" />
       <workItem from="1585223603125" duration="20000" />
+      <workItem from="1585224553758" duration="378000" />
+      <workItem from="1585231879691" duration="1664000" />
+      <workItem from="1585233558030" duration="380000" />
     </task>
     <task id="LOCAL-00001" summary="solve the input * issue">
       <created>1584936091675</created>
@@ -69,26 +85,47 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="solve the input * issue" />
     <option name="LAST_COMMIT_MESSAGE" value="solve the input * issue" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="233" y="22" key="#Project_Structure" timestamp="1585223606395">
+    <state x="233" y="22" key="#Project_Structure" timestamp="1585224887289">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="233" y="22" key="#Project_Structure/0.0.1280.720@0.0.1280.720" timestamp="1585223606395" />
+    <state x="233" y="22" key="#Project_Structure/0.0.1280.720@0.0.1280.720" timestamp="1585224887289" />
     <state x="162" y="0" key="CommitChangelistDialog2" timestamp="1585223619738">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="162" y="0" key="CommitChangelistDialog2/0.0.1280.720@0.0.1280.720" timestamp="1585223619738" />
-    <state x="144" y="6" key="SettingsEditor" timestamp="1584935926636">
+    <state x="421" y="119" key="FileChooserDialogImpl" timestamp="1585233499987">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="144" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1584935926636" />
-    <state x="337" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1585223690832">
+    <state x="421" y="119" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1585233499987" />
+    <state x="144" y="6" key="SettingsEditor" timestamp="1585233593441">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="337" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1585223690832" />
+    <state x="144" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1585233593441" />
+    <state x="337" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1585233560814">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="337" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1585233560814" />
+    <state x="297" y="161" key="run.anything.popup" timestamp="1585232856223">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="297" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1585232856223" />
   </component>
 </project>
