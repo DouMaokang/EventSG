@@ -89,7 +89,7 @@ class EventListItem extends StatelessWidget {
                             flex: 7,
                             child: Text(
                               // TODO: add venue attribute in Event model.
-                              "Default venue value",
+                              event.venue.venueName,
                               style: TextStyle(
                                   fontSize: 14,
                               ),

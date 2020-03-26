@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 
+// TODO: connect with the modified API
 /// An network API client to fetch event data from app backend services.
 class EventApiClient {
   static const baseUrl = 'http://127.0.0.1:8080/api';
