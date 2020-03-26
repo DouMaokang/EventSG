@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import './bloc.dart';
+import './blocs.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   @override
