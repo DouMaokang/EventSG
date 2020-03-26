@@ -3,6 +3,7 @@ import 'package:event_sg/models/models.dart';
 import 'package:event_sg/presentation/sub_pages/event_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 
 class EventListItem extends StatelessWidget {
@@ -19,7 +20,7 @@ class EventListItem extends StatelessWidget {
       onTap: () async {
         final singleEvent = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EventDetailsPage(event: event,))
+            MaterialPageRoute(builder: (context) => EventDetailsPage(eventId: event.eventId,))
         );
 
 
@@ -59,7 +60,7 @@ class EventListItem extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 6),
                     child: Text(
-                      this.event.startTime.toString(),
+                      DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventRegistration extends StatelessWidget {
   final DateTime startTime;
@@ -38,13 +39,19 @@ class EventRegistration extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.timer),
             title: Text('Event Date & Time'),
-            subtitle: Text("${this.startTime.toString()} - ${this.endTime.toString()}"),
+            subtitle: Text(
+                "${DateFormat('dd/MM/yyyy hh:mm a').format(this.startTime).toString()}"
+                    " ~ ${DateFormat('dd/MM/yyyy hh:mm a').format(this.endTime).toString()}"
+
+            ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           ListTile(
             leading: Icon(Icons.location_on),
             title: Text('Registration Deadline'),
-            subtitle: Text(this.registrationDeadline.toString()),
+            subtitle: Text(
+                DateFormat('dd/MM/yyyy hh:mm a').format(this.registrationDeadline).toString()
+            ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           ListTile(

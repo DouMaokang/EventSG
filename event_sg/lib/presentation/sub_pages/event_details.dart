@@ -18,9 +18,9 @@ class EventDetailsPage extends StatelessWidget {
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
-  final Event event;
+  final String eventId;
 
-  EventDetailsPage({Key key, @required this.event})
+  EventDetailsPage({Key key, @required this.eventId})
       : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class EventDetailsPage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is SingleEventEmpty) {
-                BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
+                BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: this.eventId));
                 return Center(child: CircularProgressIndicator());
               } else if (state is SingleEventLoading) {
                 return Center(child: CircularProgressIndicator());
@@ -52,18 +52,18 @@ class EventDetailsPage extends StatelessWidget {
                   children: <Widget>[
                     EventHeader(
                       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
-                      eventName: event.title,),
+                      eventName: state.event.title,),
                     SizedBox(height: 16,),
-                    OrganizerAvatar(organizer: event.organizer),
+                    OrganizerAvatar(organizer: state.event.organizer),
                     EventRegistration(
-                      startTime: event.startTime,
-                      endTime: event.endTime,
-                      registrationDeadline: event.registrationDeadline,
-                      capacity: event.capacity,
-                      numOfParticipants: event.numOfParticipants,
+                      startTime: state.event.startTime,
+                      endTime: state.event.endTime,
+                      registrationDeadline: state.event.registrationDeadline,
+                      capacity: state.event.capacity,
+                      numOfParticipants: state.event.numOfParticipants,
                     ),
                     SizedBox(height: 16,),
-                    EventDescription(description: event.description),
+                    EventDescription(description: state.event.description),
                     SizedBox(height: 24,),
                     EventLocation(),
                     EventFooter(),
