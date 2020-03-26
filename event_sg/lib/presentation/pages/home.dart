@@ -62,8 +62,8 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-//              BlocProvider.of<EventListBloc>(context)
-//                  .add(GetAllEvents());
+              BlocProvider.of<EventListBloc>(context)
+                  .add(GetAllEvents());
                 return Text("Empty");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());

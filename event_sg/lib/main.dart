@@ -1,4 +1,5 @@
 import 'package:event_sg/api_clients/api_clients.dart';
+import 'package:event_sg/blocs/search_bloc.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
@@ -113,6 +114,9 @@ class _AppState
           ),
           BlocProvider<EventListBloc>(
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
+          ),
+          BlocProvider<SearchBloc>(
+            create: (contextC) => SearchBloc(eventRepository: eventRepository),
           ),
         ],
         child: PageStorage(
