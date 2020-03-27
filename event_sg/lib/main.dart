@@ -3,6 +3,7 @@ import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
 import 'package:event_sg/repositories/event_repository.dart';
+import 'package:event_sg/simple_bloc_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,7 @@ import 'blocs/blocs.dart';
 
 
 void main() {
+  BlocSupervisor.delegate = SimpleBlocDelegate();
 
   final EventRepository eventRepository = EventRepository(
     // Add all required repositories here.
