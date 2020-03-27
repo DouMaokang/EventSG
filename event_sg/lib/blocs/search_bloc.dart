@@ -28,5 +28,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         yield SearchError();
       }
     }
+
+    if (event is FilterEvent) {
+
+    }
   }
 }

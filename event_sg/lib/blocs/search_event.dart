@@ -13,3 +13,12 @@ class FetchEvent extends SearchEvent {
   @override
   List<Object> get props => [query];
 }
+
+class FilterEvent extends SearchEvent {
+  final List<String> filters;
+
+  const FilterEvent({@required this.filters});
+
+  @override
+  List<Object> get props => [filters];
+}

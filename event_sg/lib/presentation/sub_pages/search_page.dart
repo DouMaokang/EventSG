@@ -6,6 +6,9 @@ import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:event_sg/presentation/components/components.dart';
+
+import '../components/components.dart';
 
 class SearchPage extends StatelessWidget {
   final EventRepository eventRepository = EventRepository(
@@ -21,7 +24,12 @@ class SearchPage extends StatelessWidget {
       ),
       body: BlocProvider<SearchBloc>(
         create: (contextC) => SearchBloc(eventRepository: eventRepository),
-        child: SearchBar()
+        child: Column(
+          children: <Widget>[
+            SearchBar(),
+            SearchFilter()
+          ],
+        )
       )
     );
   }
@@ -40,8 +48,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
-//    BlocProvider<SearchBloc>(
-//        create: (context) => SearchBloc(eventRepository: eventRepository));
     _searchBloc = BlocProvider.of<SearchBloc>(context);
   }
 
@@ -76,6 +82,63 @@ class _SearchBarState extends State<SearchBar> {
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+}
+
+class SearchFilter extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _SearchFilterState();
+}
+
+class _SearchFilterState extends State<SearchFilter> {
+
+  List<String> interestList = ["Cooking", "Art", "Nature", "Business",
+    "Volunteer"];
+  List<String> distanceList = ["< 1km", "< 5km"];
+  List<String> dateList = ["Weekday", "Weekend"];
+  SearchBloc _searchBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchBloc = BlocProvider.of<SearchBloc>(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        _buildContainer("Categories", interestList),
+        _buildContainer("Distance", distanceList),
+        _buildContainer("Date", dateList),
+      ],
+    );
+  }
+
+
+  _buildMultiselect(String name, List<String> categoryList) {
+    return new Container(
+      padding: EdgeInsets.fromLTRB(10, 10, 5, 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(name, style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,),
+              textAlign: TextAlign.left),
+          MultiSelectChip(
+            categoryList,
+            onSelectionChanged: (selectedList) {
+              setState(() {
+                 selectedList;
+              });
+            },
+          ),
+          new Divider()
+        ],
+      ),
+    );
   }
 }
 
