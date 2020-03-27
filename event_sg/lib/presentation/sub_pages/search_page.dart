@@ -8,13 +8,24 @@ import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:http/http.dart' as http;
 
 class SearchPage extends StatelessWidget {
-
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[SearchBar(), SearchResultList()],
-      );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Search"),
+      ),
+      body: BlocProvider<SearchBloc>(
+        create: (contextC) => SearchBloc(eventRepository: eventRepository),
+        child: ListView(
+              children: <Widget>[SearchBar(), SearchResultList()],
+              )
+      )
+    );
   }
 }
 
@@ -25,39 +36,39 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   final _textController = TextEditingController();
-  final EventRepository eventRepository = EventRepository(
-    // Add all required repositories here.
-    eventApiClient: EventApiClient(httpClient: http.Client()),
-  );
+  SearchBloc _searchBloc;
+
 
   @override
   void initState() {
     super.initState();
-    BlocProvider<SearchBloc>(
-        create: (context) => SearchBloc(eventRepository: eventRepository));
+//    BlocProvider<SearchBloc>(
+//        create: (context) => SearchBloc(eventRepository: eventRepository));
+    _searchBloc = BlocProvider.of<SearchBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: TextField(
-            controller: _textController,
-            autofocus: true,
-            textInputAction: TextInputAction.search,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.search),
-              suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              hintText: 'Enter a search term',),
-            onEditingComplete: () {
-              final query = _textController.text;
-              BlocProvider.of<SearchBloc>(context).add(FetchEvent(query: query));
-            })
-    );
+    return new Container(
+            child: TextField(
+                controller: _textController,
+                autofocus: true,
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  hintText: 'Enter a search term',),
+                onEditingComplete: () {
+                  final query = _textController.text;
+//              BlocProvider.of<SearchBloc>(context).add(FetchEvent(query: query));
+                  _searchBloc.add(FetchEvent(query: query));
+                })
+        );
   }
 
   @override

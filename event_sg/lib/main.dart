@@ -115,9 +115,6 @@ class _AppState
           BlocProvider<EventListBloc>(
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
           ),
-          BlocProvider<SearchBloc>(
-            create: (contextC) => SearchBloc(eventRepository: eventRepository),
-          ),
         ],
         child: PageStorage(
           child: pages[_selectedIndex],

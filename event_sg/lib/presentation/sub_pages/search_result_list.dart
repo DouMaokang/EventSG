@@ -17,10 +17,10 @@ class SearchResultList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider<SearchBloc>(
-        create: (context) => SearchBloc(eventRepository: eventRepository));
+//    BlocProvider<SearchBloc>(
+//        create: (context) => SearchBloc(eventRepository: eventRepository));
     return BlocBuilder<SearchBloc, SearchState>(
-      builder: (BuildContext context, SearchState state) {
+      builder: (context, state) {
         if (state is SearchLoading) {
           return Padding(
               padding: EdgeInsets.only(top: 16.0),
