@@ -9,12 +9,28 @@ import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:http/http.dart' as http;
 
 
-class SearchResultList extends StatelessWidget {
+class SearchResultPage extends StatelessWidget {
   final EventRepository eventRepository = EventRepository(
     // Add all required repositories here.
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Search Results"),
+        ),
+        body: BlocProvider<SearchBloc>(
+            create: (contextC) => SearchBloc(eventRepository: eventRepository),
+            child: SearchResultList()
+        )
+    );
+  }
+}
+
+class SearchResultList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 //    BlocProvider<SearchBloc>(
@@ -47,6 +63,7 @@ class SearchResultList extends StatelessWidget {
     );
   }
 }
+
 
 class _SearchResults extends StatelessWidget {
   final List<Event> eventList;

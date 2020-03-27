@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/search_event.dart';
 import 'package:event_sg/blocs/search_bloc.dart';
-import 'package:event_sg/presentation/sub_pages/search_result_list.dart';
+import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:http/http.dart' as http;
@@ -21,9 +21,7 @@ class SearchPage extends StatelessWidget {
       ),
       body: BlocProvider<SearchBloc>(
         create: (contextC) => SearchBloc(eventRepository: eventRepository),
-        child: ListView(
-              children: <Widget>[SearchBar(), SearchResultList()],
-              )
+        child: SearchBar()
       )
     );
   }
@@ -67,6 +65,9 @@ class _SearchBarState extends State<SearchBar> {
                   final query = _textController.text;
 //              BlocProvider.of<SearchBloc>(context).add(FetchEvent(query: query));
                   _searchBloc.add(FetchEvent(query: query));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchResultPage()));
                 })
         );
   }
