@@ -27,7 +27,6 @@ class SearchPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             SearchBar(),
-            SearchFilter()
           ],
         )
       )
@@ -41,41 +40,20 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+
+  List<String> interestList = ["None", "Cooking", "Art", "Nature",
+    "Volunteer"];
+  List<String> distanceList = ["None","< 1km", "< 5km"];
+  List<String> dateList = ["None","Weekday", "Weekend"];
+  Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
+  String query;
   final _textController = TextEditingController();
   SearchBloc _searchBloc;
-
 
   @override
   void initState() {
     super.initState();
     _searchBloc = BlocProvider.of<SearchBloc>(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-            child: TextField(
-                controller: _textController,
-                autofocus: true,
-                textInputAction: TextInputAction.search,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                  hintText: 'Enter a search term',),
-                onEditingComplete: () {
-                  final query = _textController.text;
-//              BlocProvider.of<SearchBloc>(context).add(FetchEvent(query: query));
-                  _searchBloc.add(FetchEvent(query: query));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchResultPage()));
-                })
-        );
   }
 
   @override
@@ -83,56 +61,65 @@ class _SearchBarState extends State<SearchBar> {
     _textController.dispose();
     super.dispose();
   }
-}
-
-class SearchFilter extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _SearchFilterState();
-}
-
-class _SearchFilterState extends State<SearchFilter> {
-
-  List<String> interestList = ["Cooking", "Art", "Nature", "Business",
-    "Volunteer"];
-  List<String> distanceList = ["< 1km", "< 5km"];
-  List<String> dateList = ["Weekday", "Weekend"];
-  SearchBloc _searchBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchBloc = BlocProvider.of<SearchBloc>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _buildContainer("Categories", interestList),
-        _buildContainer("Distance", distanceList),
-        _buildContainer("Date", dateList),
-      ],
-    );
+    return new Column(
+            children: <Widget>[
+              new TextField(
+                  controller: _textController,
+                  autofocus: true,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                    hintText: 'Enter a search term',),
+                  onEditingComplete: () {
+                    this.query = _textController.text;
+                    FocusScope.of(context).unfocus();
+                  }),
+              _buildSelect("Categories", interestList),
+              _buildSelect("Distance", distanceList),
+              _buildSelect("Date", dateList),
+              new Container(
+                margin: EdgeInsets.all(2),
+                child: FlatButton(
+                  child: Text('Search'),
+                  color: Colors.blueAccent,
+                  textColor: Colors.white,
+                  onPressed: () {
+                      _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchResultPage()));
+                  },
+                ),
+              ),
+            ]
+        );
   }
 
-
-  _buildMultiselect(String name, List<String> categoryList) {
+  _buildSelect(String name, List<String> categoryList) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 5, 5),
+      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(name, style: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.bold,
-            fontSize: 22,),
+            fontSize: 15,),
               textAlign: TextAlign.left),
           MultiSelectChip(
             categoryList,
-            onSelectionChanged: (selectedList) {
+            onSelectionChanged: (selectedChoice) {
               setState(() {
-                 selectedList;
-              });
+                selectedItems[name] = selectedChoice;
+                });
             },
           ),
           new Divider()

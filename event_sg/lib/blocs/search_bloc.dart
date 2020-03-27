@@ -22,15 +22,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     if (event is FetchEvent) {
       yield SearchLoading();
       try {
-        final List<Event> event = await eventRepository.getAllEvents();
-        yield SearchLoaded(eventList:event);
+        final Map<String, String> filters = event.filters;
+        final String query = event.query;
+        final List<Event> events = await eventRepository.getAllEvents();
+        //TODO implemenmt search with filter seachWithFilters(List<Event> events, List<String> filters)
+        yield SearchLoaded(eventList:events);
       } catch (_) {
         yield SearchError();
       }
-    }
-
-    if (event is FilterEvent) {
-
     }
   }
 }

@@ -7,18 +7,10 @@ abstract class SearchEvent extends Equatable {
 
 class FetchEvent extends SearchEvent {
   final String query;
+  final Map<String, String> filters;
 
-  const FetchEvent({@required this.query}) : assert(query != null);
-
-  @override
-  List<Object> get props => [query];
-}
-
-class FilterEvent extends SearchEvent {
-  final List<String> filters;
-
-  const FilterEvent({@required this.filters});
+  const FetchEvent({@required this.query, this.filters});
 
   @override
-  List<Object> get props => [filters];
+  List<Object> get props => [query, filters];
 }
