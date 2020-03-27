@@ -100,7 +100,7 @@ class NotificationsState extends State<Notifications> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FeedbackView()),
+              MaterialPageRoute(builder: (context) => EventFeedbackPage()),
             );
           },
         )

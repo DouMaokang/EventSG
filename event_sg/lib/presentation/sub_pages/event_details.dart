@@ -29,50 +29,50 @@ class EventDetailsPage extends StatelessWidget {
       appBar: EventTopBar(),
       body: BlocProvider<SingleEventBloc>(
         create: (context) => SingleEventBloc(eventRepository: eventRepository),
-      child: SingleChildScrollView(
-        child: Center(
-          child:
-          BlocBuilder<SingleEventBloc, SingleEventState>(
-            // ignore: missing_return
-            builder: (context, state) {
-              if (state is SingleEventEmpty) {
-                BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
-                return Center(child: CircularProgressIndicator());
-              } else if (state is SingleEventLoading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is SingleEventError) {
-                return Text(
-                  'Something went wrong!',
-                  style: TextStyle(color: Colors.red),
-                );
-              } else if (state is SingleEventLoaded){
-                // final singleEvent = state.event;
+        child: SingleChildScrollView(
+          child: Center(
+            child:
+            BlocBuilder<SingleEventBloc, SingleEventState>(
+              // ignore: missing_return
+              builder: (context, state) {
+                if (state is SingleEventEmpty) {
+                  BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is SingleEventLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is SingleEventError) {
+                  return Text(
+                    'Something went wrong!',
+                    style: TextStyle(color: Colors.red),
+                  );
+                } else if (state is SingleEventLoaded){
+                  // final singleEvent = state.event;
 
-                return Column(
-                  children: <Widget>[
-                    EventHeader(
-                      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
-                      eventName: event.title,),
-                    SizedBox(height: 16,),
-                    OrganizerAvatar(organizerName: "Default organizer name"),
-                    EventRegistration(
-                      startTime: event.startTime,
-                      endTime: event.endTime,
-                      registrationDeadline: event.registrationDeadline,
-                    ),
-                    SizedBox(height: 16,),
-                    EventDescription(description: event.description),
-                    SizedBox(height: 24,),
-                    EventLocation(),
-                    EventFooter(),
-                  ],
-                );
-              }
-            },
+                  return Column(
+                    children: <Widget>[
+                      EventHeader(
+                        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
+                        eventName: event.title,),
+                      SizedBox(height: 16,),
+                      OrganizerAvatar(organizerName: "Default organizer name"),
+                      EventRegistration(
+                        startTime: event.startTime,
+                        endTime: event.endTime,
+                        registrationDeadline: event.registrationDeadline,
+                      ),
+                      SizedBox(height: 16,),
+                      EventDescription(description: event.description),
+                      SizedBox(height: 24,),
+                      EventLocation(),
+                      EventFooter(),
+                    ],
+                  );
+                }
+              },
 
+            ),
           ),
         ),
-      ),
       ),
         bottomNavigationBar: EventRegistrationBar(),
     );
