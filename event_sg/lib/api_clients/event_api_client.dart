@@ -45,6 +45,20 @@ class EventApiClient {
     }
   }
 
+  Future<List<Event>> searchEventByTitle(String keyword) async {
+    final eventUrl = '$baseUrl/event/search/$keyword';
+    try{
+      final response = await httpClient.get(eventUrl);
+      List eventData = jsonDecode(response.body);
+      print(eventData);
+      List<Event> events = eventData.map((value) => Event.fromJson(value)).toList();
+      return events;
+    } catch(e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
+  }
+
   Future<Event> getEventById(String eventId) async {
     final eventUrl = '$baseUrl/event/$eventId';
 
