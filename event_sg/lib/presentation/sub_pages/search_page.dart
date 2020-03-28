@@ -24,10 +24,12 @@ class SearchPage extends StatelessWidget {
       ),
       body: BlocProvider<SearchBloc>(
         create: (contextC) => SearchBloc(eventRepository: eventRepository),
-        child: Column(
-          children: <Widget>[
-            SearchBar(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SearchBar(),
+            ],
+          )
         )
       )
     );
@@ -64,8 +66,9 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-            children: <Widget>[
+    return new SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
               new TextField(
                   controller: _textController,
                   autofocus: true,
@@ -100,12 +103,13 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               ),
             ]
-        );
+            )
+    );
   }
 
   _buildSelect(String name, List<String> categoryList) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
