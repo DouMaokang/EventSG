@@ -1,5 +1,4 @@
 import 'package:event_sg/api_clients/api_clients.dart';
-import 'package:event_sg/blocs/search_bloc.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
@@ -62,7 +61,6 @@ class _AppState
     )
   ];
 
-  final PageStorageBucket bucket = PageStorageBucket();
 
   int _selectedIndex = 0;
 
@@ -116,13 +114,8 @@ class _AppState
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
           ),
         ],
-        child: PageStorage(
-          child: pages[_selectedIndex],
-          bucket: bucket,
-        ),
+        child: pages[_selectedIndex],
       ),
-
-
     );
   }
 }
