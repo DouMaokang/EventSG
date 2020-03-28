@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 
 class Notifications extends StatefulWidget {
   State<Notifications> createState() => _NotificationsState();
+  Notifications({Key key}) : super(key: key);
 }
 
 class _NotificationsState extends State<Notifications> {
