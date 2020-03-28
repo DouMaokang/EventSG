@@ -13,3 +13,12 @@ class GetNotificationList extends NotificationEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class Refresh extends NotificationEvent {
+  final String userId;
+
+  const Refresh({@required this.userId}) : assert(userId != null);
+
+  @override
+  List<Object> get props => [userId];
+}

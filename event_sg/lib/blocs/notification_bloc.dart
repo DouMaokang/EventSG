@@ -23,5 +23,14 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         yield NotificationError();
       }
     }
+
+    if (event is Refresh) {
+      try {
+        final List<NotificationDefined> notifications = await notificationRepository.getNotificationList(event.userId);
+        yield NotificationLoaded(notifications: notifications);
+      } catch(_) {
+        yield state;
+      }
+    }
   }
 }
