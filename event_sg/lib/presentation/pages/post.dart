@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_second_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class EventPost extends StatefulWidget {
@@ -15,6 +16,10 @@ class EventPost extends StatefulWidget {
 
 class _EventPostState extends State<EventPost> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+  bool _autoValidate=true;
+  bool organizerChanged=false;
+  bool contactChanged=false;
+  bool emailChanged=false;
 
   final organizerController=TextEditingController();
   final organizationController=TextEditingController();
@@ -48,11 +53,12 @@ class _EventPostState extends State<EventPost> {
         child: Center(
           child: Form(
             key: _formKey,
+            autovalidate: _autoValidate,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 28,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     child: Text(
@@ -67,19 +73,21 @@ class _EventPostState extends State<EventPost> {
                 ),
                 SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     //height: 48,
                     child: TextFormField(
                       controller: organizerController,
+                      onChanged: (text) {organizerChanged=true;postEventBloc.setOrganizer(text);},
                       validator: (value) {
-                        if (value.length==0) return 'Organizer is mandatory';
-                        else return null;
+                        if (!organizerChanged) {postEventBloc.validateOrganizer(false);return null;}
+                        if (value.length==0) {postEventBloc.validateOrganizer(false);return 'Organizer is mandatory';}
+                        postEventBloc.validateOrganizer(true);return null;
                       },
                       obscureText:false,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Organizer (*)',
                         labelText: 'Organizer (*)',
                       ),
@@ -88,15 +96,16 @@ class _EventPostState extends State<EventPost> {
                 ),
                 SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
-                    height: 48,
+                    //height: 48,
                     child: TextField(
                       controller: organizationController,
+                      onChanged: (text) {postEventBloc.setOrganization(text);},
                       obscureText:false,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Organization Name',
                         labelText: 'Organization Name',
                       ),
@@ -105,13 +114,68 @@ class _EventPostState extends State<EventPost> {
                 ),
                 SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
-                    height: 120,
+                    //height: 48,
+                    child: TextFormField(
+                      controller: contactController,
+                      onChanged: (text) {contactChanged=true;postEventBloc.setContact(text);},
+                      validator: (value) {
+                        if (!contactChanged) {postEventBloc.validateContact(false);return null;}
+                        if (value.length==0) {postEventBloc.validateContact(false);return 'Contact Number is mandatory';}
+                        Pattern pattern = r'[8-9]\d{7}';
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(value)) {postEventBloc.validateContact(false);return 'Invalid Singapore mobile number';}
+                        postEventBloc.validateContact(true); return null;
+                      },
+                      obscureText:false,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10.0),
+                        //border: OutlineInputBorder(),
+                        hintText: 'Contact Number (*)',
+                        labelText: 'Contact Number (*)',
+                        //errorText: validateContact(contactController.text),
+
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    //height: 48,
+                    child: TextFormField(
+                      controller: emailController,
+                      onChanged: (text) {emailChanged=true;postEventBloc.setDescription(text);},
+                      validator: (value) {
+                        if (!emailChanged) {postEventBloc.validateEmail(false);return null;}
+                        if (value.length==0) {postEventBloc.validateEmail(false);return 'Email Address is mandatory';}
+                        Pattern pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(value)) {postEventBloc.validateEmail(false);return 'Invalid email address';}
+                        postEventBloc.validateEmail(true);return null;
+                      },
+                      obscureText:false,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10.0),
+                        //border: OutlineInputBorder(),
+                        hintText: 'Email Address (*)',
+                        labelText: 'Email Address (*)',
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    //height: 120,
                     child: TextField(
                       //keyboardType: TextInputType.multiline,
                       controller: descriptionController,
-                      maxLines: 4,
+                      onChanged: (text) {postEventBloc.setDescription(text);},
+                      maxLines: 6,
                       obscureText:false,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
@@ -119,52 +183,6 @@ class _EventPostState extends State<EventPost> {
                         border: OutlineInputBorder(),
                         hintText: 'Organization Descripton',
                         labelText: 'Organization Descripton',
-                      ),
-                    ),
-                  ),
-                ),
-                //SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextFormField(
-                      controller: contactController,
-                      validator: (value) {
-                        Pattern pattern = r'[8-9]\d{7}';
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(value)) return 'Invalid Singapore mobile number';
-                        else return null;
-                      },
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
-                        hintText: 'Contact Number (*)',
-                        labelText: 'Contact Number (*)',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextFormField(
-                      controller: emailController,
-                      validator: (value) {
-                        Pattern pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(value)) return 'Invalid email address';
-                        else return null;
-                      },
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
-                        hintText: 'Email Address (*)',
-                        labelText: 'Email Address (*)',
                       ),
                     ),
                   ),
@@ -219,14 +237,12 @@ class _EventPostState extends State<EventPost> {
                 children: [
                   FlatButton(
                     onPressed: () {
+                      /*
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        //_postEventBloc.addText(organizerController.text);
-                        //_postEventBloc.addText(organizationController.text);
-                        //_postEventBloc.addText(descriptionController.text);
-                        //_postEventBloc.addText(contactController.text);
-                        //_postEventBloc.addText(emailController.text);
                       }
+                      */
+                      postEventBloc.check1stPage();
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context)=>EventPostSecond()),
@@ -256,4 +272,5 @@ class _EventPostState extends State<EventPost> {
     );
   }
 }
+
 

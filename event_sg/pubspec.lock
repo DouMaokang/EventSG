@@ -123,6 +123,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  frideos:
+    dependency: "direct main"
+    description:
+      name: frideos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+1"
   google_maps_flutter:
     dependency: "direct main"
     description:
