@@ -72,11 +72,7 @@ packages:
     source: hosted
     version: "0.1.3"
   equatable:
-<<<<<<< HEAD
-    dependency: transitive
-=======
     dependency: "direct main"
->>>>>>> 8f71d9d3b1ac3cc577ea46134af3dd3b9810c2bb
     description:
       name: equatable
       url: "https://pub.dartlang.org"

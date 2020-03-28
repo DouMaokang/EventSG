@@ -11,20 +11,24 @@ class EventLocation extends StatefulWidget {
   final int postalCode;
   EventLocation({this.venueName, this.venueAddress, this.postalCode});
 
+
   @override
   _EventLocationState createState() => _EventLocationState();
 }
 
 class _EventLocationState extends State<EventLocation> {
 
+
   @override
   void initState() {
     _convertAddressToLatLng(widget.venueAddress);
+    _getCurrentLocation();
     super.initState();
   }
 
   final LatLng _center = const LatLng(1.360270, 103.811959);
   LatLng _venueLatLng;
+  String _currentAddress;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -119,6 +123,15 @@ class _EventLocationState extends State<EventLocation> {
     );
   }
 
+  _getCurrentLocation() async {
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    List<Placemark> p = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = p[0];
+    setState(() {
+      _currentAddress = "${place.name}, ${place.postalCode}, ${place.country}";
+    });
+  }
+
   _launchGoogleMapPlace() async {
     String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
     final url = "https://www.google.com/maps/search/?api=1&query=$destinationUrl";
@@ -131,19 +144,12 @@ class _EventLocationState extends State<EventLocation> {
 
   _launchGoogleMapRoute({String travelMode}) async {
 
-    // get current location
-    String currentAddress;
-    Position currentPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    List<Placemark> p = await Geolocator().placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
-    Placemark place = p[0];
-    currentAddress = "${place.locality}, ${place.postalCode}, ${place.country}";
-
-    String originUrl = Uri.encodeComponent(currentAddress);
+    String originUrl = Uri.encodeComponent(_currentAddress);
     // TODO: change address format
     String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
     String travelModeUrl = Uri.encodeComponent(travelMode);
 
-    // launch google map
+    // This launches google map.
     final url = "https://www.google.com/maps/dir/?api=1&origin=$originUrl&destination=$destinationUrl&travelmode=$travelModeUrl";
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: true);
