@@ -7,8 +7,8 @@ class Registration {
 
   factory Registration.fromJson(Map<String, dynamic> json) {
     return Registration(
-        userId: json['userId'],
-        eventId: json['eventId']
+      userId: json['userId'],
+      eventId: json['eventId']
     );
   }
 }

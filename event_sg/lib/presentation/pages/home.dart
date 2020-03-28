@@ -1,11 +1,19 @@
+import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/presentation/components/components.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+
 
 class Homepage extends StatelessWidget {
+
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
 
   Homepage({Key key}) : super(key: key);
 
@@ -36,7 +44,7 @@ class Homepage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EventDetailsPage()),
+                MaterialPageRoute(builder: (context) => SearchPage()),
               );
             },
           ),
@@ -62,20 +70,23 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-//              BlocProvider.of<EventListBloc>(context)
-//                  .add(GetAllEvents());
+              BlocProvider.of<EventListBloc>(context)
+                  .add(GetAllEvents());
                 return Text("Empty");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.eventList[index]);
-                  },
-                  itemCount: state.eventList.length,
+                return BlocProvider<SingleEventBloc>(
+                  create: (context) => SingleEventBloc(eventRepository: eventRepository),
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, int index) {
+                      return new EventListItem(event: state.eventList[index], key: UniqueKey(),);
+                    },
+                    itemCount: state.eventList.length,
+                  ),
                 );
               } else {
                 return Text(
@@ -105,7 +116,7 @@ class Homepage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.eventList[index]);
+                    return new EventListItem(event: state.eventList[index], key: UniqueKey(),);
                   },
                   itemCount: state.eventList.length,
                 );

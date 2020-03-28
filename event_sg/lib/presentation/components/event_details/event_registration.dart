@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventRegistration extends StatelessWidget {
   final DateTime startTime;
   final DateTime endTime;
   final DateTime registrationDeadline;
+  final int capacity;
+  final int numOfParticipants;
 
-  EventRegistration({Key key, @required this.startTime,
+  EventRegistration({Key key,
+    @required this.startTime,
     @required this.endTime,
-    @required this.registrationDeadline});
+    @required this.registrationDeadline,
+    @required this.capacity,
+    @required this.numOfParticipants
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +39,25 @@ class EventRegistration extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.timer),
             title: Text('Event Date & Time'),
-            subtitle: Text("${this.startTime.toString()} - ${this.endTime.toString()}"),
+            subtitle: Text(
+                "${DateFormat('dd/MM/yyyy hh:mm a').format(this.startTime).toString()}"
+                    " ~ ${DateFormat('dd/MM/yyyy hh:mm a').format(this.endTime).toString()}"
+
+            ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           ListTile(
             leading: Icon(Icons.location_on),
             title: Text('Registration Deadline'),
-            subtitle: Text(this.registrationDeadline.toString()),
+            subtitle: Text(
+                DateFormat('dd/MM/yyyy hh:mm a').format(this.registrationDeadline).toString()
+            ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.event_seat),
             title: Text('Vacancy'),
-            subtitle: Text('30 out of 50 vacancies are still available'),
+            subtitle: Text('${this.capacity - this.numOfParticipants} out of ${this.capacity.toString()} vacancies are still available'),
           ),
         ],
       ),

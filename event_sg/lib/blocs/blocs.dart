@@ -17,3 +17,8 @@ export 'add_review_state.dart';
 export 'notification_bloc.dart';
 export 'notification_event.dart';
 export 'notification_state.dart';
+
+export 'registration_bloc.dart';
+export 'registration_event.dart';
+export 'registration_state.dart';
+

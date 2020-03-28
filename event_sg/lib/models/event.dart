@@ -1,11 +1,14 @@
 import 'dart:core';
 
+import 'package:event_sg/models/models.dart';
 import 'package:intl/intl.dart';
 
 
 class Event {
   String eventId;
   String title;
+  String organizerId;
+  String organizerName;
   String description;
   DateTime startTime;
   DateTime endTime;
@@ -13,41 +16,57 @@ class Event {
   int capacity;
   int numOfParticipants;
   double avgRating;
-
-  // List<Review> reviewList;
   String category;
   String status;
 
+  // Event has a ReviewList.
+  List<Review> reviewList;
+  // Event has a venue.
+  Venue venue;
+  // Event has an organizer.
+  User organizer;
+
+
   Event({
-    this.eventId,
-    this.title,
-    this.description,
-    this.startTime,
-    this.endTime,
-    this.registrationDeadline,
-    this.capacity,
-    this.numOfParticipants,
-    this.avgRating,
-    // TODO: parse reviewList (Maybe it should not be in the event class).
-    // this.reviewList,
-    this.category,
-    this.status});
+      this.eventId,
+      this.title,
+      this.organizerId,
+      this.organizerName,
+      this.description,
+      this.startTime,
+      this.endTime,
+      this.registrationDeadline,
+      this.capacity,
+      this.numOfParticipants,
+      this.avgRating,
+      this.category,
+      this.status,
+      this.reviewList,
+      this.venue,
+      this.organizer});
+
 
   factory Event.fromJson(Map<String, dynamic> json) {
+
+    var list = json['reviewList'] as List;
+    List<Review> reviewList = list.map((review) => Review.fromJson(review)).toList();
+
     return Event(
-      title: json['title'],
-      eventId: json['eventId'],
-      description: json['description'],
-      startTime: DateFormat("dd-MM-yyyy HH:mm:ss").parse(json['startTime']),
-      endTime: DateFormat("dd-MM-yyyy HH:mm:ss").parse(json['endTime']),
+      title: json['event']['title'],
+      eventId: json['event']['eventId'],
+      description: json['event']['description'],
+      startTime: DateFormat("dd-MM-yyyy HH:mm:ss").parse(json['event']['startTime']),
+      endTime: DateFormat("dd-MM-yyyy HH:mm:ss").parse(json['event']['endTime']),
       registrationDeadline: DateFormat("dd-MM-yyyy HH:mm:ss").parse(
-          json['registrationDeadline']),
-      capacity: json['capacity'],
-      numOfParticipants: json['numOfParticipants'],
-      avgRating: json['avgRating'],
-      // reviewList: json['reviewList'],
-      category: json['category'],
-      status: json['status'],
+          json['event']['registrationDeadline']),
+      capacity: json['event']['capacity'],
+      numOfParticipants: json['event']['numOfParticipants'],
+      avgRating: json['event']['avgRating'],
+      category: json['event']['category'],
+      status: json['event']['status'],
+      reviewList: reviewList,
+      venue: Venue.fromJson(json['venue']),
+      organizer: User.fromJson(json['organizer']),
     );
   }
 }
