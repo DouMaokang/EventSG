@@ -17,4 +17,8 @@ class EventRepository {
     return eventApiClient.getEventById(eventId);
   }
 
+  Future<List<Event>> getRegisteredEvents(String userId) async {
+    return eventApiClient.getRegisteredEvent(userId);
+  }
+
 }

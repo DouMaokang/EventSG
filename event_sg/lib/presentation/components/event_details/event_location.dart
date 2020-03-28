@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class EventLocation extends StatelessWidget {
+
+class EventLocation extends StatefulWidget {
+  // Define the center of the in-app map display.
+  final String venueName;
+  final String venueAddress;
+  final int postalCode;
+  EventLocation({this.venueName, this.venueAddress, this.postalCode});
+
+  @override
+  _EventLocationState createState() => _EventLocationState();
+}
+
+class _EventLocationState extends State<EventLocation> {
+
+  @override
+  void initState() {
+    _convertAddressToLatLng(widget.venueAddress);
+    super.initState();
+  }
+
+  final LatLng _center = const LatLng(1.360270, 103.811959);
+  LatLng _venueLatLng;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,14 +46,30 @@ class EventLocation extends StatelessWidget {
                 ],
               ),
             ),
-            Container( // Map
-                padding: EdgeInsets.symmetric(vertical: 100),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://lh3.googleusercontent.com/-bQzIWFMAYus/WXy3WDcphBI/AAAAAAAAAMs/unOi6HiEoi4VWaM0WiP5q32q9zDbIhUvwCLcBGAs/s1600/7-29-2017%2B11-14-59%2BAM.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                )
+            Container(
+              height: 200,
+//                padding: EdgeInsets.symmetric(vertical: 100),
+              child: new GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 10.2,
+                ),
+                markers: Set<Marker>.of({
+                  Marker(
+                    markerId: MarkerId("1"),
+                    infoWindow: InfoWindow(
+                        title: widget.venueName,
+                        snippet: widget.venueAddress,
+                        onTap: () {
+                          _launchGoogleMapPlace();
+                        }
+                    ),
+                    position: _venueLatLng,
+                  )
+                }),
+                myLocationButtonEnabled: false,
+                myLocationEnabled: true,
+              ),
             ),
           ],
         ),
@@ -37,14 +77,6 @@ class EventLocation extends StatelessWidget {
         Center(
           child: Column(
             children: <Widget>[
-              Text(
-                "Address XXX Address XXX",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-
-              ),
-              Text(
-                "Detailed address xxx, 1234-5678",
-              ),
               SizedBox(height: 8,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,6 +85,9 @@ class EventLocation extends StatelessWidget {
                     backgroundColor: Colors.grey[200],
                     child: IconButton(
                       icon: Icon(Icons.directions_car, color: Colors.blue),
+                      onPressed: () async {
+                        _launchGoogleMapRoute(travelMode: "driving");
+                      },
                     ),
                   ),
                   SizedBox(width: 16,),
@@ -60,6 +95,9 @@ class EventLocation extends StatelessWidget {
                     backgroundColor: Colors.grey[200],
                     child: IconButton(
                       icon: Icon(Icons.directions_walk, color: Colors.blue),
+                      onPressed: () async {
+                        _launchGoogleMapRoute(travelMode: "walking");
+                      },
                     ),
                   ),
                   SizedBox(width: 16,),
@@ -67,7 +105,9 @@ class EventLocation extends StatelessWidget {
                     backgroundColor: Colors.grey[200],
                     child: IconButton(
                       icon: Icon(Icons.directions_bus, color: Colors.blue),
-
+                      onPressed: () async {
+                        _launchGoogleMapRoute(travelMode: "transit");
+                      },
                     ),
                   ),
                 ],
@@ -78,4 +118,52 @@ class EventLocation extends StatelessWidget {
       ],
     );
   }
+
+  _launchGoogleMapPlace() async {
+    String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
+    final url = "https://www.google.com/maps/search/?api=1&query=$destinationUrl";
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchGoogleMapRoute({String travelMode}) async {
+
+    // get current location
+    String currentAddress;
+    Position currentPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    List<Placemark> p = await Geolocator().placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+    Placemark place = p[0];
+    currentAddress = "${place.locality}, ${place.postalCode}, ${place.country}";
+
+    String originUrl = Uri.encodeComponent(currentAddress);
+    // TODO: change address format
+    String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
+    String travelModeUrl = Uri.encodeComponent(travelMode);
+
+    // launch google map
+    final url = "https://www.google.com/maps/dir/?api=1&origin=$originUrl&destination=$destinationUrl&travelmode=$travelModeUrl";
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _convertAddressToLatLng(String address) async
+  {
+    // TODO: Change address format
+    try {
+      List<Placemark> p = await Geolocator().placemarkFromAddress("Singapore ${widget.postalCode}");
+      Placemark place = p[0];
+      setState(() {
+        _venueLatLng = LatLng(place.position.latitude, place.position.longitude);
+      });
+    } catch (e) {
+      throw 'Could not translate $address';
+    }
+  }
+
 }
