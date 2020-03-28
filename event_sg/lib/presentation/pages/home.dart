@@ -42,6 +42,10 @@ class Homepage extends StatelessWidget {
                 hintText: 'Search for an event'
             ),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()),
+              );
             },
           ),
           SizedBox(height: 16,),
