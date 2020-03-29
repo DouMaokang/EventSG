@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:intl/intl.dart';
 
 class EventPostSecond extends StatefulWidget {
@@ -11,6 +14,13 @@ class EventPostSecond extends StatefulWidget {
 }
 class _EventPostSecondState extends State<EventPostSecond> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+
+  bool nameChanged=false;
+  bool dateChanged=false;
+  bool startChanged=false;
+  bool endChanged=false;
+  bool postClicked=false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +41,13 @@ class _EventPostSecondState extends State<EventPostSecond> {
         child: Center(
           child: Form(
             key: _formKey,
+            autovalidate: true,
             child: Column(
               children: <Widget>[
 
                 SizedBox(height: 28,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     child: Text(
@@ -51,48 +62,30 @@ class _EventPostSecondState extends State<EventPostSecond> {
                 ),
                 SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     //height: 48,
                     child: TextFormField(
+                      onChanged: (text) {nameChanged=true;postEventBloc.setName(text);},
                       validator: (value) {
-                        if (value.length==0) return 'Event Name is mandatory';
-                        else return null;
+                        if (!postClicked && !nameChanged) {postEventBloc.validateName(false);return null;}
+                        if (value.length==0) {postEventBloc.validateName(false);return 'Event Name is mandatory';}
+                        postEventBloc.validateName(true); return null;
                       },
                       textAlignVertical: TextAlignVertical.center,
                       obscureText:false,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Event Name (*)',
                         labelText: 'Event Name (*)',
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Container(
-                    height: 120,
-                    child: TextField(
-                      textAlignVertical: TextAlignVertical.center,
-                      //keyboardType: TextInputType.multiline,
-                      maxLines: 4,
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(),
-                        hintText: 'Event Description',
-                        labelText: 'Event Description',
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -143,13 +136,15 @@ class _EventPostSecondState extends State<EventPostSecond> {
 
                 SizedBox(height: 24,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     //height: 48,
                     child: DateTimeField(
+                      onChanged: (text) {dateChanged=true;postEventBloc.setDate(text);},
                       validator: (value) {
-                        if (value==null) return 'Date is mandatory';
-                        else return null;
+                        if (!postClicked && !dateChanged) {postEventBloc.validateDate(false);return null;}
+                        if (value==null) {postEventBloc.validateDate(false);return 'Date is mandatory';}
+                        postEventBloc.validateDate(true); return null;
                       },
                       obscureText: false,
                       format: DateFormat("yyyy-MM-dd"),
@@ -162,7 +157,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Event Date (*)',
                         labelText: 'Event Date (*)',
                       ),
@@ -171,7 +166,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                 ),
                 SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -180,9 +175,11 @@ class _EventPostSecondState extends State<EventPostSecond> {
                         width: 175,
                         //height: 48,
                         child: DateTimeField(
+                          onChanged: (text) {startChanged=true;postEventBloc.setStart(text);},
                           validator: (value) {
-                            if (value==null) return 'Starts Time is mandatory';
-                            else return null;
+                            if (!postClicked && !startChanged) {postEventBloc.validateStart(false);return null;}
+                            if (value==null) {postEventBloc.validateStart(false);return 'Starts Time is mandatory';}
+                            postEventBloc.validateStart(true); return null;
                           },
                           obscureText: false,
                           format: DateFormat("HH:mm"),
@@ -195,7 +192,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                           },
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(10.0),
-                            border: OutlineInputBorder(),
+                            //border: OutlineInputBorder(),
                             hintText: 'Starts (*)',
                             labelText: 'Starts (*)',
                           ),
@@ -206,9 +203,11 @@ class _EventPostSecondState extends State<EventPostSecond> {
                         width: 175,
                         //height: 48,
                         child: DateTimeField(
+                          onChanged: (text) {endChanged=true;postEventBloc.setEnd(text);},
                           validator: (value) {
-                            if (value==null) return 'Ends Time is mandatory';
-                            else return null;
+                            if (!postClicked && !endChanged) {postEventBloc.validateEnd(false);return null;}
+                            if (value==null) {postEventBloc.validateEnd(false);return 'Ends Time is mandatory';}
+                            postEventBloc.validateEnd(true); return null;
                           },
                           obscureText: false,
                           format: DateFormat("HH-mm"),
@@ -221,7 +220,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                           },
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(10.0),
-                            border: OutlineInputBorder(),
+                            //border: OutlineInputBorder(),
                             hintText: 'Ends (*)',
                             labelText: 'Ends (*)',
                           ),
@@ -230,15 +229,16 @@ class _EventPostSecondState extends State<EventPostSecond> {
                     ],),),
                 SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     height: 48,
                     child: TextField(
+                      onChanged: (text) {postEventBloc.setMaxCapacity(text);},
                       textAlignVertical: TextAlignVertical.center,
                       obscureText:false,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Maximum Capacity',
                         labelText: 'Maximum Capacity',
                       ),
@@ -248,10 +248,11 @@ class _EventPostSecondState extends State<EventPostSecond> {
 
                 SizedBox(height: 20,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     height: 48,
                     child: DateTimeField(
+                      onChanged: (text) {postEventBloc.setDDL(text);},
                       obscureText: false,
                       format: DateFormat("yyyy-MM-dd HH:mm"),
                       onShowPicker: (context, currentValue) async {
@@ -270,7 +271,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10.0),
-                        border: OutlineInputBorder(),
+                        //border: OutlineInputBorder(),
                         hintText: 'Registration Deadline',
                         labelText: 'Registration Deadline',
                       ),
@@ -306,7 +307,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                               ),
                               onPressed: () {},
                               color: Colors.blue,
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                             ),
                           ),
                         ],
@@ -319,7 +320,29 @@ class _EventPostSecondState extends State<EventPostSecond> {
                   ),
                 ),
 
-                SizedBox(height: 20,),
+                SizedBox(height: 30,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    height: 120,
+                    child: TextField(
+                      onChanged: (text) {postEventBloc.setEventDescription(text);},
+                      textAlignVertical: TextAlignVertical.center,
+                      //keyboardType: TextInputType.multiline,
+                      maxLines: 6,
+                      obscureText:false,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10.0),
+                        alignLabelWithHint: true,
+                        border: OutlineInputBorder(),
+                        hintText: 'Event Description',
+                        labelText: 'Event Description',
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 28,),
                 Center(
                   child: Column(
                     children: <Widget>[
@@ -396,7 +419,14 @@ class _EventPostSecondState extends State<EventPostSecond> {
                         fontSize: 20,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      postClicked=true;
+                      if (_formKey.currentState.validate()) {
+                        postEventBloc.post();
+                        //dialog
+                      }
+                      Timer(Duration(seconds:2),() {postClicked=false;_formKey.currentState.validate();});
+                    },
                     color: Colors.grey,
                     padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   ),

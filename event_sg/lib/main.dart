@@ -46,10 +46,12 @@ class App extends StatefulWidget {
 class _AppState
     extends State<App> {
   final List<Widget> pages = [
+
     Homepage(),
     EventPost(),
     Notifications(),
     UserAccount()
+
   ];
 
 
