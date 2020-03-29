@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../sub_pages/events_saved.dart';
+
 class EventTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
@@ -26,12 +28,14 @@ class EventTopBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.turned_in_not),
+            icon: const Icon(Icons.favorite_border),
             tooltip: 'Show saved events',
-            onPressed: () {
-            },
+            onPressed: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => EventSaved())),
+
           ),
         ],
+
       ),
     );
   }

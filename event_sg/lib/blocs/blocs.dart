@@ -9,3 +9,5 @@ export 'single_event_state.dart';
 export 'registration_bloc.dart';
 export 'registration_event.dart';
 export 'registration_state.dart';
+
+export 'event_saved_bloc.dart';
