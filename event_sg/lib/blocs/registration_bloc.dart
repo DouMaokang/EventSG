@@ -7,6 +7,7 @@ import './blocs.dart';
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   final RegistrationRepository registrationRepository;
 
+
   RegistrationBloc({@required this.registrationRepository})
       : assert(registrationRepository != null);
 
