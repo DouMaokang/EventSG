@@ -21,4 +21,8 @@ class EventRepository {
     return eventApiClient.getRegisteredEvent(userId);
   }
 
+  Future<List<Event>> searchEventByTitle(String keyword) async {
+    return eventApiClient.searchEventByTitle(keyword);
+  }
+
 }
