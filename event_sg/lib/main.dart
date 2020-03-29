@@ -2,7 +2,7 @@ import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
-import 'package:event_sg/repositories/event_repository.dart';
+import 'package:event_sg/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -17,16 +17,31 @@ void main() {
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
-  runApp(EventSG(eventRepository: eventRepository,));
+  // todo i'm not sure
+  final ReviewRepository reviewRepository = ReviewRepository(
+    reviewApiClient: ReviewApiClient(httpClient: http.Client()),
+  );
+
+  final NotificationRepository notificationRepository = NotificationRepository(
+    notificationApiClient: NotificationApiClient(httpClient: http.Client()),
+  );
+
+  runApp(EventSG(
+    eventRepository: eventRepository,
+    reviewRepository: reviewRepository,
+    notificationRepository: notificationRepository,
+  ));
 }
 
 class EventSG extends StatelessWidget {
   final EventRepository eventRepository;
+  final ReviewRepository reviewRepository;
+  final NotificationRepository notificationRepository;
 
   EventSG({ Key key,
-    @required this.eventRepository,
+    @required this.eventRepository, this.reviewRepository, this.notificationRepository
   })
-      : assert(eventRepository != null),
+      : assert(eventRepository != null && reviewRepository != null && notificationRepository != null),
         super(key: key);
 
   // This widget is the root of your application.
@@ -92,6 +107,15 @@ class _AppState
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
+  final ReviewRepository reviewRepository = ReviewRepository(
+    reviewApiClient: ReviewApiClient(httpClient: http.Client()),
+  );
+
+  final NotificationRepository notificationRepository = NotificationRepository(
+    notificationApiClient: NotificationApiClient(httpClient: http.Client()),
+  );
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +128,15 @@ class _AppState
           BlocProvider<EventListBloc>(
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
           ),
+          BlocProvider<ReviewListBloc>(
+            create: (contextC) => ReviewListBloc(reviewRepository: reviewRepository),
+          ),
+          BlocProvider<AddReviewBloc>(
+            create: (contextD) => AddReviewBloc(reviewRepository: reviewRepository),
+          ),
+          BlocProvider<NotificationBloc>(
+            create: (contextE) => NotificationBloc(notificationRepository: notificationRepository),
+          )
         ],
         child: pages[_selectedIndex],
       ),

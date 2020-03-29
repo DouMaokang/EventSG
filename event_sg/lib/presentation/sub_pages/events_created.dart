@@ -1,6 +1,8 @@
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
+import 'event_feedback.dart';
+
 
 
 /// This is the stateful widget that the main application instantiates.
@@ -93,7 +95,7 @@ class _EventsCreatedState extends State<EventsCreated> {
                     ),
                     new InkWell(onTap:(){
                         Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => FeedbackView())
+                          context, MaterialPageRoute(builder: (context) => EventFeedbackPage())
                         );
                     },
                       child: new Container(
