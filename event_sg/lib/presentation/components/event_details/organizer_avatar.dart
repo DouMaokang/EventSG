@@ -14,7 +14,8 @@ class OrganizerAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.cyan[200],
+        radius: 20,
+        backgroundImage: AssetImage("assets/female-1.jpg"),
       ),
       title: Text(
         this.organizer.userName,
