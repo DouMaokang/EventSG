@@ -51,7 +51,7 @@ class _AppState
       key: PageStorageKey('home'),
 
     ),
-    EventPost(
+    PostPage(
         key: PageStorageKey('post')
     ),
     Notifications(
