@@ -122,7 +122,7 @@ class EventListItem extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 3,
-                                  child:_buildFavoriteButton(context),
+
                               )
 
                             ],
@@ -140,7 +140,9 @@ class EventListItem extends StatelessWidget {
 
   }
 
+  /*
   Widget _buildFavoriteButton(BuildContext context) {
+
     final bloc = BlocProvider.of<EventSavedBloc>(context);
     return StreamBuilder<List<Event>>(
       stream: bloc.favoritesStream,
@@ -164,4 +166,5 @@ class EventListItem extends StatelessWidget {
       },
     );
   }
+  */
 }

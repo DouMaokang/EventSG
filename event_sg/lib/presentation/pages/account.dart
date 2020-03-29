@@ -111,7 +111,7 @@ class _UserAccountState extends State<UserAccount> {
                             MaterialPageRoute(builder: (context) => EventsRegistered()));
                       },
                     ),
-                    Divider(height: 0, indent: 16, endIndent: 16,),
+                   /* Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.save_alt),
                       title: Text('Events Saved'),
@@ -119,9 +119,9 @@ class _UserAccountState extends State<UserAccount> {
                       onTap: (){
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => EventSaved()));
+                           MaterialPageRoute(builder: (context) => EventSaved()));
                       },
-                    ),
+                    ),*/
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.place),
