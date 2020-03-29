@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "994211147608",
+    "firebase_url": "https://ssad-software-arena.firebaseio.com",
+    "project_id": "ssad-software-arena",
+    "storage_bucket": "ssad-software-arena.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994211147608:android:0399f886145eab6ae8bf2d",
+        "android_client_info": {
+          "package_name": "scse.ssad.sw_arena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994211147608-0cb09u4tq527i11k4sosp7r1u6s81u9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApjBCdoJla7LPMLY9sfqBOhu1mwf8147M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994211147608-0cb09u4tq527i11k4sosp7r1u6s81u9a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "994211147608-o7k8nmaf3627o471ovakqurb7fihs5qt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.google.leaderboardtest.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
