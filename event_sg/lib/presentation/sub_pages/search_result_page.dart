@@ -35,6 +35,7 @@ class SearchResultPage extends StatelessWidget {
                 title: Text("Search Results"),
               ),
               body: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   itemCount: eventList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return EventListItem(
