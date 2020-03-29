@@ -33,6 +33,11 @@ class EventSG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+        primaryColor: Colors.teal[400],
+      ),
       home: App(),
     );
   }
@@ -57,30 +62,42 @@ class _AppState
 
   int _selectedIndex = 0;
 
-  Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        title: Text('Home'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.add_box),
-        title: Text('Post'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.notifications),
-        title: Text('Notification'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.account_circle),
-        title: Text('Profile'),
-      ),
+  Widget _bottomNavigationBar(int selectedIndex) => SizedBox(
+    child: BottomNavigationBar(
+      backgroundColor: Colors.cyan[200],
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('Home',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_box),
+          title: Text('Post',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          title: Text('Notification',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          title: Text(
+              'Profile',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
 
-    ],
-    currentIndex: _selectedIndex,
-    selectedItemColor: Colors.amber[800],
-    onTap: _onItemTapped,
-    type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: _onItemTapped,
+      type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
+    ),
   );
 
   void _onItemTapped(int index) {

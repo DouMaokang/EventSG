@@ -31,18 +31,21 @@ class NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Notifications'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-                BlocProvider.of<EventListBloc>(context)
-                    .add(InitializeEventList());
-            },
-          )
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text('Notifications'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () async {
+                  BlocProvider.of<EventListBloc>(context)
+                      .add(InitializeEventList());
+              },
+            )
 
-        ],
+          ],
+        ),
       ),
       // body: _buildSuggestions(),
 

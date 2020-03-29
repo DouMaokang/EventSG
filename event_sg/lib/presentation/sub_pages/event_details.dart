@@ -53,7 +53,12 @@ class EventDetailsPage extends StatelessWidget {
           // final singleEvent = state.event;
 
           return Scaffold(
-            appBar: EventTopBar(eventId: eventId, userId: "3b41e41f-1b4b-4708-98ec-28145d2c4e6a"),
+            appBar: PreferredSize(
+                preferredSize: Size.fromHeight(44.0),
+                child: EventTopBar(
+                    eventId: eventId,
+                    userId: "3b41e41f-1b4b-4708-98ec-28145d2c4e6a")
+            ),
             body: SingleChildScrollView(
               child: Center(
                 child:  Column(
