@@ -21,7 +21,6 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   Stream<RegistrationState> mapEventToState(
       RegistrationEvent event,
       ) async* {
-    // TODO: Add Logic
     if (event is ConfirmRegistration) {
       yield RegistrationProcessing();
       try {
@@ -30,6 +29,16 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       } catch (_) {
         yield RegistrationError();
       }
+    } else if (event is CancelRegistration) {
+      yield CancellationProcessing();
+      try {
+        registrationRepository.deregisterEvent(event.eventId, event.userId);
+        yield RegistrationNotMade();
+      } catch(_) {
+        yield RegistrationError();
+      }
+    } else if (event is EnterWithRegistration) {
+      yield RegistrationConfirmed(hasRegistered: true);
     }
   }
 }

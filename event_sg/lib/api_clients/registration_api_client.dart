@@ -49,7 +49,7 @@ class RegistrationApiClient {
   bool deregisterEvent(String eventId, String userId) {
     final url = '$baseUrl/registration/cancel/$eventId/$userId';
     try {
-      httpClient.post(url);
+      httpClient.delete(url);
       return true;
     } catch (e) {
       print('Caught error: $e');
@@ -63,14 +63,13 @@ class RegistrationApiClient {
 
     try {
       final response = await httpClient.get(url);
-      String data = response.toString();
+      bool data = jsonDecode(response.body);
       print(data);
-      if (data.toLowerCase() == "true") {
+      if (data) {
         return true;
       } else {
         return false;
       }
-
     } catch (e) {
       print('Caught error: $e');
       throw Exception('error getting data!');

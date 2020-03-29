@@ -120,10 +120,10 @@ class EventListItem extends StatelessWidget {
                                   softWrap: true,
                                 ),
                               ),
-                              Expanded(
-                                flex: 3,
-
-                              )
+//                              Expanded(
+//                                flex: 3,
+//
+//                              )
 
                             ],
                           ),

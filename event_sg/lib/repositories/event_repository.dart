@@ -25,4 +25,8 @@ class EventRepository {
     return eventApiClient.searchEventByTitle(keyword);
   }
 
+  Future<bool> hasSavedEvent({@required String eventId, @required String userId}) {
+    return eventApiClient.hasSaved(eventId, userId);
+  }
+
 }

@@ -1,31 +1,28 @@
-/*
 import 'dart:async';
-
-import '../models/event.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/repositories/event_repository.dart';
+import 'package:flutter/cupertino.dart';
+import './blocs.dart';
 
+class EventSavedBloc extends Bloc<EventSavedEvent, EventSavedState> {
+  EventRepository eventRepository;
 
-class EventSavedBloc implements Bloc {
-  var _event = <Event>[];
-  List<Event> get favorites => _event;
-
-  final _controller = StreamController<List<Event>>.broadcast();
-  Stream<List<Event>> get favoritesStream => _controller.stream;
-
-  void toggleRestaurant(Event event) {
-    if (_event.contains(event)) {
-      _event.remove(event);
-    } else {
-      _event.add(event);
-    }
-
-    _controller.sink.add(_event);
-  }
+  EventSavedBloc({@required this.eventRepository});
 
   @override
-  void dispose() {
-    _controller.close();
+  EventSavedState get initialState => EventNotSaved();
+
+  @override
+  Stream<EventSavedState> mapEventToState(
+    EventSavedEvent event,
+  ) async* {
+    if (event is SaveEvent) {
+      yield EventSaved();
+    } else if (event is EnterWithSave) {
+      yield EventSaved();
+    } else {
+      yield EventNotSaved();
+    }
   }
 }
-
- */

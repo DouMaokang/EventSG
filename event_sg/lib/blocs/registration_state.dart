@@ -15,6 +15,7 @@ class RegistrationConfirmed extends RegistrationState {
 
 class RegistrationProcessing extends RegistrationState {}
 
-class RegistrationCanceled extends RegistrationState {}
-
 class RegistrationError extends RegistrationState {}
+
+class CancellationProcessing extends RegistrationState {}
+

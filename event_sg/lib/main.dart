@@ -48,7 +48,7 @@ class _AppState
   final List<Widget> pages = [
 
     Homepage(),
-    EventPost(),
+    // EventPost(),
     Notifications(),
     UserAccount()
 

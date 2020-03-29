@@ -86,6 +86,25 @@ class EventApiClient {
     return null;
   }
 
+  Future<bool> hasSaved(String eventId, String userId) async {
+
+    final url = '$baseUrl/event/has_saved/$eventId/$userId';
+
+    try {
+      final response = await httpClient.get(url);
+      bool data = jsonDecode(response.body);
+      print(data);
+      if (data) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting data!');
+    }
+  }
+
 }
 
 

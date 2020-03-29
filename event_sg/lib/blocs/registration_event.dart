@@ -18,3 +18,6 @@ class CancelRegistration extends RegistrationEvent {
   const CancelRegistration({@required this.eventId, @required this.userId})
       : assert(eventId != null, userId != null);
 }
+
+
+class EnterWithRegistration extends RegistrationEvent {}
