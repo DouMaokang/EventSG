@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 // TODO: connect with the modified API
 /// An network API client to fetch event data from app backend services.
 class EventApiClient {
-  static const baseUrl = 'http://127.0.0.1:8080/api';
+  // maokang's ip: 192.168.31.72
+  // your local ip: 127.0.0.1
+  static const baseUrl = 'http://192.168.31.72:8080/api';
   final http.Client httpClient;
 
   EventApiClient({
@@ -29,7 +31,20 @@ class EventApiClient {
       print('Caught error: $e');
       throw Exception('error getting event data!');
     }
+  }
 
+  Future<List<Event>> getRegisteredEvent(String userId) async {
+    final eventUrl = '$baseUrl/event/registered/$userId';
+    try {
+      final eventResponse = await httpClient.get(eventUrl);
+      List eventData = jsonDecode(eventResponse.body);
+      print(eventData);
+      List<Event> events = eventData.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
   }
 
   Future<Event> getEventById(String eventId) async {
@@ -45,7 +60,6 @@ class EventApiClient {
       print('Caught error: $e');
       throw Exception('error getting event data!');
     }
-
   }
 
   /// Returns a list of recommended events based on a user's interests.

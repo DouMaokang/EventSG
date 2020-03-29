@@ -1,5 +1,4 @@
 import 'package:event_sg/api_clients/api_clients.dart';
-import 'package:event_sg/blocs/search_bloc.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
@@ -47,22 +46,14 @@ class App extends StatefulWidget {
 class _AppState
     extends State<App> {
   final List<Widget> pages = [
-    Homepage(
-      key: PageStorageKey('home'),
 
-    ),
-    PostPage(
-        key: PageStorageKey('post')
-    ),
-    Notifications(
-      key: PageStorageKey('notification'),
-    ),
-    UserAccount(
-        key: PageStorageKey('account')
-    )
+    Homepage(),
+    EventPost(),
+    Notifications(),
+    UserAccount()
+
   ];
 
-  final PageStorageBucket bucket = PageStorageBucket();
 
   int _selectedIndex = 0;
 
@@ -116,13 +107,8 @@ class _AppState
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
           ),
         ],
-        child: PageStorage(
-          child: pages[_selectedIndex],
-          bucket: bucket,
-        ),
+        child: pages[_selectedIndex],
       ),
-
-
     );
   }
 }
