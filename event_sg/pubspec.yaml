@@ -36,6 +36,7 @@ dependencies:
   datetime_picker_formfield: ^1.0.0
   email_validator: ^1.0.0
   bloc: ^3.0.0
+  frideos: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
