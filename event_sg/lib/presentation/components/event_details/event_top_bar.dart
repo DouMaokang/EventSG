@@ -30,8 +30,8 @@ class EventTopBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: const Icon(Icons.favorite_border),
             tooltip: 'Show saved events',
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => EventSaved())),
+            onPressed: (){}// => Navigator.of(context)
+                //.push(MaterialPageRoute(builder: (_) => EventSaved())),
 
           ),
         ],
