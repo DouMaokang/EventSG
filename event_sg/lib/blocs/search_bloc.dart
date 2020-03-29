@@ -24,9 +24,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       try {
         final Map<String, String> filters = event.filters;
         final String query = event.query;
-        final List<Event> events = await eventRepository.getAllEvents();
-        //TODO implemenmt search with filter seachWithFilters(List<Event> events, List<String> filters)
-        yield SearchLoaded(eventList:events);
+        List<Event> queriedEvents;
+
+        // if a query is not empty, query by keywords first and then filter using filters
+        if(query != "")
+          queriedEvents = await eventRepository.searchEventByTitle(query);
+        else
+          queriedEvents = await eventRepository.getAllEvents();
+
+        // if category filter is set:
+        if(filters["Categories"] != "" && filters["Categories"] != "None")
+          queriedEvents = queriedEvents.where((i) => (i.category == filters["Categories"])).toList();
+        //  if distance filter is set:
+        //TODO distance filter
+
+        print(queriedEvents);
+        yield SearchLoaded(eventList:queriedEvents);
       } catch (_) {
         yield SearchError();
       }
