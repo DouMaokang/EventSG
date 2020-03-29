@@ -35,29 +35,41 @@ class EventRegistration extends StatelessWidget {
               alignment: Alignment.topLeft,
             ),
           ),
-          SizedBox(height: 4,),
+          SizedBox(height: 8,),
           ListTile(
             leading: Icon(Icons.timer),
             title: Text('Event Date & Time'),
             subtitle: Text(
                 "${DateFormat('dd/MM/yyyy hh:mm a').format(this.startTime).toString()}"
-                    " ~ ${DateFormat('dd/MM/yyyy hh:mm a').format(this.endTime).toString()}"
+                    " ~ ${DateFormat('dd/MM/yyyy hh:mm a').format(this.endTime).toString()}",
+              style: TextStyle(fontSize: 14),
+
 
             ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           ListTile(
             leading: Icon(Icons.location_on),
-            title: Text('Registration Deadline'),
+            title: Text(
+              'Registration Deadline',
+              style: TextStyle(fontSize: 16),
+            ),
             subtitle: Text(
-                DateFormat('dd/MM/yyyy hh:mm a').format(this.registrationDeadline).toString()
+                DateFormat('dd/MM/yyyy hh:mm a').format(this.registrationDeadline).toString(),
+              style: TextStyle(fontSize: 14),
+
             ),
           ),
           Divider(height: 0, indent: 16, endIndent: 16,),
           ListTile(
             leading: Icon(Icons.event_seat),
-            title: Text('Vacancy'),
-            subtitle: Text('${this.capacity - this.numOfParticipants} out of ${this.capacity.toString()} vacancies are still available'),
+            title: Text('Vacancy',
+              style: TextStyle(fontSize: 16),
+            ),
+            subtitle: Text(
+                '${this.capacity - this.numOfParticipants} out of ${this.capacity.toString()} vacancies are still available',
+              style: TextStyle(fontSize: 14),
+            ),
           ),
         ],
       ),

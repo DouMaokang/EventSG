@@ -14,12 +14,13 @@ class OrganizerAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.cyan[200],
       ),
       title: Text(
         this.organizer.userName,
         style: TextStyle(
-            fontSize: 16),
+          fontFamily: 'Raleway',
+            fontSize: 16, fontWeight: FontWeight.w500),
       ),
     );
   }

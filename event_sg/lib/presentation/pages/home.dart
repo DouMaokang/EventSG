@@ -24,7 +24,7 @@ class Homepage extends StatelessWidget {
         preferredSize: Size.fromHeight(44.0),
         child: AppBar(
             title: Text(
-                "EventSG",
+              "EventSG",
             ),
             actions: <Widget>[
               IconButton(
@@ -45,24 +45,48 @@ class Homepage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: <Widget>[
 
-          SizedBox(height: 16,),
-          new RichText(
-              text: TextSpan(
-                  children: [
-                    TextSpan(text: "Upcoming Events",
-                        style: TextStyle(color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22)),
-                    WidgetSpan(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 2.0),
-                          child: Icon(Icons.notifications),
-                        )
-                    )
-                  ]
-              )
+
+          Container(
+            decoration: BoxDecoration(color: Colors.cyan[50]),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+              title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Upcoming Events",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    Icon(Icons.event, color: Colors.black, size: 20),
+                  ],
+                ),
+              ),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      "The following events will be happing in 7 days",
+                      style: TextStyle(color: Colors.black),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
+
+          SizedBox(height: 6,),
+
           BlocBuilder<EventListBloc, EventListState>(
             // ignore: missing_return
             builder: (context, state) {
@@ -93,11 +117,49 @@ class Homepage extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 24,),
-          Text("Recommended Events", style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 22)),
+
+          Divider(),
+          Container(
+            decoration: BoxDecoration(color: Colors.cyan[50]),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+              title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Recommended Events",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    Icon(Icons.face, color: Colors.black, size: 20,),
+                  ],
+                ),
+              ),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      "The following events are recomended for you based on your interests",
+                      style: TextStyle(color: Colors.black),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 6,),
+
           BlocBuilder<EventListBloc, EventListState>(
             // ignore: missing_return
             builder: (context, state) {

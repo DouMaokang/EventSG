@@ -1,11 +1,8 @@
-import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/api_clients/registration_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/blocs/registration_bloc.dart';
-import 'package:event_sg/blocs/single_event_bloc.dart';
 import 'package:event_sg/presentation/components/event_details/cancel_dialog.dart';
 import 'package:event_sg/presentation/components/event_details/no_vacancy_dialog.dart';
-import 'package:event_sg/repositories/event_repository.dart';
 import 'package:event_sg/repositories/registration_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,84 +55,80 @@ class _EventRegistrationBarState extends State<EventRegistrationBar> {
       registrationBloc.add(EnterWithRegistration());
     }
 
-    return BottomAppBar(
-      color: Colors.lightBlue,
-      child: BlocBuilder<RegistrationBloc, RegistrationState>(
-        builder: (context, state) {
-          if (state is RegistrationNotMade) {
-            return ButtonTheme(
-              height: 54,
-              child: FlatButton(
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                disabledColor: Colors.white,
-                onPressed: () {
-                  if (widget.vacancy > 0) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            RegistrationDialog(
-                              eventTitle: widget.eventTitle,
-                              eventDateTime: widget.eventDateTime
-                                  .toString(),
-                              userId: widget.userId,
-                              eventId: widget.eventId,
-                              registrationBloc: registrationBloc,
-                            )
-                    );
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            NoVacancyDialog()
-                    );
-                  }
-                },
+    return BlocBuilder<RegistrationBloc, RegistrationState>(
+      builder: (context, state) {
+        if (state is RegistrationNotMade) {
+          return FlatButton(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            color: Colors.blue,
+            child: Text(
+              "Register",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
               ),
-            );
-          } else if (state is RegistrationConfirmed) {
-            return ButtonTheme(
-              height: 54,
-              child: FlatButton(
-                child: Text(
-                  "Cancel Registration",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          CancelDialog(
-                            eventTitle: widget.eventTitle,
-                            eventDateTime: widget.eventDateTime
-                                .toString(),
-                            userId: widget.userId,
-                            eventId: widget.eventId,
-                            registrationBloc: registrationBloc,
-                          )
-                  );
-                },
+            ),
+            onPressed: () {
+              if (widget.vacancy > 0) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        RegistrationDialog(
+                          eventTitle: widget.eventTitle,
+                          eventDateTime: widget.eventDateTime
+                              .toString(),
+                          userId: widget.userId,
+                          eventId: widget.eventId,
+                          registrationBloc: registrationBloc,
+                        )
+                );
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        NoVacancyDialog()
+                );
+              }
+            },
+          );
+        } else if (state is RegistrationConfirmed) {
+          return FlatButton(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            color: Colors.blue,
+            child: Text(
+              "Cancel Registration",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
               ),
-            );
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      CancelDialog(
+                        eventTitle: widget.eventTitle,
+                        eventDateTime: widget.eventDateTime
+                            .toString(),
+                        userId: widget.userId,
+                        eventId: widget.eventId,
+                        registrationBloc: registrationBloc,
+                      )
+              );
+            },
+          );
 
-            return Text("Confirmed");
-          } else if (state is RegistrationProcessing) {
-            print("state: processing");
+          return Text("Confirmed");
+        } else if (state is RegistrationProcessing) {
+          print("state: processing");
 
-            return Text("Processing");
-          } else {
-            print("state: error");
+          return Text("Processing");
+        } else {
+          print("state: error");
 
-            return Text("Error");
-          }
-        },
-      ),
+          return Text("Error");
+        }
+      },
     );
   }
 

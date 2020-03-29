@@ -7,17 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
-class EventTopBar extends StatefulWidget implements PreferredSizeWidget {
+class EventTopBar extends StatefulWidget {
 
   final eventId;
   final userId;
 
   EventTopBar({@required this.eventId, @required this.userId});
 
-
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   _EventTopBarState createState() => _EventTopBarState();

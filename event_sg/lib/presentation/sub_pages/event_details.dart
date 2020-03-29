@@ -1,5 +1,6 @@
 import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/presentation/components/event_details/event_details_widgets.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:event_sg/repositories/registration_repository.dart';
@@ -66,7 +67,7 @@ class EventDetailsPage extends StatelessWidget {
                     EventHeader(
                       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
                       eventName: state.event.title,),
-                    SizedBox(height: 16,),
+                    SizedBox(height: 4,),
                     OrganizerAvatar(organizer: state.event.organizer),
                     EventRegistration(
                       startTime: state.event.startTime,
@@ -95,8 +96,7 @@ class EventDetailsPage extends StatelessWidget {
                 eventId: eventId,
                 eventDateTime: state.event.startTime,
                 eventTitle: state.event.title,
-                // TODO: get user id. how?
-                userId: "3b41e41f-1b4b-4708-98ec-28145d2c4e6a",
+                userId: Login().getUserId(),
                 vacancy: state.event.capacity - state.event.numOfParticipants,
                 key: UniqueKey(),
               ),

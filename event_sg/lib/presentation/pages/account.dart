@@ -69,19 +69,8 @@ class _UserAccountState extends State<UserAccount> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    SizedBox(height: 16,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0,),
-                      child: Align(
-                        child: Text(
-                          " Edit/View Profile",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-
-                        ),
-                        alignment: Alignment.topLeft,
-                      ),
-                    ),
-                    SizedBox(height: 6,),
+                    SizedBox(height: 4,),
+                    Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Personal Information'),
