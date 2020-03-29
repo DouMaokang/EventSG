@@ -43,7 +43,7 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
 
   List<String> interestList = ["None", "Cooking", "Art", "Nature",
-    "Volunteer"];
+    "Volunteer", "School"];
   List<String> distanceList = ["None","< 1km", "< 5km"];
   List<String> dateList = ["None","Weekday", "Weekend"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
