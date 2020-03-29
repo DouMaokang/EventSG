@@ -47,7 +47,7 @@ class _PostPageState extends State<PostPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>EventPost()),
+                    MaterialPageRoute(builder: (context)=>EventPostSecond()),
                   );
                 },
                 color: Colors.green,

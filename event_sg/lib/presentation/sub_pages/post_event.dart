@@ -1,3 +1,4 @@
+/*
 import 'package:email_validator/email_validator.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_event2.dart';
@@ -44,7 +45,7 @@ class _EventPostState extends State<EventPost> {
     return Scaffold(
       appBar: AppBar(
         title: Align (
-            alignment: Alignment(-0.25,0.0),
+            alignment: Alignment(-0.3,0.0),
             child: const Text('Post an Event 1/2')
         ),
 
@@ -200,12 +201,76 @@ class _EventPostState extends State<EventPost> {
                     ],
                   ),
                 ),
-                SizedBox(height:40,),
+                //SizedBox(height:40,),
+
+                SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ButtonBar(
+                        children: [
+                          FlatButton(
+                            child: Text(
+                              " Save ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                //Save
+                              }
+                            },
+                            color: Colors.green,
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                          ),
+
+                        ]
+                    ),
+                    ButtonBar(
+                        children: [
+                          FlatButton(
+                            onPressed: () {
+                              /*
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                      }
+                      */
+                              postEventBloc.check1stPage();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=>EventPostSecond()),
+                              );
+                            },
+                            color: Colors.blue,
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+
+                            child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    " Next",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_forward),
+                                ]
+                            ),
+                          ),
+                        ]
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
               ],
             ),
           ),
         ),
       ),
+      /*
       bottomNavigationBar: BottomAppBar(
         color: Colors.lightBlue,
         child: Row(
@@ -269,7 +334,8 @@ class _EventPostState extends State<EventPost> {
           ],
         ),
       ),
+      */
     );
   }
 }
-
+ */
