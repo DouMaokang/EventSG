@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http;
 class EventApiClient {
   // maokang's ip: 192.168.31.72
   // your local ip: 127.0.0.1
-  static const baseUrl = 'http://192.168.31.72:8080/api';
+  static const baseUrl = Urls.apiUrlBase;
   final http.Client httpClient;
 
   EventApiClient({
@@ -77,14 +78,50 @@ class EventApiClient {
   }
 
   /// Returns a list of recommended events based on a user's interests.
-  Future<List<Event>> getRecommendedEvents() async {
-    return null;
+  Future<List<Event>> getRecommendedEvents({@required String userId}) async {
+    final url = '$baseUrl/event/recommended/$userId';
+    try {
+      final response = await httpClient.get(url);
+      List data = jsonDecode(response.body);
+      print(data);
+      List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
   }
 
-  /// Returns a list of popular events based on the number of saves/likes.
-  Future<List<Event>> getPopularEvents() async {
-    return null;
+  /// Returns a list of upcoming events (in 7 days) of a particular user.
+  Future<List<Event>> getUpcomingEvents({@required String userId}) async {
+    final url = '$baseUrl/event/upcoming/$userId/7';
+    try {
+      final response = await httpClient.get(url);
+      List data = jsonDecode(response.body);
+      print(data);
+      List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
   }
+
+  /// Returns a list of events liked by a particular user.
+  Future<List<Event>> getLikedEvents({@required String userId}) async {
+    final url = '$baseUrl/event/all_saved_events/$userId';
+    try {
+      final response = await httpClient.get(url);
+      List data = jsonDecode(response.body);
+      print(data);
+      List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
+  }
+
 
   Future<bool> hasSaved(String eventId, String userId) async {
 

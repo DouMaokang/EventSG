@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:event_sg/repositories/repositories.dart';
@@ -25,8 +26,8 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
     if (event is GetAllEvents) {
       yield EventListLoading();
       try {
-        final List<Event> eventList = await eventRepository.getAllEvents();
-        yield EventListLoaded(eventList: eventList);
+        final List<Event> eventList = await eventRepository.getUpcomingEvents("userId");
+        yield EventListLoaded(upcomingEventList: eventList, recommendedEventList: eventList);
       } catch (_) {
         yield EventListError();
       }

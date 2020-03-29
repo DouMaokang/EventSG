@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -8,9 +9,7 @@ import 'package:http/http.dart' as http;
 // TODO: connect with the modified API
 /// An network API client to fetch event data from app backend services.
 class RegistrationApiClient {
-  // maokang's ip: 192.168.31.72
-  // your local ip: 127.0.0.1
-  static const baseUrl = 'http://192.168.31.72:8080/api';
+  static const baseUrl = Urls.apiUrlBase;
   final http.Client httpClient;
 
   RegistrationApiClient({

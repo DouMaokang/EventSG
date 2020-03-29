@@ -83,9 +83,9 @@ class Homepage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemBuilder: (context, int index) {
-                      return new EventListItem(event: state.eventList[index], key: UniqueKey(),);
+                      return new EventListItem(event: state.upcomingEventList[index], key: UniqueKey(),);
                     },
-                    itemCount: state.eventList.length,
+                    itemCount: state.upcomingEventList.length,
                   ),
                 );
               } else {
@@ -116,9 +116,9 @@ class Homepage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.eventList[index], key: UniqueKey(),);
+                    return new EventListItem(event: state.recommendedEventList[index], key: UniqueKey(),);
                   },
-                  itemCount: state.eventList.length,
+                  itemCount: state.recommendedEventList.length,
                 );
               } else {
                 return Text(

@@ -54,10 +54,10 @@ class NotificationsState extends State<Notifications> {
               return ListView.builder(
                 itemBuilder: (context, int index) {
                   return new ListTile(
-                    title: new Text('${state.eventList[index].title}'),
+                    title: new Text('${state.recommendedEventList[index].title}'),
                   );
                 },
-                itemCount: state.eventList.length,
+                itemCount: state.recommendedEventList.length,
               );
             } else {
               return Text("GetAllEvents() Failed");
