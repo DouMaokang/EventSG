@@ -81,7 +81,6 @@ class _SearchBarState extends State<SearchBar> {
                   autofocus: true,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
                     prefixIcon: Icon(Icons.search),
                     suffixIcon: IconButton(
                         icon: Icon(Icons.clear),

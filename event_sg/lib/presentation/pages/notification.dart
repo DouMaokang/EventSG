@@ -38,7 +38,7 @@ class NotificationsState extends State<Notifications> {
             icon: Icon(Icons.search),
             onPressed: () async {
                 BlocProvider.of<EventListBloc>(context)
-                    .add(GetAllEvents());
+                    .add(InitializeEventList());
             },
           )
 

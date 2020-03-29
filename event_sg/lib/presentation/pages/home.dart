@@ -24,9 +24,12 @@ class Homepage extends StatelessWidget {
           title: Text("Homepage"),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.add_box),
+              icon: Icon(Icons.search),
               onPressed: () {
-                // navigate to post
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
               },
             ),
           ]
@@ -36,18 +39,7 @@ class Homepage extends StatelessWidget {
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: <Widget>[
-          new TextField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search for an event'
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
-          ),
+
           SizedBox(height: 16,),
           new RichText(
               text: TextSpan(
@@ -70,8 +62,8 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-              BlocProvider.of<EventListBloc>(context)
-                  .add(GetAllEvents());
+//              BlocProvider.of<EventListBloc>(context)
+//                  .add(InitializeEventList());
                 return Text("Empty");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
@@ -106,7 +98,7 @@ class Homepage extends StatelessWidget {
             builder: (context, state) {
               if (state is EventListEmpty) {
                 BlocProvider.of<EventListBloc>(context)
-                    .add(GetAllEvents());
+                    .add(InitializeEventList());
                 return Text("Hello");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());

@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 // TODO: connect with the modified API
 /// An network API client to fetch event data from app backend services.
 class EventApiClient {
-  // maokang's ip: 192.168.31.72
-  // your local ip: 127.0.0.1
   static const baseUrl = Urls.apiUrlBase;
   final http.Client httpClient;
 
