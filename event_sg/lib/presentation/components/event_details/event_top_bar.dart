@@ -6,6 +6,7 @@ import 'package:event_sg/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:toast/toast.dart';
 
 class EventTopBar extends StatefulWidget implements PreferredSizeWidget {
 
@@ -79,6 +80,7 @@ class _EventTopBarState extends State<EventTopBar> {
                     return IconButton(
                         icon: const Icon(Icons.favorite),
                         onPressed: () {
+                          Toast.show("Event unsaved!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
                           BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
                         }
                     );
@@ -86,6 +88,7 @@ class _EventTopBarState extends State<EventTopBar> {
                     return IconButton(
                         icon: const Icon(Icons.favorite_border),
                         onPressed: () {
+                          Toast.show("Event saved!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP);
                           BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
                         }
                     );

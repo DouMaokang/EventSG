@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../models/event.dart';
 import '../../models/event.dart';
+import '../sub_pages/event_details.dart';
 
 
 class EventListItem extends StatelessWidget {
@@ -41,7 +42,7 @@ class EventListItem extends StatelessWidget {
                         create: (context) => SingleEventBloc(eventRepository: eventRepository),
                         child: BlocBuilder<SingleEventBloc, SingleEventState>(
                             builder: (context, state) {
-                              return ReviewAddingPage(eventId: event.eventId);}
+                              return EventDetailsPage(eventId: event.eventId);}
                         )
                     )
                 )
