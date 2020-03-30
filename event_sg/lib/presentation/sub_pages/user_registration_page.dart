@@ -1,4 +1,5 @@
 import 'package:event_sg/presentation/pages/home.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
+import 'package:event_sg/globals/login.dart';
 
 void main(){
   runApp(RegistrationPage());
@@ -143,13 +145,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _showSuccessDialog() {
     // flutter defined function
+    Login().logIn(email: jsonMap["email"], password: jsonMap["password"]);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Success"),
-          content: new Text("Account created."),
+          content: new Text("Account created. You are now logged in!"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -162,6 +165,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
       },
     );
+    Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddInterestedCategoryPage()),
+          );
   }
 
   Future<String> apiRequest(String url, Map jsonMap) async {

@@ -119,7 +119,7 @@ class _SearchBarState extends State<SearchBar> {
             fontWeight: FontWeight.bold,
             fontSize: 15,),
               textAlign: TextAlign.left),
-          MultiSelectChip(
+          SingleSelectChip(
             categoryList,
             onSelectionChanged: (selectedChoice) {
               setState(() {
