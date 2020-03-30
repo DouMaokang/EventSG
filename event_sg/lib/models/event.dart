@@ -19,7 +19,6 @@ class Event {
   String category;
   String status;
 
-
   // Event has a ReviewList.
   List<Review> reviewList;
   // Event has a venue.
