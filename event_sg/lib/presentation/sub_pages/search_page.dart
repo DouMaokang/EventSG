@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/blocs.dart';
-import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
-import 'package:event_sg/repositories/event_repository.dart';
-import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
+import 'package:event_sg/repositories/repositories.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_sg/presentation/components/components.dart';
 
-import '../components/components.dart';
 
 class SearchPage extends StatelessWidget {
   final EventRepository eventRepository = EventRepository(
