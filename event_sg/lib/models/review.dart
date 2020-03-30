@@ -13,7 +13,7 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json){
     return Review(
         reviewId: json['reviewId'],
-        reviewerId: json['reviewer'],
+        reviewerId: json['reviewerId'],
         eventId: json['eventId'],
         rating: json['rating'],
         content: json['content']
