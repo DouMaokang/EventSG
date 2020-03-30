@@ -73,29 +73,36 @@ class _SearchBarState extends State<SearchBar> {
       }
     },
     child: new SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: <Widget>[
-              new TextField(
-                  controller: _textController,
-                  autofocus: true,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                    hintText: 'Enter a search term',),
-                  onEditingComplete: () {
-                    this.query = _textController.text;
-                    FocusScope.of(context).unfocus();
-                  }),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: new TextField(
+
+                    controller: _textController,
+                    autofocus: true,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _textController.clear();
+                          }),
+                      hintText: 'Enter a keyword',),
+                    onEditingComplete: () {
+                      this.query = _textController.text;
+                      FocusScope.of(context).unfocus();
+                    }),
+              ),
+              SizedBox(height: 16,),
               _buildSelect("Categories", interestList),
 //              _buildSelect("Distance", distanceList),
               _buildSelect("Date", dateList),
+
               new Container(
-                margin: EdgeInsets.all(2),
+                margin: EdgeInsets.all(16),
                 child: FlatButton(
                   child: Text('Search'),
                   color: Colors.blueAccent,
@@ -110,12 +117,11 @@ class _SearchBarState extends State<SearchBar> {
 
   _buildSelect(String name, List<String> categoryList) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(name, style: TextStyle(
-            color: Colors.grey,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 15,),
               textAlign: TextAlign.left),
@@ -127,7 +133,8 @@ class _SearchBarState extends State<SearchBar> {
                 });
             },
           ),
-          new Divider()
+          new Divider(),
+          SizedBox(height: 4,),
         ],
       ),
     );
