@@ -1,81 +1,113 @@
+import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/presentation/components/components.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+
 
 class Homepage extends StatelessWidget {
+
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
 
   Homepage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Homepage"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add_box),
-              onPressed: () {
-                // navigate to post
-              },
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+            title: Text(
+              "EventSG",
             ),
-          ]
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchPage()),
+                  );
+                },
+              ),
+            ]
+        ),
       ),
       body: new ListView(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: <Widget>[
-          new TextField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search for an event'
+
+
+          Container(
+            decoration: BoxDecoration(color: Colors.cyan[50]),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+              title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Upcoming Events",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    Icon(Icons.event, color: Colors.black, size: 20),
+                  ],
+                ),
+              ),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      "The following events will be happing in 7 days",
+                      style: TextStyle(color: Colors.black),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
+                  )
+                ],
+              ),
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
           ),
-          SizedBox(height: 16,),
-          new RichText(
-              text: TextSpan(
-                  children: [
-                    TextSpan(text: "Upcoming Events",
-                        style: TextStyle(color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22)),
-                    WidgetSpan(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 2.0),
-                          child: Icon(Icons.notifications),
-                        )
-                    )
-                  ]
-              )
-          ),
+
+          SizedBox(height: 6,),
+
           BlocBuilder<EventListBloc, EventListState>(
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-              BlocProvider.of<EventListBloc>(context)
-                  .add(GetAllEvents());
+//              BlocProvider.of<EventListBloc>(context)
+//                  .add(InitializeEventList());
                 return Text("Empty");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.eventList[index]);
-                  },
-                  itemCount: state.eventList.length,
+                return BlocProvider<SingleEventBloc>(
+                  create: (context) => SingleEventBloc(eventRepository: eventRepository),
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, int index) {
+                      return new EventListItem(event: state.upcomingEventList[index], key: UniqueKey(),);
+                    },
+                    itemCount: state.upcomingEventList.length,
+                  ),
                 );
               } else {
                 return Text(
@@ -85,17 +117,55 @@ class Homepage extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 24,),
-          Text("Recommended Events", style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 22)),
+
+          Divider(),
+          Container(
+            decoration: BoxDecoration(color: Colors.cyan[50]),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+              title: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Recommended Events",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    Icon(Icons.face, color: Colors.black, size: 20,),
+                  ],
+                ),
+              ),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      "The following events are recomended for you based on your interests",
+                      style: TextStyle(color: Colors.black),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 6,),
+
           BlocBuilder<EventListBloc, EventListState>(
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
                 BlocProvider.of<EventListBloc>(context)
-                    .add(GetAllEvents());
+                    .add(InitializeEventList());
                 return Text("Hello");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
@@ -105,9 +175,9 @@ class Homepage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.eventList[index]);
+                    return new EventListItem(event: state.recommendedEventList[index], key: UniqueKey(),);
                   },
-                  itemCount: state.eventList.length,
+                  itemCount: state.recommendedEventList.length,
                 );
               } else {
                 return Text(

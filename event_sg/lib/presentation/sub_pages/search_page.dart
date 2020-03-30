@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:event_sg/blocs/search_event.dart';
-import 'package:event_sg/blocs/search_bloc.dart';
+import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:event_sg/api_clients/event_api_client.dart';
@@ -24,10 +23,12 @@ class SearchPage extends StatelessWidget {
       ),
       body: BlocProvider<SearchBloc>(
         create: (contextC) => SearchBloc(eventRepository: eventRepository),
-        child: Column(
-          children: <Widget>[
-            SearchBar(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SearchBar(),
+            ],
+          )
         )
       )
     );
@@ -42,11 +43,11 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
 
   List<String> interestList = ["None", "Cooking", "Art", "Nature",
-    "Volunteer"];
+    "Volunteer", "School"];
   List<String> distanceList = ["None","< 1km", "< 5km"];
   List<String> dateList = ["None","Weekday", "Weekend"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
-  String query;
+  String query = "";
   final _textController = TextEditingController();
   SearchBloc _searchBloc;
 
@@ -64,14 +65,22 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-            children: <Widget>[
+    return BlocListener<SearchBloc, SearchState>(
+    listener: (context, state) {
+      if (state is SearchLoaded) {
+          Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SearchResultPage(eventList: state.eventList)));
+          return null;
+      }
+    },
+    child: new SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
               new TextField(
                   controller: _textController,
                   autofocus: true,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
                     prefixIcon: Icon(Icons.search),
                     suffixIcon: IconButton(
                         icon: Icon(Icons.clear),
@@ -94,18 +103,15 @@ class _SearchBarState extends State<SearchBar> {
                   textColor: Colors.white,
                   onPressed: () {
                       _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchResultPage()));
-                  },
-                ),
-              ),
+                  }))
             ]
-        );
+            )
+    ));
   }
 
   _buildSelect(String name, List<String> categoryList) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

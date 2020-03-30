@@ -1,5 +1,4 @@
 import 'package:event_sg/api_clients/api_clients.dart';
-import 'package:event_sg/blocs/search_bloc.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notification.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
@@ -34,6 +33,10 @@ class EventSG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+      ),
       home: App(),
     );
   }
@@ -47,49 +50,52 @@ class App extends StatefulWidget {
 class _AppState
     extends State<App> {
   final List<Widget> pages = [
-    Homepage(
-      key: PageStorageKey('home'),
 
-    ),
-    PostPage(
-        key: PageStorageKey('post')
-    ),
-    Notifications(
-      key: PageStorageKey('notification'),
-    ),
-    UserAccount(
-        key: PageStorageKey('account')
-    )
+    Homepage(),
+    PostPage(),
+    Notifications(),
+    UserAccount()
+
   ];
 
-  final PageStorageBucket bucket = PageStorageBucket();
 
   int _selectedIndex = 0;
 
-  Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        title: Text('Home'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.add_box),
-        title: Text('Post'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.notifications),
-        title: Text('Notification'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.account_circle),
-        title: Text('Profile'),
-      ),
+  Widget _bottomNavigationBar(int selectedIndex) => SizedBox(
+    child: BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('Home',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_box),
+          title: Text('Post',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          title: Text('Notification',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          title: Text(
+              'Profile',
+            style: TextStyle(fontSize: 13),
+          ),
+        ),
 
-    ],
-    currentIndex: _selectedIndex,
-    selectedItemColor: Colors.amber[800],
-    onTap: _onItemTapped,
-    type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: _onItemTapped,
+      type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
+    ),
   );
 
   void _onItemTapped(int index) {
@@ -115,14 +121,12 @@ class _AppState
           BlocProvider<EventListBloc>(
             create: (contextB) => EventListBloc(eventRepository: eventRepository),
           ),
+          BlocProvider<SearchBloc>(
+            create: (contextC) => SearchBloc(eventRepository: eventRepository),
+          ),
         ],
-        child: PageStorage(
-          child: pages[_selectedIndex],
-          bucket: bucket,
-        ),
+        child: pages[_selectedIndex],
       ),
-
-
     );
   }
 }

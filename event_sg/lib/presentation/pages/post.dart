@@ -27,8 +27,12 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     //PostEventBloc _postEventBloc=PostEventBloc();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Post My Event And Venue"),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          elevation: 1.0,
+          title: Text("Post"),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
