@@ -8,9 +8,9 @@ class Urls {
 
   Urls._internal();
 
-
+  // NTUSecure 10.27.197.142
   // maokang's ip: 192.168.31.72
   // your local ip: 127.0.0.1
-  static const apiUrlBase = "http://192.168.31.72:8080/api";
+  static const apiUrlBase = "http://10.27.197.142:8080/api";
 }
 

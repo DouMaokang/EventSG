@@ -63,7 +63,6 @@ class RegistrationApiClient {
     try {
       final response = await httpClient.get(url);
       bool data = jsonDecode(response.body);
-      print(data);
       if (data) {
         return true;
       } else {

@@ -126,7 +126,6 @@ class EventApiClient {
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
-      print(data);
       List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -135,15 +134,35 @@ class EventApiClient {
     }
   }
 
+  void likeEvent({@required String eventId, @required String userId}) {
+    final url = '$baseUrl/event/save_event/eventId=$eventId/userId=$userId';
+    print(url);
+    try {
+      httpClient.post(url);
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error posting data!');
+    }
+  }
 
-  Future<bool> hasSaved(String eventId, String userId) async {
+  void unlikeEvent({@required String eventId, @required String userId}) {
+    final url = '$baseUrl/event/unsave_event/eventId=$eventId/userId=$userId';
+    try {
+      httpClient.delete(url);
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error posting data!');
+    }
+  }
 
-    final url = '$baseUrl/event/has_saved/$eventId/$userId';
+
+  Future<bool> checkHasLikedEvent(String eventId, String userId) async {
+
+    final url = '$baseUrl/event/has_saved/eventId=$eventId/userId=$userId';
 
     try {
       final response = await httpClient.get(url);
       bool data = jsonDecode(response.body);
-      print(data);
       if (data) {
         return true;
       } else {

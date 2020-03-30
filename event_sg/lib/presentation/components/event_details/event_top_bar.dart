@@ -33,6 +33,9 @@ class _EventTopBarState extends State<EventTopBar> {
 
   @override
   void initState() {
+    print("inside top bar: ${widget.eventId}");
+    print("inside top bar: ${widget.userId}");
+
     _checkHasSaved(eventId: widget.eventId, userId: widget.userId);
     super.initState();
   }
@@ -42,60 +45,56 @@ class _EventTopBarState extends State<EventTopBar> {
   Widget build(BuildContext context) {
 
 
-
-    return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight),
-      child: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: 'Return to previous page',
-          onPressed: () {
-            Navigator.pop(
-              context,
-            );
-          },
-        ),
-        title: Align (
-            alignment: Alignment.centerLeft,
-            child: const Text('Event Details')
-        ),
-        actions: <Widget>[
-          BlocProvider<EventSavedBloc>(
-            create: (context) => EventSavedBloc(eventRepository: eventRepository),
-
-            child: BlocBuilder<EventSavedBloc, EventSavedState>(
-              // ignore: missing_return
-                builder: (context, state) {
-
-                  if (_hasSaved) {
-                    BlocProvider.of<EventSavedBloc>(context).add(EnterWithSave());
-                  }
-
-                  if (state is EventSaved) {
-                    return IconButton(
-                        icon: const Icon(Icons.favorite),
-                        onPressed: () {
-                          BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
-                        }
-                    );
-                  } else {
-                    return IconButton(
-                        icon: const Icon(Icons.favorite_border),
-                        onPressed: () {
-                          BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
-                        }
-                    );
-                  }
-                }
-            ),
-          )
-        ],
+    if (_hasSaved) {
+      BlocProvider.of<EventSavedBloc>(context).add(EnterWithSave());
+      print("_hasSaved: enter with save");
+    }
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        tooltip: 'Return to previous page',
+        onPressed: () {
+          Navigator.pop(
+            context,
+          );
+        },
       ),
+      title: Align (
+          alignment: Alignment.centerLeft,
+          child: const Text('Event Details')
+      ),
+      actions: <Widget>[
+        BlocBuilder<EventSavedBloc, EventSavedState>(
+          // ignore: missing_return
+
+            // ignore: missing_return
+            builder: (context, state) {
+
+
+              if (state is EventNotSaved) {
+                return IconButton(
+                    icon: const Icon(Icons.favorite_border),
+                    onPressed: () {
+                      BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
+                    }
+                );
+              } else if (state is EventSaved) {
+                return IconButton(
+                    icon: const Icon(Icons.favorite),
+                    onPressed: () {
+                      BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
+                    }
+                );
+              }
+            }
+        )
+      ],
     );
   }
 
   _checkHasSaved({String eventId, String userId}) async {
-    bool result = await eventRepository.hasSavedEvent(eventId: eventId, userId: userId);
+    bool result = await eventRepository.checkHasLikedEvent(eventId: eventId, userId: userId);
+    print("checkHasSaved result: ${result.toString()}");
     setState(() {
       _hasSaved = result;
     });
