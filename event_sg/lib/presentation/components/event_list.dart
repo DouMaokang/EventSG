@@ -1,6 +1,7 @@
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/models/models.dart';
+import 'package:event_sg/presentation/sub_pages/add_review.dart';
 import 'package:event_sg/presentation/sub_pages/event_details.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class EventListItem extends StatelessWidget {
                         create: (context) => SingleEventBloc(eventRepository: eventRepository),
                         child: BlocBuilder<SingleEventBloc, SingleEventState>(
                             builder: (context, state) {
-                              return EventDetailsPage(eventId: event.eventId);}
+                              return ReviewAddingPage(eventId: event.eventId);}
                         )
                     )
                 )
