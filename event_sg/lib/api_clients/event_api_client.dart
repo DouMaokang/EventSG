@@ -120,6 +120,21 @@ class EventApiClient {
     }
   }
 
+  /// Returns a list of organized events by a user.
+  Future<List<Event>> getOrganizedEvents({@required String userId}) async {
+    final url = '$baseUrl/event/organizer/$userId';
+    try {
+      final response = await httpClient.get(url);
+      List data = jsonDecode(response.body);
+      print(data);
+      List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
+  }
+
 
   Future<bool> hasSaved(String eventId, String userId) async {
 

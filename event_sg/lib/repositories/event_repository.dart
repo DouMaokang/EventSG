@@ -37,6 +37,9 @@ class EventRepository {
     return eventApiClient.hasSaved(eventId, userId);
   }
 
+  Future<List<Event>> getOrganizedEvents(String userId) async {
+    return eventApiClient.getOrganizedEvents(userId: userId);
+  }
 
 
 }

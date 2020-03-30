@@ -63,10 +63,11 @@ flutter:
         - asset: fonts/Roboto-Regular.ttf
         - asset: fonts/Roboto-Medium.ttf
         - asset: fonts/Roboto-Italic.ttf
-    - family: PlayfairDisplay
-      fonts:
-        - asset: fonts/PlayfairDisplay-VariableFont.ttf
+
   uses-material-design: true
+
+  assets:
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

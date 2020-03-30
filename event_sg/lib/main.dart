@@ -36,7 +36,6 @@ class EventSG extends StatelessWidget {
 
       theme: ThemeData(
         fontFamily: 'Roboto',
-        primaryColor: Colors.teal[400],
       ),
       home: App(),
     );
@@ -64,7 +63,6 @@ class _AppState
 
   Widget _bottomNavigationBar(int selectedIndex) => SizedBox(
     child: BottomNavigationBar(
-      backgroundColor: Colors.cyan[200],
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
