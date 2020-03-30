@@ -3,8 +3,11 @@ import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_event.dart';
 import 'package:event_sg/presentation/sub_pages/post_event2.dart';
 import 'package:event_sg/presentation/sub_pages/post_venue.dart';
+import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../sub_pages/post_venue.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class PostPage extends StatefulWidget {
@@ -17,11 +20,6 @@ class PostPage extends StatefulWidget {
 
 
 class _PostPageState extends State<PostPage> {
-  final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
-  bool _autoValidate=true;
-  bool organizerChanged=false;
-  bool contactChanged=false;
-  bool emailChanged=false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,7 @@ class _PostPageState extends State<PostPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>VenuePost()),
+                    MaterialPageRoute(builder: (context)=>VenuePostingPage()),
                   );
                 },
                 color: Colors.purple,

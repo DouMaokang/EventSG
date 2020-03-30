@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 // TODO: connect with the modified API
 /// An network API client to fetch event data from app backend services.
 class EventApiClient {
+
   static const baseUrl = Urls.apiUrlBase;
+
   final http.Client httpClient;
 
   EventApiClient({
@@ -126,7 +128,6 @@ class EventApiClient {
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
-      print(data);
       List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -135,15 +136,35 @@ class EventApiClient {
     }
   }
 
+  void likeEvent({@required String eventId, @required String userId}) {
+    final url = '$baseUrl/event/save_event/eventId=$eventId/userId=$userId';
+    print(url);
+    try {
+      httpClient.post(url);
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error posting data!');
+    }
+  }
 
-  Future<bool> hasSaved(String eventId, String userId) async {
+  void unlikeEvent({@required String eventId, @required String userId}) {
+    final url = '$baseUrl/event/unsave_event/eventId=$eventId/userId=$userId';
+    try {
+      httpClient.delete(url);
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error posting data!');
+    }
+  }
 
-    final url = '$baseUrl/event/has_saved/$eventId/$userId';
+
+  Future<bool> checkHasLikedEvent(String eventId, String userId) async {
+
+    final url = '$baseUrl/event/has_saved/eventId=$eventId/userId=$userId';
 
     try {
       final response = await httpClient.get(url);
       bool data = jsonDecode(response.body);
-      print(data);
       if (data) {
         return true;
       } else {
@@ -152,6 +173,37 @@ class EventApiClient {
     } catch (e) {
       print('Caught error: $e');
       throw Exception('error getting data!');
+    }
+  }
+
+  Future<bool> postEvent(Event event) async {
+    final url = '$baseUrl/event/add';
+    print('post was called in api');
+
+    try {
+      final response = await httpClient.post(url,body: jsonEncode(event.toJson()));
+      bool data = jsonDecode(response.body);
+      print(data);
+      if (data) return true;
+      else return false;
+    } catch(e) {
+      print('Caught error: $e');
+      throw Exception('error posting event!');
+    }
+  }
+
+  Future<bool> saveDraftEvent(Event event) async {
+    final url = '$baseUrl/event/add-draft';
+    print('save was called in api');
+    try {
+      final response = await httpClient.post(url,body: jsonEncode(event.toJson()));
+      bool data = jsonDecode(response.body);
+      print(data);
+      if (data) return true;
+      else return false;
+    } catch(e) {
+      print('Caught error: $e');
+      throw Exception('error saving event!');
     }
   }
 
