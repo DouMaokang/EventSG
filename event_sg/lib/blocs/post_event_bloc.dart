@@ -19,20 +19,6 @@ class PostEventBloc {
   //bool nameValidation,dateValidation,startValidation,endValidation;
   //bool locationValidation;
 
-    /*
-  PostEventBloc() {
-    //organizer.onChange(checkForm);
-    //organizerValidation=false;
-    //contactValidation=false;
-    //emailValidation=false;
-    nameValidation=false;
-    dateValidation=false;
-    startValidation=false;
-    endValidation=false;
-    locationValidation=false;
-  }
-   */
-
   void setName(text) {if (text.length==0) text=null;name=text;}
   void setEventDescription(text) {eventDescription=text;}
   void setDate(text) {date=text;}
@@ -64,13 +50,6 @@ class PostEventBloc {
    */
 
   bool check() {
-    /*
-    locationValidation=true;
-    if (nameValidation && dateValidation && startValidation && endValidation) {
-      print ('good');
-      return true;
-    }
-     */
     print('name $name');
     print('date $date');
     print('start $start');
