@@ -43,7 +43,7 @@ class EventListItem extends StatelessWidget {
                         create: (context) => SingleEventBloc(eventRepository: eventRepository),
                         child: BlocBuilder<SingleEventBloc, SingleEventState>(
                             builder: (context, state) {
-                              return EventFeedbackPage(eventId: event.eventId);}
+                              return EventDetailsPage(eventId: event.eventId);}
                         )
                     )
                 )

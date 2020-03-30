@@ -77,7 +77,7 @@ class Homepage extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      "The following events will be happing in 7 days",
+                      "The following events will be happening in 7 days",
                       style: TextStyle(color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -95,9 +95,12 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-//              BlocProvider.of<EventListBloc>(context)
-//                  .add(InitializeEventList());
-                return Text("Empty");
+                return Center(
+                  child: Text(
+                    'Events not loaded!',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                );
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
@@ -114,9 +117,11 @@ class Homepage extends StatelessWidget {
                   ),
                 );
               } else {
-                return Text(
-                  'Something went wrong!',
-                  style: TextStyle(color: Colors.red),
+                return Center(
+                  child: Text(
+                    'Something went wrong!',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 );
               }
             },
@@ -168,7 +173,15 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-                return Text("Hello");
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Events not loaded!',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
@@ -182,9 +195,14 @@ class Homepage extends StatelessWidget {
                   itemCount: state.recommendedEventList.length,
                 );
               } else {
-                return Text(
-                  'Something went wrong!',
-                  style: TextStyle(color: Colors.red),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      'Something went wrong!',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
                 );
               }
             },
