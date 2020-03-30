@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class EventPostSecond extends StatefulWidget {
@@ -16,6 +18,8 @@ class EventPostSecond extends StatefulWidget {
 class _EventPostSecondState extends State<EventPostSecond> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
 
+
+
   bool nameChanged=false;
   bool dateChanged=false;
   bool startChanged=false;
@@ -27,11 +31,14 @@ class _EventPostSecondState extends State<EventPostSecond> {
   bool postalState=true;
 
   bool postClicked=false;
-  bool postColor=postEventBloc.check();
+  bool postColor=false;
   bool venueColor=true;
+
+  PostEventBloc postEventBloc=new PostEventBloc();
 
   @override
   Widget build(BuildContext context) {
+
 
     if (postEventBloc.check()) setState(() {postColor=true;});
     var _chooseVenue = () {};
@@ -145,8 +152,8 @@ class _EventPostSecondState extends State<EventPostSecond> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
 
-                        Container(
-                          width: 175,
+                        Expanded(
+                          //width: 175,
                           //height: 48,
                           child: DateTimeField(
                             onChanged: (text) {startChanged=true;postEventBloc.setStart(text);if (postEventBloc.check()) setState(() {postColor=true;});
@@ -176,8 +183,8 @@ class _EventPostSecondState extends State<EventPostSecond> {
                           ),
                         ),
 
-                        Container(
-                          width: 175,
+                        Expanded(
+                          //width: 175,
                           //height: 48,
                           child: DateTimeField(
                             onChanged: (text) {endChanged=true;postEventBloc.setEnd(text);if (postEventBloc.check()) setState(() {postColor=true;});
@@ -352,7 +359,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                     child: Container(
                       height: 120,
                       child: TextField(
-                        onChanged: (text) {postEventBloc.setEventDescription(text);},
+                        onChanged: (text) {postEventBloc.setDescription(text);},
                         textAlignVertical: TextAlignVertical.center,
                         //keyboardType: TextInputType.multiline,
                         maxLines: 8,
@@ -420,10 +427,7 @@ class _EventPostSecondState extends State<EventPostSecond> {
                                 ),
                               ),
                               onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  _formKey.currentState.save();
-                                  //Save
-                                }
+                                postEventBloc.save();
                               },
                               color: Colors.green,
                               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
