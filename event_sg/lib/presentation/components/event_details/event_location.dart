@@ -62,7 +62,7 @@ class _EventLocationState extends State<EventLocation> {
                   Marker(
                     markerId: MarkerId("1"),
                     infoWindow: InfoWindow(
-                        title: widget.venueName,
+                        title: "",
                         snippet: widget.venueAddress,
                         onTap: () {
                           _launchGoogleMapPlace();

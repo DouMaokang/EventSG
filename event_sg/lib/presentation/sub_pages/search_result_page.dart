@@ -22,27 +22,90 @@ class SearchResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (eventList == null || eventList.length == 0){
       return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text("Search Results"),
           ),
-          body: Center(child: Text("No results"))
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.error_outline, size: 46,),
+                SizedBox(height: 24,),
+                Text(
+                    "Sorry, We didn't find any events",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18
+                    ),
+                  ),
+
+              ],
+            ),
+          )
       );
     } else{
       return BlocProvider<SingleEventBloc>(
           create: (context) => SingleEventBloc(eventRepository: eventRepository),
           child: Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
-                title: Text("Search Results"),
+                title: Text("Search"),
               ),
-              body: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  itemCount: eventList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return EventListItem(
-                      event: eventList[index],
-                    );
-                  })
-        ));
-      }
+              body: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(color: Colors.cyan[50]),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+                      title: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Search Results",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                              ),
+                            ),
+                            SizedBox(width: 6,),
+                            Icon(Icons.widgets, color: Colors.black, size: 20),
+                          ],
+                        ),
+                      ),
+
+                      subtitle: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "We have found ${eventList.length} related events for you",
+                              style: TextStyle(color: Colors.black),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8,),
+                  ListView.builder(
+                      itemCount: eventList.length,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return EventListItem(
+                          event: eventList[index],
+                        );
+                      }),
+                ],
+              )
+          ));
     }
+  }
 }
