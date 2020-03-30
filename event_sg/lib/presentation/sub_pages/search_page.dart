@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/blocs.dart';
-import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
-import 'package:event_sg/repositories/event_repository.dart';
-import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
+import 'package:event_sg/repositories/repositories.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_sg/presentation/components/components.dart';
 
-import '../components/components.dart';
 
 class SearchPage extends StatelessWidget {
   final EventRepository eventRepository = EventRepository(
@@ -44,8 +43,8 @@ class _SearchBarState extends State<SearchBar> {
 
   List<String> interestList = ["None", "Cooking", "Art", "Nature",
     "Volunteer", "School"];
-  List<String> distanceList = ["None","< 1km", "< 5km"];
-  List<String> dateList = ["None","Weekday", "Weekend"];
+//  List<String> distanceList = ["None","< 1km", "< 5km"];
+  List<String> dateList = ["None","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
   String query = "";
   final _textController = TextEditingController();
@@ -93,7 +92,7 @@ class _SearchBarState extends State<SearchBar> {
                     FocusScope.of(context).unfocus();
                   }),
               _buildSelect("Categories", interestList),
-              _buildSelect("Distance", distanceList),
+//              _buildSelect("Distance", distanceList),
               _buildSelect("Date", dateList),
               new Container(
                 margin: EdgeInsets.all(2),
@@ -120,7 +119,7 @@ class _SearchBarState extends State<SearchBar> {
             fontWeight: FontWeight.bold,
             fontSize: 15,),
               textAlign: TextAlign.left),
-          MultiSelectChip(
+          SingleSelectChip(
             categoryList,
             onSelectionChanged: (selectedChoice) {
               setState(() {
