@@ -51,7 +51,7 @@ class Homepage extends StatelessWidget {
 
 
           Container(
-            decoration: BoxDecoration(color: Colors.cyan[50]),
+            decoration: BoxDecoration(color: Colors.blue[50]),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
@@ -129,7 +129,7 @@ class Homepage extends StatelessWidget {
 
           Divider(),
           Container(
-            decoration: BoxDecoration(color: Colors.cyan[50]),
+            decoration: BoxDecoration(color: Colors.blue[50]),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 

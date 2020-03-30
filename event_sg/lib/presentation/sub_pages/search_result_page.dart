@@ -56,7 +56,7 @@ class SearchResultPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(color: Colors.cyan[50]),
+                    decoration: BoxDecoration(color: Colors.blue[50]),
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
