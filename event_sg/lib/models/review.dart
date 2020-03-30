@@ -1,7 +1,9 @@
+import 'package:event_sg/models/models.dart';
+
 class Review {
   String reviewId;
   String reviewerId;
-  String eventId;
+  String eventId; // there is already a review list in event!
   double rating;
   String content;
 
@@ -11,10 +13,10 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json){
     return Review(
         reviewId: json['reviewId'],
-        reviewerId: json['reviewerId'],
+        reviewerId: json['reviewer'],
         eventId: json['eventId'],
         rating: json['rating'],
-        content: json['rating']
+        content: json['content']
     );
   }
 }

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class RegistrationApiClient {
   // maokang's ip: 192.168.31.72
   // your local ip: 127.0.0.1
-  static const baseUrl = 'http://192.168.31.72:8080/api';
+  static const baseUrl = 'http://127.0.0.1:8080/api';
   final http.Client httpClient;
 
   RegistrationApiClient({
