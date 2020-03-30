@@ -44,8 +44,8 @@ class _SearchBarState extends State<SearchBar> {
 
   List<String> interestList = ["None", "Cooking", "Art", "Nature",
     "Volunteer", "School"];
-  List<String> distanceList = ["None","< 1km", "< 5km"];
-  List<String> dateList = ["None","Weekday", "Weekend"];
+//  List<String> distanceList = ["None","< 1km", "< 5km"];
+  List<String> dateList = ["None","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
   String query = "";
   final _textController = TextEditingController();
@@ -93,7 +93,7 @@ class _SearchBarState extends State<SearchBar> {
                     FocusScope.of(context).unfocus();
                   }),
               _buildSelect("Categories", interestList),
-              _buildSelect("Distance", distanceList),
+//              _buildSelect("Distance", distanceList),
               _buildSelect("Date", dateList),
               new Container(
                 margin: EdgeInsets.all(2),
