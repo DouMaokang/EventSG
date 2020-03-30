@@ -36,7 +36,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         if(filters["Categories"] != "" && filters["Categories"] != "None")
           queriedEvents = queriedEvents.where((i) => (i.category == filters["Categories"])).toList();
         //  if distance filter is set:
-        //TODO distance filter
+
+        if(filters["Date"] != "" && filters["Date"] != "None")
+          {
+            Map<String, int> dayToNum = {"Monday":1, "Tuesday":2, "Wednesday":3,
+                            "Thursday":4, "Friday":5, "Saturday":6, "Sunday":7};
+            queriedEvents = queriedEvents.where((i) => (i.startTime.weekday == dayToNum[filters["Date"]])).toList();
+          }
 
         print(queriedEvents);
         yield SearchLoaded(eventList:queriedEvents);

@@ -3,6 +3,7 @@ import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_event.dart';
 import 'package:event_sg/presentation/sub_pages/post_event2.dart';
 import 'package:event_sg/presentation/sub_pages/post_venue.dart';
+import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,18 +20,17 @@ class PostPage extends StatefulWidget {
 
 
 class _PostPageState extends State<PostPage> {
-  final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
-  bool _autoValidate=true;
-  bool organizerChanged=false;
-  bool contactChanged=false;
-  bool emailChanged=false;
 
   @override
   Widget build(BuildContext context) {
     //PostEventBloc _postEventBloc=PostEventBloc();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Post My Event And Venue"),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          elevation: 1.0,
+          title: Text("Post"),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -49,7 +49,7 @@ class _PostPageState extends State<PostPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>EventPost()),
+                    MaterialPageRoute(builder: (context)=>EventPostSecond()),
                   );
                 },
                 color: Colors.green,

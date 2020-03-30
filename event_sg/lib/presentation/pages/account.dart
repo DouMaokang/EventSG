@@ -18,19 +18,22 @@ class _UserAccountState extends State<UserAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Align (
-            alignment: Alignment.centerLeft,
-            child: const Text('Profile Page')
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Align (
+              alignment: Alignment.center,
+              child: const Text('Profile')
+          ),
+          /*  actions: <Widget>[
+           IconButton(
+             icon: const Icon(Icons.turned_in_not),
+             tooltip: 'Show saved events',
+             onPressed: () {
+             },
+           ),
+         ], */
         ),
-        /*  actions: <Widget>[
-         IconButton(
-           icon: const Icon(Icons.turned_in_not),
-           tooltip: 'Show saved events',
-           onPressed: () {
-           },
-         ),
-       ], */
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -66,19 +69,8 @@ class _UserAccountState extends State<UserAccount> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    SizedBox(height: 16,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0,),
-                      child: Align(
-                        child: Text(
-                          " Edit/View Profile",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-
-                        ),
-                        alignment: Alignment.topLeft,
-                      ),
-                    ),
-                    SizedBox(height: 6,),
+                    SizedBox(height: 4,),
+                    Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Personal Information'),

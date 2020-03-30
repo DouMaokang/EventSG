@@ -31,18 +31,21 @@ class NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Notifications'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-                BlocProvider.of<EventListBloc>(context)
-                    .add(GetAllEvents());
-            },
-          )
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text('Notifications'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () async {
+                  BlocProvider.of<EventListBloc>(context)
+                      .add(InitializeEventList());
+              },
+            )
 
-        ],
+          ],
+        ),
       ),
       // body: _buildSuggestions(),
 
@@ -54,10 +57,10 @@ class NotificationsState extends State<Notifications> {
               return ListView.builder(
                 itemBuilder: (context, int index) {
                   return new ListTile(
-                    title: new Text('${state.eventList[index].title}'),
+                    title: new Text('${state.recommendedEventList[index].title}'),
                   );
                 },
-                itemCount: state.eventList.length,
+                itemCount: state.recommendedEventList.length,
               );
             } else {
               return Text("GetAllEvents() Failed");
