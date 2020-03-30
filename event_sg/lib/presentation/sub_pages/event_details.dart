@@ -92,6 +92,8 @@ class EventDetailsPage extends StatelessWidget {
                 )
             ),
             body: RefreshIndicator(
+              backgroundColor: Colors.blue,
+              color: Colors.white,
               // ignore: missing_return
               onRefresh: () {
                 singleEventBloc.add(

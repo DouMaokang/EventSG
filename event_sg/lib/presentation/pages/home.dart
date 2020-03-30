@@ -21,13 +21,19 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    BlocProvider.of<EventListBloc>(context)
-        .add(InitializeEventList());
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(44.0),
         child: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+
+                BlocProvider.of<EventListBloc>(context)
+                    .add(InitializeEventList());
+
+            },
+          ),
             title: Text(
               "EventSG",
             ),
@@ -44,7 +50,7 @@ class Homepage extends StatelessWidget {
             ]
         ),
       ),
-      body: new ListView(
+      body: ListView(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -96,6 +102,8 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
+                BlocProvider.of<EventListBloc>(context)
+                    .add(InitializeEventList());
                 return Center(
                   child: Text(
                     'Events not loaded!',
