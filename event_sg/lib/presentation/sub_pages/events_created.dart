@@ -93,7 +93,7 @@ class _EventsCreatedState extends State<EventsCreated> {
                     ),
                     new InkWell(onTap:(){
                         Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => FeedbackView())
+                          context, MaterialPageRoute(builder: (context) => EventFeedbackPage()) // todo pass in current eventid here
                         );
                     },
                       child: new Container(

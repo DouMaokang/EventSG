@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:event_sg/models/models.dart';
 
 class Venue {
 
   String venueId;
   String address;
   int postalCode;
-  String ownerId;
+  User ownerId;
   double rentalFee;
   double area;
   String description;
@@ -19,7 +20,7 @@ class Venue {
         venueId: json['venueId'],
         address: json['address'],
         postalCode: json['postalCode'],
-        ownerId: json['ownerId'],
+        ownerId: json['owner'],
         rentalFee: json['rentalFee'],
         area: json['area'],
         description: json['description'],
