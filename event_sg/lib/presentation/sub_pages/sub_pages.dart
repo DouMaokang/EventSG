@@ -8,3 +8,5 @@ export 'search_page.dart';
 export 'search_result_page.dart';
 export 'user_details.dart';
 export 'venues_listed.dart';
+export 'user_registration_page.dart';
+export 'user_add_interested_categories.dart';

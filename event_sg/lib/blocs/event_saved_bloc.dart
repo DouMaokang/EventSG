@@ -18,11 +18,13 @@ class EventSavedBloc extends Bloc<EventSavedEvent, EventSavedState> {
     EventSavedEvent event,
   ) async* {
     if (event is SaveEvent) {
+      eventRepository.likeEvent(eventId: event.eventId, userId: event.userId);
       yield EventSaved();
+    } else if (event is UnSaveEvent) {
+      eventRepository.unlikeEvent(eventId: event.eventId, userId: event.userId);
+      yield EventNotSaved();
     } else if (event is EnterWithSave) {
       yield EventSaved();
-    } else {
-      yield EventNotSaved();
     }
   }
 }

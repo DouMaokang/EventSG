@@ -24,6 +24,12 @@ class EventDetailsPage extends StatelessWidget {
     registrationApiClient: RegistrationApiClient(httpClient: http.Client()),
   );
 
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
+
+
   final String eventId;
 
 
@@ -56,9 +62,13 @@ class EventDetailsPage extends StatelessWidget {
           return Scaffold(
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(44.0),
-                child: EventTopBar(
-                    eventId: eventId,
-                    userId: "3b41e41f-1b4b-4708-98ec-28145d2c4e6a")
+                child: BlocProvider<EventSavedBloc>(
+                    create: (context) => EventSavedBloc(eventRepository: eventRepository),
+                  child: EventTopBar(
+                      eventId: eventId,
+                      userId: Login().getUserId(),
+                  ),
+                )
             ),
             body: SingleChildScrollView(
               child: Center(
