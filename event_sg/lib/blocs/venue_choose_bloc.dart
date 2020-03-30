@@ -16,7 +16,7 @@ class VenueChooseBloc {
   Future<List<Venue>> getAllVenues() async {
     //return await venueRepository.getAllVenues();
     List<Venue> venues=List<Venue>();
-    venues.add(Venue(venueId:'1',address:'It has a long long address.',postalCode: 111111,ownerId:'0',rentalFee: 10,area:100,description: 'Very Good Description!!!',venueName: 'NTU'));
+    venues.add(Venue(venueId:'1',address:'It has a long long address.',postalCode: 111111,rentalFee: 10,area:100,description: 'Very Good Description!!!',venueName: 'NTU'));
     print(venues[0].venueName);
     return Future.delayed(Duration(seconds: 1), () => venues);
   }
