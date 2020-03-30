@@ -6,6 +6,8 @@ import 'package:event_sg/repositories/repositories.dart';
 import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_sg/presentation/components/components.dart';
+import 'package:event_sg/globals/event_categories.dart';
+
 
 
 class SearchPage extends StatelessWidget {
@@ -41,10 +43,9 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
 
-  List<String> interestList = ["None", "Cooking", "Art", "Nature",
-    "Volunteer", "School"];
+  List<String> interestList = List();
 //  List<String> distanceList = ["None","< 1km", "< 5km"];
-  List<String> dateList = ["None","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  List<String> dateList = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday","None"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
   String query = "";
   final _textController = TextEditingController();
@@ -54,6 +55,9 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     super.initState();
     _searchBloc = BlocProvider.of<SearchBloc>(context);
+    EventCategories.eventCategories.forEach((element) => interestList.add(element));
+    interestList.add("None");
+
   }
 
   @override
@@ -84,7 +88,7 @@ class _SearchBarState extends State<SearchBar> {
                     suffixIcon: IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () {
-                          Navigator.pop(context);
+                         _textController.clear();
                         }),
                     hintText: 'Enter a search term',),
                   onEditingComplete: () {
