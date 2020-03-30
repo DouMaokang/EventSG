@@ -174,6 +174,37 @@ class EventApiClient {
     }
   }
 
+  Future<bool> postEvent(Event event) async {
+    final url = '$baseUrl/event/add';
+    print('post was called in api');
+
+    try {
+      final response = await httpClient.post(url,body: jsonEncode(event.toJson()));
+      bool data = jsonDecode(response.body);
+      print(data);
+      if (data) return true;
+      else return false;
+    } catch(e) {
+      print('Caught error: $e');
+      throw Exception('error posting event!');
+    }
+  }
+
+  Future<bool> saveDraftEvent(Event event) async {
+    final url = '$baseUrl/event/add-draft';
+    print('save was called in api');
+    try {
+      final response = await httpClient.post(url,body: jsonEncode(event.toJson()));
+      bool data = jsonDecode(response.body);
+      print(data);
+      if (data) return true;
+      else return false;
+    } catch(e) {
+      print('Caught error: $e');
+      throw Exception('error saving event!');
+    }
+  }
+
 }
 
 

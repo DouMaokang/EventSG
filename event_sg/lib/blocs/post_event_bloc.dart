@@ -1,3 +1,12 @@
+import 'dart:math';
+
+import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/models/event.dart';
+import 'package:event_sg/models/venue.dart';
+import 'package:event_sg/repositories/event_repository.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 import 'package:frideos/frideos.dart';
 import 'package:intl/intl.dart';
 
@@ -14,27 +23,19 @@ class PostEventBloc {
   bool emailValidation;
    */
 
-  String name,eventDescription,maxCapacity,address,postal;
+  EventRepository eventRepository = EventRepository(
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
+
+
+  String name,description,maxCapacity,address,postal;
   DateTime date,start,end,ddl;
+  Venue venue;
   //bool nameValidation,dateValidation,startValidation,endValidation;
   //bool locationValidation;
 
-    /*
-  PostEventBloc() {
-    //organizer.onChange(checkForm);
-    //organizerValidation=false;
-    //contactValidation=false;
-    //emailValidation=false;
-    nameValidation=false;
-    dateValidation=false;
-    startValidation=false;
-    endValidation=false;
-    locationValidation=false;
-  }
-   */
-
   void setName(text) {if (text.length==0) text=null;name=text;}
-  void setEventDescription(text) {eventDescription=text;}
+  void setDescription(text) {description=text;}
   void setDate(text) {date=text;}
   void setStart(text) {start=text;}
   void setEnd(text) {end=text;}
@@ -64,13 +65,6 @@ class PostEventBloc {
    */
 
   bool check() {
-    /*
-    locationValidation=true;
-    if (nameValidation && dateValidation && startValidation && endValidation) {
-      print ('good');
-      return true;
-    }
-     */
     print('name $name');
     print('date $date');
     print('start $start');
@@ -87,13 +81,35 @@ class PostEventBloc {
   }
 
   void post() {
-    check();
-    print('good');
+    if (check()) {
+      Event event = Event(
+          title:name,
+          description: description,
+          capacity: maxCapacity==null? 0:int.parse(maxCapacity),
+          registrationDeadline:ddl,
+          startTime: DateTime(date.year,date.month,date.day,start.hour,start.minute),
+          endTime: DateTime(date.year,date.month,date.day,end.hour,end.minute),
+          venue: venue,
+          status: 'posted',
+          organizerId: Login().getUserId());
+      eventRepository.postEvent(event);
+    }
+  }
+  void save() {
+    Event event = Event(
+        title:name,
+        description: description,
+        capacity: maxCapacity==null? 0:int.parse(maxCapacity),
+        registrationDeadline:ddl,
+        startTime: (date!=null && start!=null)?DateTime(date.year,date.month,date.day,start.hour,start.minute):null,
+        endTime: (date!=null && end!=null)?DateTime(date.year,date.month,date.day,end.hour,end.minute):null,
+        venue: venue,
+        organizerId: Login().getUserId());
+    eventRepository.saveDraftEvent(event);
   }
 
   void dispose() {}
 }
-final postEventBloc = PostEventBloc();
 /*
 import 'package:bloc/bloc.dart';
 import 'package:event_sg/blocs/post_event_event.dart';

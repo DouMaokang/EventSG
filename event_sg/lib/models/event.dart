@@ -69,4 +69,18 @@ class Event {
       organizer: User.fromJson(json['organizer']),
     );
   }
+
+  Map<String,dynamic> toJson() => {
+    'title':title,
+    'eventId':eventId,
+    'organizerId':organizerId,
+    'description':description,
+    'startTime':startTime.toString(),
+    'endTime':endTime.toString(),
+    'registrationDeadline':registrationDeadline.toString(),
+    'capacity':capacity,
+    'category':category,
+    'status':status,
+    'venue':(venue==null)?null:venue.toJson(),
+  };
 }

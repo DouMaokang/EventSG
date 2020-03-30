@@ -49,6 +49,13 @@ class EventRepository {
   Future<List<Event>> getOrganizedEvents(String userId) async {
     return eventApiClient.getOrganizedEvents(userId: userId);
   }
+  
+  Future<bool> postEvent(Event event) async {
+    return eventApiClient.postEvent(event);
+  }
 
+  Future<bool> saveDraftEvent(Event event) async {
+    return eventApiClient.saveDraftEvent(event);
+  }
 
 }
