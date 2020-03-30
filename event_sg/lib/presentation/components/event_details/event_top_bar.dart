@@ -110,7 +110,7 @@ class _EventTopBarState extends State<EventTopBar> {
                     return IconButton(
                         icon: const Icon(Icons.favorite_border),
                         onPressed: () {
-                          Toast.show("Event saved!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP);
+                          Toast.show("Event saved!", context, duration: Toast.LENGTH_SHORT, gravity: 1);
                           BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
                         }
                     );
@@ -120,32 +120,6 @@ class _EventTopBarState extends State<EventTopBar> {
           )
         ],
       ),
-      actions: <Widget>[
-        BlocBuilder<EventSavedBloc, EventSavedState>(
-          // ignore: missing_return
-
-            // ignore: missing_return
-            builder: (context, state) {
-
-
-              if (state is EventNotSaved) {
-                return IconButton(
-                    icon: const Icon(Icons.favorite_border),
-                    onPressed: () {
-                      BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
-                    }
-                );
-              } else if (state is EventSaved) {
-                return IconButton(
-                    icon: const Icon(Icons.favorite),
-                    onPressed: () {
-                      BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
-                    }
-                );
-              }
-            }
-        )
-      ],
     );
   }
 
