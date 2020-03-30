@@ -19,6 +19,10 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    BlocProvider.of<EventListBloc>(context)
+        .add(InitializeEventList());
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(44.0),
@@ -164,8 +168,6 @@ class Homepage extends StatelessWidget {
             // ignore: missing_return
             builder: (context, state) {
               if (state is EventListEmpty) {
-                BlocProvider.of<EventListBloc>(context)
-                    .add(InitializeEventList());
                 return Text("Hello");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());

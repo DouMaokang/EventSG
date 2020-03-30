@@ -7,6 +7,8 @@ import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../sub_pages/post_venue.dart';
+
 /// This is the stateful widget that the main application instantiates.
 class PostPage extends StatefulWidget {
   const PostPage({Key key}) : super(key: key);
@@ -66,7 +68,7 @@ class _PostPageState extends State<PostPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>VenuePost()),
+                    MaterialPageRoute(builder: (context)=>VenuePostingPage()),
                   );
                 },
                 color: Colors.purple,

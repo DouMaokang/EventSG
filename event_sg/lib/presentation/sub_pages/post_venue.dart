@@ -1,277 +1,250 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:event_sg/blocs/post_event_bloc.dart';
-import 'package:event_sg/presentation/sub_pages/post_event2.dart';
+import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
 
-/// This is the stateful widget that the main application instantiates.
-class VenuePost extends StatefulWidget {
-  const VenuePost({Key key}) : super(key: key);
-
-
-  @override
-  _VenuePostState createState() => _VenuePostState();
+void main(){
+  runApp(VenuePostingPage());
 }
 
-
-class _VenuePostState extends State<VenuePost> {
-  final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
-  bool _autoValidate=true;
-  bool organizerChanged=false;
-  bool contactChanged=false;
-  bool emailChanged=false;
-
-  final organizerController=TextEditingController();
-  final organizationController=TextEditingController();
-  final descriptionController=TextEditingController();
-  final contactController=TextEditingController();
-  final emailController=TextEditingController();
+class VenuePostingPage extends StatefulWidget {
+  const VenuePostingPage({Key key}) : super(key: key);
 
   @override
-  // ignore: must_call_super
-  void dispose() {
-    super.dispose();
-    organizationController.dispose();
-    organizerController.dispose();
-    descriptionController.dispose();
-    contactController.dispose();
-    emailController.dispose();
-  }
+  _VenuePostingPageState createState() => _VenuePostingPageState();
+}
+
+class _VenuePostingPageState extends State<VenuePostingPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Map jsonMap = {
+    "address": "",
+    "postalCode": "",
+    "ownerId": Login().getUserId(),  // todo get currently logged in user
+    "rentalFee": "",
+    "area": "",
+    "description": "",
+    "venueName": ""
+  };
 
   @override
   Widget build(BuildContext context) {
-    //PostEventBloc _postEventBloc=PostEventBloc();
-    return Scaffold(
-      appBar: AppBar(
-        title: Align (
-            alignment: Alignment(-0.25,0.0),
-            child: const Text('Post a Venue')
-        ),
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+          appBar: AppBar(title: Text("Post a Venue")),
+          body: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            children: <Widget>[
+              venueNameInput(),
+              const SizedBox(height: 16.0),
+              addressInput(),
+              const SizedBox(height: 16.0),
+              postalCodeInput(),
+              const SizedBox(height: 16.0),
+              rentalFeeInput(),
+              const SizedBox(height: 16.0),
+              areaInput(),
+              const SizedBox(height: 16.0),
+              descriptionInput(),
+              const SizedBox(height: 16.0),
 
-      ),
-      /*
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            autovalidate: _autoValidate,
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 28,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    width: double.infinity,
-                    child: Text(
-                      "1. Organization Information",
-                      //textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  OutlineButton(
+                    highlightedBorderColor: Colors.black,
+                    onPressed:  _submit,
+                    child: const Text('Post'),
                   ),
-                ),
-                SizedBox(height: 24,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextFormField(
-                      controller: organizerController,
-                      onChanged: (text) {organizerChanged=true;postEventBloc.setOrganizer(text);},
-                      validator: (value) {
-                        if (!organizerChanged) {postEventBloc.validateOrganizer(false);return null;}
-                        if (value.length==0) {postEventBloc.validateOrganizer(false);return 'Organizer is mandatory';}
-                        postEventBloc.validateOrganizer(true);return null;
-                      },
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        //border: OutlineInputBorder(),
-                        hintText: 'Organizer (*)',
-                        labelText: 'Organizer (*)',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextField(
-                      controller: organizationController,
-                      onChanged: (text) {postEventBloc.setOrganization(text);},
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        //border: OutlineInputBorder(),
-                        hintText: 'Organization Name',
-                        labelText: 'Organization Name',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextFormField(
-                      controller: contactController,
-                      onChanged: (text) {contactChanged=true;postEventBloc.setContact(text);},
-                      validator: (value) {
-                        if (!contactChanged) {postEventBloc.validateContact(false);return null;}
-                        if (value.length==0) {postEventBloc.validateContact(false);return 'Contact Number is mandatory';}
-                        Pattern pattern = r'[8-9]\d{7}';
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(value)) {postEventBloc.validateContact(false);return 'Invalid Singapore mobile number';}
-                        postEventBloc.validateContact(true); return null;
-                      },
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        //border: OutlineInputBorder(),
-                        hintText: 'Contact Number (*)',
-                        labelText: 'Contact Number (*)',
-                        //errorText: validateContact(contactController.text),
+                ],
+              ),
+            ],
+          )),
+    );
+  }
 
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    //height: 48,
-                    child: TextFormField(
-                      controller: emailController,
-                      onChanged: (text) {emailChanged=true;postEventBloc.setDescription(text);},
-                      validator: (value) {
-                        if (!emailChanged) {postEventBloc.validateEmail(false);return null;}
-                        if (value.length==0) {postEventBloc.validateEmail(false);return 'Email Address is mandatory';}
-                        Pattern pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(value)) {postEventBloc.validateEmail(false);return 'Invalid email address';}
-                        postEventBloc.validateEmail(true);return null;
-                      },
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        //border: OutlineInputBorder(),
-                        hintText: 'Email Address (*)',
-                        labelText: 'Email Address (*)',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    //height: 120,
-                    child: TextField(
-                      //keyboardType: TextInputType.multiline,
-                      controller: descriptionController,
-                      onChanged: (text) {postEventBloc.setDescription(text);},
-                      maxLines: 6,
-                      obscureText:false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(),
-                        hintText: 'Organization Descripton',
-                        labelText: 'Organization Descripton',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20,),
+  void _submit() async {
+    print(jsonMap);
+    if(_formKey.currentState.validate()){
+      String url ='http://127.0.0.1:8080/api/venue/add';
+      String response = await apiRequest(url, jsonMap);
+      if(response!="")
+        _showDialog();
+      else
+        _showSuccessDialog();
+//        else
+//          Navigator.push(
+//            context,
+//            MaterialPageRoute(builder: (context) => Homepage()),
+//          );
+    }
+  }
 
-
-                SizedBox(height: 8,),
-                Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "( All * entries are mandatory )",
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height:40,),
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.lightBlue,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            ButtonBar(
-                children: [
-                  FlatButton(
-                    child: Text(
-                      " Save ",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        //Save
-                      }
-                    },
-                    color: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  ),
-
-                ]
-            ),
-            ButtonBar(
-                children: [
-                  FlatButton(
-                    onPressed: () {
-                      /*
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                      }
-                      */
-                      postEventBloc.check1stPage();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=>EventPostSecond()),
-                      );
-                    },
-                    color: Colors.purple,
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-
-                    child: Row(
-                        children: <Widget>[
-                          Text(
-                            " Next",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward),
-                        ]
-                    ),
-                  ),
-                ]
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text("There is an unknown error!."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Try again"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
           ],
-        ),
-      ),
+        );
+      },
+    );
+  }
 
-       */
+
+  void _showSuccessDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Success"),
+          content: new Text("Venue created."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Done"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();},
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String> apiRequest(String url, Map jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    // todo - should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return reply;
+  }
+
+  Widget venueNameInput() {
+    return TextFormField(
+      keyboardType: TextInputType.text ,
+      decoration: InputDecoration(
+        labelText: "Venue Name",
+        hintText: "e.g Hall 14 Function Room",
+      ),
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["venueName"] = name,
+// todo add regex?
+//      validator: (venueName){
+//        Pattern pattern =
+//            r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
+//        RegExp regex = new RegExp(pattern);
+//        if (!regex.hasMatch(venueName.trim())){
+//          return 'Invalid venue Name. Need at least 1 letter & 1 number. Length >= 6 ';
+//        }
+//        else
+//          return null;
+//      },
+    );
+  }
+
+  Widget addressInput() {
+    return TextFormField(
+      textCapitalization: TextCapitalization.words,
+      keyboardType: TextInputType.text ,
+      decoration: InputDecoration(
+        labelText: "Address",
+        hintText: "e.g 34 Nanyang Crescent",
+      ),
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["address"] = name,
+    );
+  }
+
+  Widget postalCodeInput() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        WhitelistingTextInputFormatter.digitsOnly],
+      decoration: InputDecoration(
+        labelText: "Postal Code",
+        hintText: "e.g 637634",
+      ),
+      validator: (postalCode) {
+        if(postalCode.trim().length!=6){
+          return "Invalid postal code. Length should = 6.";
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["postalCode"] = int.parse(name),
+    );
+  }
+
+  Widget rentalFeeInput() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        WhitelistingTextInputFormatter.digitsOnly],
+      decoration: InputDecoration(
+        labelText: "Rental Fee (S\$/hour)",
+        hintText: "e.g 200",
+      ),
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["rentalFee"] = double.parse(name),
+    );
+  }
+
+  Widget areaInput() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        WhitelistingTextInputFormatter.digitsOnly],
+      decoration: InputDecoration(
+        labelText: "Venue Area (square meter..)",
+        hintText: "e.g 100",
+      ),
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["area"] = double.parse(name),
+    );
+  }
+
+  Widget descriptionInput() {
+    return TextFormField(
+      keyboardType: TextInputType.text,
+      maxLines: 7,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        alignLabelWithHint: true,
+        labelText: "Desciption",
+        hintText: "e.g This is the best place for ...",
+      ),
+      textInputAction: TextInputAction.done,
+      onChanged: (name)=> jsonMap["description"] = name,
     );
   }
 }
