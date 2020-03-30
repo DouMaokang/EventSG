@@ -100,9 +100,9 @@ class _EventTopBarState extends State<EventTopBar> {
 
                   if (state is EventSaved) {
                     return IconButton(
-                        icon: const Icon(Icons.favorite),
+                        icon: const Icon(Icons.favorite, color: Colors.redAccent,),
                         onPressed: () {
-                          Toast.show("Event unsaved!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
+                          Toast.show("Event Unsaved", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
                           BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
                         }
                     );
@@ -110,7 +110,7 @@ class _EventTopBarState extends State<EventTopBar> {
                     return IconButton(
                         icon: const Icon(Icons.favorite_border),
                         onPressed: () {
-                          Toast.show("Event saved!", context, duration: Toast.LENGTH_SHORT, gravity: 1);
+                          Toast.show("Event Saved", context, duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
                           BlocProvider.of<EventSavedBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
                         }
                     );

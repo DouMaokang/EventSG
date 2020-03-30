@@ -15,7 +15,7 @@ class OrganizerAvatar extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: 20,
-        backgroundImage: AssetImage("assets/female-1.jpg"),
+        backgroundImage: AssetImage(organizer.image),
       ),
       title: Text(
         this.organizer.userName,

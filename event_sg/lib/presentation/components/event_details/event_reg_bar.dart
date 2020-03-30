@@ -75,8 +75,7 @@ class _EventRegistrationBarState extends State<EventRegistrationBar> {
                     builder: (BuildContext context) =>
                         RegistrationDialog(
                           eventTitle: widget.eventTitle,
-                          eventDateTime: widget.eventDateTime
-                              .toString(),
+                          eventDateTime: widget.eventDateTime,
                           userId: widget.userId,
                           eventId: widget.eventId,
                           registrationBloc: registrationBloc,
@@ -108,8 +107,7 @@ class _EventRegistrationBarState extends State<EventRegistrationBar> {
                   builder: (BuildContext context) =>
                       CancelDialog(
                         eventTitle: widget.eventTitle,
-                        eventDateTime: widget.eventDateTime
-                            .toString(),
+                        eventDateTime: widget.eventDateTime,
                         userId: widget.userId,
                         eventId: widget.eventId,
                         registrationBloc: registrationBloc,

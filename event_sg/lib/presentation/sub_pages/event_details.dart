@@ -75,7 +75,7 @@ class EventDetailsPage extends StatelessWidget {
                 child:  Column(
                   children: <Widget>[
                     EventHeader(
-                      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
+                      image: state.event.image,
                       eventName: state.event.title,),
                     SizedBox(height: 4,),
                     OrganizerAvatar(organizer: state.event.organizer),

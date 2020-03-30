@@ -11,9 +11,10 @@ class Venue {
   double area;
   String description;
   String venueName;
+  String image;
 
   Venue({this.venueId, this.address, this.postalCode, this.ownerId,
-    this.rentalFee, this.area, this.description, this.venueName});
+    this.rentalFee, this.area, this.description, this.venueName, this.image});
 
   factory Venue.fromJson(Map<String, dynamic> json) {
     return Venue(
@@ -24,7 +25,8 @@ class Venue {
         rentalFee: json['rentalFee'],
         area: json['area'],
         description: json['description'],
-        venueName: json['venueName']
+        venueName: json['venueName'],
+      image: json['image'],
     );
   }
 

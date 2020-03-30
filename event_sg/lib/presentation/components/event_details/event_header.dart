@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class EventHeader extends StatelessWidget {
-  final String url;
+  final String image;
   final String eventName;
 
-  EventHeader({this.url, @required this.eventName});
+  EventHeader({this.image, @required this.eventName});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class EventHeader extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(this.url),
+                    image: AssetImage(this.image),
                     fit: BoxFit.cover,
                   ),
                 ),
