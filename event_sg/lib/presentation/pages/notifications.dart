@@ -45,7 +45,6 @@ class _NotificationsState extends State<Notifications> {
     // assign this variable your Future
     myFutureList = notificationRepository.getNotificationList(widget.userId);
 
-
   }
 
   Widget _buildNotifications(List<NotificationDefined> notifications) {
@@ -53,6 +52,7 @@ class _NotificationsState extends State<Notifications> {
     for(var i = 0; i < notifications.length; i++){
       notificationList.add(NotificationListItem(notification: notifications[i]));
     }
+
 
 
 
@@ -76,10 +76,8 @@ class _NotificationsState extends State<Notifications> {
         ),
       );
     } else {
-      return Container(
-        child: Column(
-            children: notificationList
-        ),
+      return Column(
+          children: notificationList
       );
     }
   }
@@ -88,28 +86,30 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
       backgroundColor: Colors.white,
+
           appBar: AppBar(
             title: Text('Notifications'),
           ),
           // body: _buildSuggestions(),
           body: SingleChildScrollView(
-            child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: FutureBuilder(
-                      future: myFutureList,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData)
-                          return new Container();
-                        List<NotificationDefined> notifications = snapshot.data;
-                        return Container(
-                          child: _buildNotifications(notifications),
-                        );
-                      }
-                  ),
-                )
+
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: FutureBuilder(
+                  future: myFutureList,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return new Container();
+                    List<NotificationDefined> notifications = snapshot.data;
+                    return Container(
+                      child: _buildNotifications(notifications),
+                    );
+                  }
+              ),
+
             ),
           )
         );

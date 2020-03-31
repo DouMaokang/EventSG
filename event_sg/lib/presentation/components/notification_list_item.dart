@@ -89,27 +89,40 @@ class _NotificationListItemState extends State<NotificationListItem> {
                 },
               child: Card(
 
-                  elevation: 0.3,
+                  elevation: 0,
                   color: Colors.blue[50],
                   child: Column(
                     children: <Widget>[
                       ListTile(
                           title: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  event.title,
-                                  style: TextStyle(
-                                      fontSize: 16
+                                Expanded(
+                                  flex: 8,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                    child: Text(
+                                      event.title,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                        fontWeight: FontWeight.w500
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      softWrap: true,
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  "${DateFormat('dd/MM/yyyy').format(widget.notification.timeCreated)}",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                    color: Colors.grey[600]
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    "${DateFormat('dd/MM/yyyy').format(widget.notification.timeCreated)}",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                      color: Colors.grey[600]
+                                    ),
                                   ),
                                 )
                               ],
@@ -134,15 +147,15 @@ class _NotificationListItemState extends State<NotificationListItem> {
 
   String _subtitleController(String type) {
     if (type == "event") {
-      return "The event organizer you liked is going to hold a new event!";
+      return "The event organizer you liked is going to hold a new event";
     } else if (type == "venue") {
-      return "An event organizer would like to rent your venue.";
+      return "An event organizer would like to rent your venue";
     } else if (type == "registration") {
-      return "A user has registered your event.";
+      return "A user has registered your event";
     } else if (type == "deregistration") {
-      return "A user has cancelled his registration for you event.";
+      return "A user has cancelled his registration for you event";
     } else if (type == "review") {
-      return "A new review is provided for your event.";
+      return "A new review is provided for your event";
     }
   }
 

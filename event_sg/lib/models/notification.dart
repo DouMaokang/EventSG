@@ -20,6 +20,7 @@ class NotificationDefined {
   });
 
 
+
   factory NotificationDefined.fromJson(Map<String, dynamic> json) {
     return NotificationDefined(
       notificationId: json['notificationId'],
