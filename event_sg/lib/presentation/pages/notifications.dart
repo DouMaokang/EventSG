@@ -79,10 +79,15 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-          appBar: AppBar(
-            title: Text('Notifications'),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(44.0),
+          child: AppBar(
+            title: Align (
+                alignment: Alignment.center,
+                child: const Text('Notifications')
+            ),
           ),
-          // body: _buildSuggestions(),
+        ),
           body: SingleChildScrollView(
 
             child: Padding(
