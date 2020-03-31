@@ -19,3 +19,8 @@ export 'search_state.dart';
 export 'event_saved_bloc.dart';
 export 'event_saved_event.dart';
 export 'event_saved_state.dart';
+
+
+export 'add_review_bloc.dart';
+export 'add_review_event.dart';
+export 'add_review_state.dart';
