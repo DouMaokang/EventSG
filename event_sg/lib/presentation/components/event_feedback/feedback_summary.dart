@@ -25,7 +25,7 @@ class FeedbackSummary extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.only(bottom: 0, left: 14),
                         child: Text(
-                          _getOverallRating(reviews).toString(),
+                          _getOverallRating(reviews),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 44,
@@ -137,13 +137,15 @@ class FeedbackSummary extends StatelessWidget {
       return 'Reviews';
     } else return 'Review';
   }
-  double _getOverallRating(List<Review> reviews) {
+
+  String _getOverallRating(List<Review> reviews) {
     int noRating = _getLength(reviews);
     double sum = 0;
     for (int i=0; i<noRating; i++) {
       sum += reviews[i].rating;
     }
-    return sum/noRating;
+    String rounded = (sum/noRating).toStringAsFixed(1);
+    return rounded;
   }
 
   int _getIndividualNoRating(List<Review> reviews, int rating) {
