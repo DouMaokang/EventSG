@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/models/models.dart';
 import 'package:event_sg/presentation/sub_pages/venue_choose_page.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +19,6 @@ class EventPostPage extends StatefulWidget {
 class _EventPostPageState extends State<EventPostPage> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   final addressController=TextEditingController();
-
-  bool nameChanged=false;
-  bool dateChanged=false;
-  bool startChanged=false;
-  bool endChanged=false;
-  bool addressChanged=false;
-  bool postalChanged=false;
 
   bool addressState=true;
   bool postalState=true;
@@ -44,11 +38,13 @@ class _EventPostPageState extends State<EventPostPage> {
     setState(() {address=null;});
 
     var _chooseVenue = (BuildContext context) async {
-      final result=await Navigator.push(
+      Venue result=await Navigator.push(
           context,
           MaterialPageRoute(builder:(context)=>VenueChoosePage(),)
       );
-      addressController.text=result;
+      addressController.text=result.address;
+      postEventBloc.setAddress(result);
+      postEventBloc.setVenue(result);
     };
     var _onPressed = () {
       postClicked = true;
@@ -102,12 +98,12 @@ class _EventPostPageState extends State<EventPostPage> {
                         //height: 48,
                         child: TextFormField(
                           onChanged: (text) {
-                            nameChanged=true;postEventBloc.setName(text);
+                            postEventBloc.setName(text);
                             if (postEventBloc.check()) setState(() {postColor=true;});
                             else setState(() {postColor=false;});
                           },
                           validator: (value) {
-                            if (!postClicked && !nameChanged) {return null;}
+                            if (!postClicked && value.length==0/*&& !nameChanged*/) {return null;}
                             if (value.length==0) {return 'Event Name is mandatory';}
                             return null;
                           },
@@ -129,11 +125,11 @@ class _EventPostPageState extends State<EventPostPage> {
                       child: Container(
                         //height: 48,
                         child: DateTimeField(
-                          onChanged: (text) {dateChanged=true;postEventBloc.setDate(text);if (postEventBloc.check()) setState(() {postColor=true;});
+                          onChanged: (text) {postEventBloc.setDate(text);if (postEventBloc.check()) setState(() {postColor=true;});
                             else setState(() {postColor=false;});
                           },
                           validator: (value) {
-                            if (!postClicked && !dateChanged) {return null;}
+                            if (!postClicked && value==null) {return null;}
                             if (value==null) {return 'Date is mandatory';}
                             return null;
                           },
@@ -166,11 +162,11 @@ class _EventPostPageState extends State<EventPostPage> {
                             //width: 175,
                             //height: 48,
                             child: DateTimeField(
-                              onChanged: (text) {startChanged=true;postEventBloc.setStart(text);if (postEventBloc.check()) setState(() {postColor=true;});
+                              onChanged: (text) {postEventBloc.setStart(text);if (postEventBloc.check()) setState(() {postColor=true;});
                                 else setState(() {postColor=false;});
                               },
                               validator: (value) {
-                                if (!postClicked && !startChanged) {return null;}
+                                if (!postClicked && value==null) {return null;}
                                 if (value==null) {return 'Starts Time is mandatory';}
                                 return null;
                               },
@@ -197,11 +193,11 @@ class _EventPostPageState extends State<EventPostPage> {
                             //width: 175,
                             //height: 48,
                             child: DateTimeField(
-                              onChanged: (text) {endChanged=true;postEventBloc.setEnd(text);if (postEventBloc.check()) setState(() {postColor=true;});
+                              onChanged: (text) {postEventBloc.setEnd(text);if (postEventBloc.check()) setState(() {postColor=true;});
                                 else setState(() {postColor=false;});
                               },
                               validator: (value) {
-                                if (!postClicked && !endChanged) {return null;}
+                                if (!postClicked && value==null) {return null;}
                                 if (value==null) {return 'Ends Time is mandatory';}
                                 return null;
                               },
@@ -282,7 +278,7 @@ class _EventPostPageState extends State<EventPostPage> {
                         child: TextFormField(
                           controller: addressController,
                           onChanged: (text) {
-                            addressChanged=true;postEventBloc.setAddress(text);
+                            postEventBloc.setAddress(text);
                             if (postEventBloc.check()) setState(() {postColor=true;});
                             else setState(() {postColor=false;});
                             setState(() {
@@ -291,7 +287,7 @@ class _EventPostPageState extends State<EventPostPage> {
                             });
                           },
                           validator: (value) {
-                            if (!postClicked && !addressChanged) {return null;}
+                            if (!postClicked && value.length==0) {return null;}
                             if (value.length==0) {return 'Event Address is mandatory';}
                             return null;
                           },
@@ -317,7 +313,7 @@ class _EventPostPageState extends State<EventPostPage> {
                             width:150,
                             child: TextFormField(
                               onChanged: (text) {
-                                postalChanged=true;postEventBloc.setPostal(text);
+                                postEventBloc.setPostal(text);
                                 if (postEventBloc.check()) setState(() {postColor=true;});
                                 else setState(() {postColor=false;});
                                 setState(() {
@@ -326,7 +322,7 @@ class _EventPostPageState extends State<EventPostPage> {
                                 });
                               },
                               validator: (value) {
-                                if (!postClicked && !postalChanged) {return null;}
+                                if (!postClicked && value.length==0) {return null;}
                                 if (value.length==0) {return 'Postal Code is mandatory';}
                                 Pattern pattern = r'^\d{6}$';
                                 RegExp regex = new RegExp(pattern);
@@ -426,7 +422,6 @@ class _EventPostPageState extends State<EventPostPage> {
                               ),
                             ]
                         ),
-                           */
                         ButtonBar(
                             children: [
                               FlatButton(
@@ -446,6 +441,7 @@ class _EventPostPageState extends State<EventPostPage> {
 
                             ]
                         ),
+                           */
                         RaisedButton(
                           child: Text(
                             " Post ",
