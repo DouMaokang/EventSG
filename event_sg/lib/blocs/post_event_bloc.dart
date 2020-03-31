@@ -4,7 +4,9 @@ import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/models/event.dart';
 import 'package:event_sg/models/venue.dart';
+import 'package:event_sg/presentation/components/event_feedback/post_event_dialog.dart';
 import 'package:event_sg/repositories/event_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:frideos/frideos.dart';
@@ -29,7 +31,7 @@ class PostEventBloc {
   String userId=Login().getUserId();
 
 
-  String name,description,maxCapacity,address,postal;
+  String name,description,maxCapacity,address;
   DateTime date,start,end,ddl;
   Venue venue;
   //bool nameValidation,dateValidation,startValidation,endValidation;
@@ -40,18 +42,12 @@ class PostEventBloc {
   void setDate(text) {date=text;}
   void setStart(text) {start=text;}
   void setEnd(text) {end=text;}
-  void setMaxCapacity(text) {maxCapacity=text;}
+  void setMaxCapacity(text) {if (text.length==0) text=null;maxCapacity=text;}
   void setDDL(text) {ddl=text;}
   void setAddress(text) {if (text.length==0) text=null; address=text;}
-  void setPostal(text) {if (text.length==0 || !validatePostal(text)) text=null; postal=text;}
   void setVenue(venue) {this.venue=venue;}
 
-  bool validatePostal(value) {
-    Pattern pattern = r'\d{6}';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value)) return false;
-    return true;
-  }
+
   /*
   void validateOrganizer(value) {organizerValidation=value;}
   void validateContact(value) {contactValidation=value;}
@@ -72,9 +68,10 @@ class PostEventBloc {
     print('start $start');
     print('end $end');
     print('address $address');
-    print('postal $postal');
+    print('capacity $maxCapacity');
+    print('ddl $ddl');
     //add logic of date and time period
-    if (name!=null && date!=null && start!=null && end!=null && address!=null && postal!=null) {
+    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null) {
       print('good');
       return true;
     }
@@ -82,12 +79,12 @@ class PostEventBloc {
     return false;
   }
 
-  void post() {
+  Future<void> post(BuildContext context) async {
     if (check()) {
       Event event = Event(
           title:name,
           description: description,
-          capacity: maxCapacity==null? 0:int.parse(maxCapacity),
+          capacity: int.parse(maxCapacity),
           registrationDeadline:ddl,
           startTime: DateTime(date.year,date.month,date.day,start.hour,start.minute),
           endTime: DateTime(date.year,date.month,date.day,end.hour,end.minute),
@@ -95,7 +92,11 @@ class PostEventBloc {
           status: 'posted',
           organizerId: userId,
       );
-      eventRepository.postEvent(event);
+      print('okkk');
+      bool result = await Navigator.push(context,MaterialPageRoute(builder:(context)=>PostEventDialog(event:event)));
+      bool res;
+      if (result==true) res=await eventRepository.postEvent(event);
+      else print('cancelled');
     }
   }
 
