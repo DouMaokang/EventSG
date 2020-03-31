@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:event_sg/models/notification.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationApiClient {
-  static const baseUrl = 'http://127.0.0.1:8080/api/notification';
+  static const baseUrl = Urls.apiUrlBase;
   final http.Client httpClient;
 
   NotificationApiClient({

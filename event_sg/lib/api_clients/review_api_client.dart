@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 
 class ReviewApiClient {
-  static const baseUrl = 'http://127.0.0.1:8080/api/review';
+  static const baseUrl = Urls.apiUrlBase;
   final http.Client httpClient;
 
   ReviewApiClient({
