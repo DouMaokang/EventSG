@@ -48,7 +48,7 @@ class _PostPageState extends State<PostPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context)=>VenuePostingPage()),
+                        MaterialPageRoute(builder: (context)=>EventPostSecond()),
                       );
                     },
                     contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
