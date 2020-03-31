@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 /// This is the stateful widget that the main application instantiates.
 class MyVenues extends StatefulWidget {
 
