@@ -1,3 +1,4 @@
+import 'package:event_sg/presentation/sub_pages/owner_venue_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:event_sg/repositories/repositories.dart';
@@ -67,7 +68,7 @@ class _MyVenuesState extends State<MyVenues> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => VenueDetailPage(venue: venue)),
+              builder: (context) => OwnerVenueDetailPage(venue: venue)),
         );
       },
       child: Container(
@@ -88,8 +89,7 @@ class _MyVenuesState extends State<MyVenues> {
                 //
                 borderRadius: BorderRadius.circular(2.0),
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                  image: AssetImage(venue.image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -100,21 +100,6 @@ class _MyVenuesState extends State<MyVenues> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  /*
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                  child: Text(
-                    DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: true,
-                  ),
-                ),
-                 */
                   Text(
                     venue.venueName,
                     style: TextStyle(
@@ -125,7 +110,7 @@ class _MyVenuesState extends State<MyVenues> {
                     softWrap: true,
                   ),
                   Text(
-                    venue.area.toString() + 'm2' + ' ' * 8 + '\$' +
+                    venue.area.toString() + "m\u00b2" + ' ' * 8 + '\$' +
                         venue.rentalFee.toString() + ' per hour',
                     style: TextStyle(
                         fontSize: 14,

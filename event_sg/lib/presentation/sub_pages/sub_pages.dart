@@ -11,3 +11,4 @@ export 'my_venues.dart';
 export 'user_registration_page.dart';
 export 'user_add_interested_categories.dart';
 export 'venue_detail_page.dart';
+export 'owner_venue_details_page.dart';
