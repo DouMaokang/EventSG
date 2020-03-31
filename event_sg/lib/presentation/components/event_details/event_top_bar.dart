@@ -54,7 +54,7 @@ class _EventTopBarState extends State<EventTopBar> {
   @override
   Widget build(BuildContext context) {
 
-    _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
+    //_checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
@@ -72,20 +72,57 @@ class _EventTopBarState extends State<EventTopBar> {
             child: const Text('Event Details')
         ),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {
-              _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
-              print(widget.userId);
-              if (_hasReviewed) {
-                Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>ReviewAddingPage(eventId: widget.eventId)),
-                );
-              }
-            },
+//          IconButton(
+//            icon: const Icon(Icons.add_circle_outline),
+//            onPressed: () {
+//              _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
+//              print(widget.userId);
+//              if (_hasReviewed) {
+//                Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
+//              } else {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context)=>ReviewAddingPage(eventId: widget.eventId)),
+//                );
+//              }
+//            },
+//          ),
+
+          // -------------------------- add review button with bloc ---------------------
+          BlocProvider<AddReviewBloc>(
+            create: (context) => AddReviewBloc(reviewRepository: reviewRepository),
+
+            child: BlocBuilder<AddReviewBloc, AddReviewState>(
+              // ignore: missing_return
+                builder: (context, state) {
+
+                  if (_hasReviewed) {
+                    BlocProvider.of<AddReviewBloc>(context).add(EnterWithAdded());
+                  }
+
+                  if (state is AddReviewAdded) {
+                    return IconButton(
+                        icon: const Icon(Icons.add_circle_outline),
+                        onPressed: () {
+                          Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
+                          // BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
+                        }
+                    );
+                  } else {
+                    return IconButton(
+                        icon: const Icon(Icons.add_circle_outline),
+                        onPressed: () {
+                          // Toast.show("Event Saved", context, duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+                          // BlocProvider.of<AddReviewBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>ReviewAddingPage(eventId: widget.eventId)),
+                          );
+                        }
+                    );
+                  }
+                }
+            ),
           ),
 
           // -------------------------- save event button- ---------------------
@@ -119,7 +156,7 @@ class _EventTopBarState extends State<EventTopBar> {
                   }
                 }
             ),
-          )
+          ),
         ],
       ),
     );
@@ -135,6 +172,8 @@ class _EventTopBarState extends State<EventTopBar> {
 
   _checkHasReviewed({String eventId, String userId}) async {
     bool result = await reviewRepository.hasReviewed(eventId: eventId, userId: userId);
+    print("eventId: $eventId userId: $userId");
+    print("checkHasReviewed result: ${result.toString()}");
     setState(() {
       _hasReviewed = result;
     });

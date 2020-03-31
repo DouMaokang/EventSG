@@ -15,7 +15,7 @@ class NotificationApiClient {
   }) : assert(httpClient != null);
 
   Future<List<NotificationDefined>> getNotificationList(String userId) async {
-    final notificationUrl = '$baseUrl/$userId';
+    final notificationUrl = '$baseUrl/notification/$userId';
     try {
       final notificationResponse = await this.httpClient.get(notificationUrl);
       List notificationData = jsonDecode(notificationResponse.body);
