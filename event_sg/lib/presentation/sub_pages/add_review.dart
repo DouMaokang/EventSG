@@ -123,14 +123,6 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
                           }
                       ),
                     ),
-
-                    // -------------------------------------------
-////                  OutlineButton(
-////                    highlightedBorderColor: Colors.black,
-////                    onPressed:  _submit,
-////                    child: const Text('Add'),
-//                  // -------------------------------------------
-//                  ),
                   ],
                 ),
               ],

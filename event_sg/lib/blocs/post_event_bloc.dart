@@ -44,6 +44,7 @@ class PostEventBloc {
   void setDDL(text) {ddl=text;}
   void setAddress(text) {if (text.length==0) text=null; address=text;}
   void setPostal(text) {if (text.length==0 || !validatePostal(text)) text=null; postal=text;}
+  void setVenue(venue) {this.venue=venue;}
 
   bool validatePostal(value) {
     Pattern pattern = r'\d{6}';
@@ -96,19 +97,6 @@ class PostEventBloc {
       );
       eventRepository.postEvent(event);
     }
-  }
-  void save() {
-    Event event = Event(
-        title:name,
-        description: description,
-        capacity: maxCapacity==null? 0:int.parse(maxCapacity),
-        registrationDeadline:ddl,
-        startTime: (date!=null && start!=null)?DateTime(date.year,date.month,date.day,start.hour,start.minute):null,
-        endTime: (date!=null && end!=null)?DateTime(date.year,date.month,date.day,end.hour,end.minute):null,
-        venue: venue,
-        organizerId: userId,
-    );
-    eventRepository.saveDraftEvent(event);
   }
 
   void dispose() {}
