@@ -10,6 +10,7 @@ class VenueChoosePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: Text('Venue List'),),
       body: FutureBuilder<List<Venue>>(
         future: venueChooseBloc.getAllVenues(),
@@ -22,7 +23,7 @@ class VenueChoosePage extends StatelessWidget {
             return Text(snapshot.data[0].venueName);
           }
           else {
-            return CircularProgressIndicator();
+            return Center(child:CircularProgressIndicator());
           }
         },
       ),
@@ -30,10 +31,12 @@ class VenueChoosePage extends StatelessWidget {
   }
 }
 Widget buildVenueList(List<Venue> venues,BuildContext context) {
-  return Column(
-    children: <Widget>[
-      for (Venue venue in venues) buildVenueWidget(venue,context)
-    ],
+  return SingleChildScrollView(
+    child:Column(
+      children: <Widget>[
+        for (Venue venue in venues) buildVenueWidget(venue,context)
+      ],
+    )
   );
 }
 Widget buildVenueWidget(Venue venue,BuildContext context) {
@@ -89,15 +92,17 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
                     softWrap: true,
                   ),
                 ),
-                  Text(
-                    venue.venueName,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    softWrap: true,
-                  ),
+                Container(
+                    child:Text(
+                      venue.venueName,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
+                ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
                   child: Row(
@@ -105,14 +110,16 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
                     children: <Widget>[
                       Icon(Icons.location_city, size: 14,),
                       SizedBox(width: 6,),
-                      Text(
-                        venue.address,
-                        style: TextStyle(
-                          fontSize: 13,
+                      Expanded(
+                        child: Text(
+                          venue.address,
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: true,
                       ),
                     ],
                   ),

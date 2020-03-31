@@ -100,7 +100,6 @@ class VenueDetailPage extends StatelessWidget{
             ),
             subtitle: Text(
               '65-'+venue.owner.phoneNum.toString()+' '*8+venue.owner.email,
-              venue.owner.phoneNum.toString(),
               style: TextStyle(fontSize: 14),
             ),
           ),
@@ -140,11 +139,14 @@ class VenueDetailPage extends StatelessWidget{
             ),
           ),
           SizedBox(height: 16,),
+          /*
           EventLocation(
             venueName: venue.venueName,
             venueAddress: venue.address,
             postalCode: venue.postalCode,
           ),
+
+           */
           SizedBox(height: 16,),
         ],
         ),
