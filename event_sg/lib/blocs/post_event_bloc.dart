@@ -38,7 +38,7 @@ class PostEventBloc {
   //bool locationValidation;
 
   void setName(text) {if (text.length==0) text=null;name=text;}
-  void setDescription(text) {description=text;}
+  void setDescription(text) {if (text.length==0) text=null;description=text;}
   void setDate(text) {date=text;}
   void setStart(text) {start=text;}
   void setEnd(text) {end=text;}
@@ -71,7 +71,7 @@ class PostEventBloc {
     print('capacity $maxCapacity');
     print('ddl $ddl');
     //add logic of date and time period
-    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null) {
+    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null && description!=null) {
       print('good');
       return true;
     }
@@ -93,9 +93,8 @@ class PostEventBloc {
           organizerId: userId,
       );
       print('okkk');
-      bool result = await Navigator.push(context,MaterialPageRoute(builder:(context)=>PostEventDialog(event:event)));
-      bool res;
-      if (result==true) res=await eventRepository.postEvent(event);
+      bool result=postEventDialog(context, event);
+      if (result==true) eventRepository.postEvent(event);
       else print('cancelled');
     }
   }

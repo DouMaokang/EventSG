@@ -32,123 +32,127 @@ class _PostPageState extends State<PostPage> {
           title: Text("Post"),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
+      body:
+      SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
 
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: Container(
-                height: 168,
-                decoration: BoxDecoration(color: Colors.blue[50]),
-                child: Center(
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
+            SizedBox(height: 70,),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Container(
+                  height: 168,
+                  decoration: BoxDecoration(color: Colors.blue[50]),
+                  child: Center(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
 
-                        MaterialPageRoute(builder: (context)=>EventPostPage()),
-                      );
-                    },
-                    contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
+                          MaterialPageRoute(builder: (context)=>EventPostPage()),
+                        );
+                      },
+                      contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
 
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Events",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28
+                      title: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Events",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 6,),
-                          Icon(Icons.local_activity, color: Colors.black, size: 28),
+                            SizedBox(width: 6,),
+                            Icon(Icons.local_activity, color: Colors.black, size: 28),
+                          ],
+                        ),
+                      ),
+
+                      subtitle: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Post an awesome event",
+                              style: TextStyle(color: Colors.black, fontSize: 16),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          )
                         ],
                       ),
-                    ),
 
-                    subtitle: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            "Post an awesome event",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        )
-                      ],
+                      trailing: Icon(Icons.chevron_right, size: 28,),
                     ),
-
-                    trailing: Icon(Icons.chevron_right, size: 28,),
                   ),
                 ),
               ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: Container(
-                height: 168,
-                decoration: BoxDecoration(color: Colors.blue[50]),
-                child: Center(
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=>VenuePostingPage()),
-                      );
-                    },
-                    contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Container(
+                  height: 168,
+                  decoration: BoxDecoration(color: Colors.blue[50]),
+                  child: Center(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>VenuePostingPage()),
+                        );
+                      },
+                      contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
 
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Venues",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28
+                      title: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Venues",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 6,),
-                          Icon(Icons.weekend, color: Colors.black, size: 28),
+                            SizedBox(width: 6,),
+                            Icon(Icons.weekend, color: Colors.black, size: 28),
+                          ],
+                        ),
+                      ),
+
+                      subtitle: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "List an exclusive venue",
+                              style: TextStyle(color: Colors.black, fontSize: 16),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          )
                         ],
                       ),
-                    ),
 
-                    subtitle: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            "List an exclusive venue",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        )
-                      ],
+                      trailing: Icon(Icons.chevron_right, size: 28,),
                     ),
-
-                    trailing: Icon(Icons.chevron_right, size: 28,),
                   ),
                 ),
               ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

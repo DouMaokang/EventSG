@@ -45,15 +45,17 @@ class _EventPostPageState extends State<EventPostPage> {
           context,
           MaterialPageRoute(builder:(context)=>VenueChoosePage(),)
       );
-      setState(() {
-        venueChoosed=true;
-      });
-      addressController.text=result.venueName;
-      postEventBloc.setAddress(result.address);
-      postEventBloc.setVenue(result);
-      if (postEventBloc.check()) setState(() {
-        postColor=true;
-      });
+      if (result!=null) {
+        setState(() {
+          venueChoosed = true;
+        });
+        addressController.text = result.venueName;
+        postEventBloc.setAddress(result.address);
+        postEventBloc.setVenue(result);
+        if (postEventBloc.check()) setState(() {
+          postColor = true;
+        });
+      }
     };
     var _onPressed = () {
       postClicked = true;
@@ -227,7 +229,7 @@ class _EventPostPageState extends State<EventPostPage> {
                                 return null;
                               },
                               obscureText: false,
-                              format: DateFormat("HH-mm"),
+                              format: DateFormat("HH:mm"),
                               onShowPicker: (context, currentValue) async {
                                 final time = await showTimePicker(
                                     context: context,
@@ -334,45 +336,39 @@ class _EventPostPageState extends State<EventPostPage> {
                               //venueColor=addressState && postalState;
                             //});
                           },
-                          validator: (value) {
-                            if (!postClicked && value.length==0) {return null;}
-                            if (value.length==0) {return 'Event Address is mandatory';}
-                            return null;
-                          },
                           textAlignVertical: TextAlignVertical.center,
                           obscureText:false,
                           decoration: InputDecoration(
+                            disabledBorder: InputBorder.none,//venueChoosed?UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)):InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                             //border: OutlineInputBorder(),
-                            helperText: ' ',
-                            labelText: venueChoosed?'Venue':'Please choose a venue',
+                            //helperText: ' ',
+                            labelText: venueChoosed?'Venue':'Please click the button to choose a venue',
+                            labelStyle:TextStyle(
+                              color:venueChoosed?Colors.grey:Colors.black
+                            )
                           ),
                         ),
                       ),
                     ),
+                    SizedBox(height:8,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child:Row (
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          RaisedButton(
-                            child: Text(
-                              "+ Choose a Venue",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
+                      child:SizedBox(
+                        width:double.infinity,
+                        child: RaisedButton(
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
+                          child: Text(
+                            "+ Choose a Venue",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
                             ),
-                            elevation: _elevation,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(18.0),
-                              //side: BorderSide(color: Colors.red)
-                            ),
-                            onPressed: () {_chooseVenue(context);},
-                            color: venueColor?Colors.blue:Colors.grey,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                           ),
-                        ],
+                          elevation: _elevation,
+                          onPressed: () {_chooseVenue(context);},
+                          color: venueColor?Colors.blue:Colors.grey,
+                        ),
                       ),
                     ),
 
@@ -380,7 +376,7 @@ class _EventPostPageState extends State<EventPostPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Container(
-                        height: 150,
+                        height: 200,
                         child: TextFormField(
                           onChanged: (text) {
                             postEventBloc.setDescription(text);
@@ -408,67 +404,14 @@ class _EventPostPageState extends State<EventPostPage> {
                       ),
                     ),
 
-                    SizedBox(height: 28,),
-                    Center(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "( All entries are mandatory )",
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20,),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                          /*
-                        ButtonBar(
-                            children: [
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                color: Colors.blue,
-                                padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 10),
-
-                                child: Row(
-                                    children: <Widget>[
-                                      Icon(Icons.arrow_back),
-                                      Text(
-                                        "Back ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ]
-                                ),
-                              ),
-                            ]
-                        ),
-                        ButtonBar(
-                            children: [
-                              FlatButton(
-                                child: Text(
-                                  " Save ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  postEventBloc.save();
-                                },
-                                color: Colors.green,
-                                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                              ),
-
-                            ]
-                        ),
-                           */
-                        RaisedButton(
+                    SizedBox(height: 8,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SizedBox(
+                        width:double.infinity,
+                        child: RaisedButton(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           child: Text(
                             " Post ",
                             style: TextStyle(
@@ -478,11 +421,10 @@ class _EventPostPageState extends State<EventPostPage> {
                           ),
                           onPressed: _onPressed,
                           color: postColor?Colors.blue:Colors.grey,
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 16,),
                   ],
                 ),
               ),
