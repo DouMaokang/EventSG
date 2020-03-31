@@ -39,37 +39,42 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       key: _formKey,
       child: Scaffold(
           appBar: AppBar(title: Text("Post a Venue")),
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-            children: <Widget>[
-              venueNameInput(),
-              const SizedBox(height: 16.0),
-              addressInput(),
-              const SizedBox(height: 16.0),
-              postalCodeInput(),
-              const SizedBox(height: 16.0),
-              rentalFeeInput(),
-              const SizedBox(height: 16.0),
-              areaInput(),
-              const SizedBox(height: 16.0),
-              descriptionInput(),
-              const SizedBox(height: 16.0),
+          body: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {FocusScope.of(context).requestFocus(new FocusNode());},
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              children: <Widget>[
+                venueNameInput(),
+                const SizedBox(height: 16.0),
+                addressInput(),
+                const SizedBox(height: 16.0),
+                postalCodeInput(),
+                const SizedBox(height: 16.0),
+                rentalFeeInput(),
+                const SizedBox(height: 16.0),
+                areaInput(),
+                const SizedBox(height: 16.0),
+                descriptionInput(),
+                const SizedBox(height: 16.0),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  OutlineButton(
-                    highlightedBorderColor: Colors.black,
-                    onPressed:  _submit,
-                    child: const Text('Post'),
-                  ),
-                ],
-              ),
-            ],
-          )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    OutlineButton(
+                      highlightedBorderColor: Colors.black,
+                      onPressed:  _submit,
+                      child: const Text('Post'),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ),
+      )
     );
   }
 

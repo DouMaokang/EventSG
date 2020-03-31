@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 
 class ReviewApiClient {
-  static const baseUrl = 'http://127.0.0.1:8080/api/review';
+
+  static const baseUrl = '${Urls.apiUrlBase}/review';
+
   final http.Client httpClient;
 
   ReviewApiClient({
@@ -15,7 +18,7 @@ class ReviewApiClient {
   }) : assert(httpClient != null);
 
   Future<int> addReview(Review review) async {
-    final reviewUrl = '$baseUrl/add';
+    final reviewUrl = '$baseUrl/review/add';
     try {
       final reviewResponse = await this.httpClient.post(reviewUrl, body: jsonEncode(review));
       if (reviewResponse.statusCode == 200)
@@ -30,7 +33,7 @@ class ReviewApiClient {
   }
 
   Future<bool> hasReviewed(String eventId, String userId) async {
-    final url = '$baseUrl/has_reviewed/$eventId/$userId';
+    final url = '$baseUrl/review/has_reviewed/$eventId/$userId';
     try {
       final response = await httpClient.get(url);
       // print( response.body);
@@ -43,12 +46,12 @@ class ReviewApiClient {
       }
     } catch (e) {
       print("Caught error: $e");
-      throw Exception('error getting data!');
+      throw Exception('error getting review whether added data!');
     }
   }
 
   Future<Review> getReviewById(String reviewId) async {
-    final reviewUrl = '$baseUrl/$reviewId';
+    final reviewUrl = '$baseUrl/review/$reviewId';
 
     try {
       final reviewResponse = await this.httpClient.get(reviewUrl);
@@ -63,7 +66,7 @@ class ReviewApiClient {
   }
 
   Future<List<Review>> getReviewsByEventId(String eventId) async {
-    final reviewUrl = '$baseUrl/$eventId';
+    final reviewUrl = '$baseUrl/review/$eventId';
     try {
       final reviewResponse = await this.httpClient.get(reviewUrl);
       List reviewData = jsonDecode(reviewResponse.body);
