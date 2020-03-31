@@ -27,11 +27,7 @@ class SearchPage extends StatelessWidget {
         child: BlocProvider<SearchBloc>(
           create: (contextC) => SearchBloc(eventRepository: eventRepository),
           child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SearchBar(),
-              ],
-            )
+            child: SearchBar()
           )
         ),
       )
@@ -79,52 +75,52 @@ class _SearchBarState extends State<SearchBar> {
           return null;
       }
     },
-    child: new SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: new TextField(
+    child: Column(
+      children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: new TextField(
 
-                    controller: _textController,
-                    autofocus: true,
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      suffixIcon: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            _textController.clear();
-                          }),
-                      hintText: 'Enter a keyword',),
-                    onEditingComplete: () {
-                      this.query = _textController.text;
-                      FocusScope.of(context).unfocus();
-                    }),
-              ),
-              SizedBox(height: 16,),
-              _buildSelect("Categories", interestList),
-//              _buildSelect("Distance", distanceList),
-              _buildSelect("Date", dateList),
-
-              SizedBox(
-                width: double.infinity,
-                child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 18),
-                    color: Colors.blue,
-                    child: Text(
-                      "Search",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
+            controller: _textController,
+            autofocus: false,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
                   onPressed: () {
-                      _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
+                    _textController.clear();
                   }),
-              )
-            ]
-            )
+              hintText: 'Enter a keyword',),
+            onEditingComplete: () {
+              this.query = _textController.text;
+              FocusScope.of(context).unfocus();
+            }),
+      ),
+      SizedBox(height: 16,),
+      _buildSelect("Categories", interestList),
+//              _buildSelect("Distance", distanceList),
+      _buildSelect("Date", dateList),
+
+      SizedBox(height: 30,),
+
+      SizedBox(
+        width: double.infinity,
+        child: FlatButton(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            color: Colors.blue,
+            child: Text(
+              "Search",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          onPressed: () {
+              _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
+          }),
+      )
+    ]
     ));
   }
 
@@ -146,7 +142,7 @@ class _SearchBarState extends State<SearchBar> {
                 });
             },
           ),
-          new Divider(),
+          new Divider(height: 16,),
           SizedBox(height: 4,),
         ],
       ),

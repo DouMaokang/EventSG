@@ -1,239 +1,242 @@
 import 'package:flutter/material.dart';
+import 'package:event_sg/repositories/repositories.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
+import 'package:event_sg/models/models.dart';
+import 'package:http/http.dart' as http;
+import 'package:event_sg/globals/login.dart';
 
-
-/// This is the stateful widget that the main application instantiates.
 class UserInfo extends StatefulWidget {
-
   @override
   _UserInfoState createState() => _UserInfoState();
 }
 
-
 class _UserInfoState extends State<UserInfo> {
-  final TextStyle textstyle =
-  TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-  final InputDecoration decoration = InputDecoration(border: OutlineInputBorder(),);
+
+  String userId = "d3980cd7-48c5-42a5-8353-02a70c51af45";
+  final UserRepository userRepository = UserRepository(
+      userApiClient: UserApiClient(httpClient: http.Client())
+  );
+
+  Future<User> userInfo;
+  Future<List<String>> categories;
+  String categoriesString = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+//    userId = Login().getUserId();
+    super.initState();
+    userInfo = userRepository.getUserById(userId);
+    categories = userRepository.getInterestedCategories(userId);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: 'Return to previous page',
-          onPressed: () {
-            Navigator.pop(
-              context,
-            );
-          },
+        title: Text(
+          "Personal Information",
+          style: TextStyle(fontSize: 18.0),
         ),
-        title: Align(
-            alignment: Alignment.centerLeft,
-            child: const Text('Edit/View Profile')
-        ),
-
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "Personal Information",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              new Container(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage:
-                      NetworkImage('https://silentmouth.com/wp-content/uploads/2010/11/facebook-generic-profile-pic-i.jpg'),
-                      backgroundColor: Colors.blue,
+      body: FutureBuilder<User>(
+        future: userInfo,
+        builder: (context, snapshot){
+          if(snapshot.hasData)
+            {
+            return SafeArea(
+                child: Center(
+                  child: ListView(
+                    children: <Widget>[
+                      SizedBox(height: 30),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[CircleAvatar(
+                            radius: 60,
+                            backgroundImage: AssetImage(snapshot.data.image),
+                          )]),
+                      SizedBox(height: 10),
 
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-
-                    ButtonBar(
-                        children: [
-                          FlatButton(
-                            child: Text(
-                              "Change photo",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            onPressed: () {},
-                            color: Colors.blue,
-                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                          ),
-
-                        ]
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'User Name(*)'
-                  ),
-
-                ),
-
-
-              ),
-              SizedBox(height: 10),
-
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-
-                          border: OutlineInputBorder(),
-                          labelText: 'Current Password(*)',
+                      SizedBox(
+                        height: 20.0,
+                        width: 200,
+                        child: Divider(
+                          color: Colors.teal[100],
                         ),
                       ),
-                    ),
-
-
-                    SizedBox(width: 10.0,),
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
-                          labelText: 'New Password(*)',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-              ),
-              SizedBox(height: 10),
-
-
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-
-
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email Address(*)'
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Contact Number(*)'
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 10),
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-
-                          border: OutlineInputBorder(),
-                          labelText: 'Occupation',
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(width: 10.0,),
-                    new Flexible(
-                      child: new TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          border: OutlineInputBorder(),
-                          labelText: 'Organization',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-              ),
-              SizedBox(height: 10),
-
-              new Container(
-                margin: const EdgeInsets.only(right: 10, left: 10),
-                child:TextFormField(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 40.0),
-                      border: OutlineInputBorder(),
-                      labelText: '  Interests'
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 30),
-
-              ButtonBar(
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        "Save changes",
-                        style: TextStyle(
+                      Card(
                           color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {},
-                      color: Colors.blue,
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    ),
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.account_circle,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(snapshot.data.userName,
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text("Username:", style: TextStyle(fontSize: 15),),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.account_circle,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(snapshot.data.firstName+' '+ snapshot.data.lastName,
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text("Name:", style: TextStyle(fontSize: 15),),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.mail,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(snapshot.data.email,
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text("Email:", style: TextStyle(fontSize: 15),),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.cake,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(snapshot.data.birthday,
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text("Birthday:", style: TextStyle(fontSize: 15),),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.phone,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(
+                              snapshot.data.phoneNum.toString(),
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text("Phone number", style: TextStyle(fontSize: 15)),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.work,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(
+                              'Student',
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text(snapshot.data.occupation, style: TextStyle(fontSize: 15)),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.location_city,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: Text(
+                              'NTU',
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18.0),
+                            ),
+                            title: Text(snapshot.data.organization, style: TextStyle(fontSize: 15),),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          margin:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.favorite,
+                              color: Colors.teal[900],
+                              size: 40,
+                            ),
+                            subtitle: _getCategories(),
+                            title: Text("Interested Categories", style: TextStyle(fontSize: 15),),
+                          )),
+                    ],
+                  ),
+                )
+            )
+            ;
+            }
+          else if(snapshot.hasError) {
+            return Text("Error");
+          }
+          else{
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            );
+          }
+        }
+      )
+    );
+  }
 
-                  ]
-              )
-
-
-            ],
-          ),
-        ),
-      ),
+  Widget _getCategories(){
+    return FutureBuilder<List<String>>(
+      future: categories,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          for (var i = 0; i < snapshot.data.length; i++){
+            categoriesString+=snapshot.data[i]+'; ';
+          }
+          return  Text(
+            categoriesString,
+            style:
+            TextStyle(color: Colors.black, fontSize: 18.0),
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error");
+        }
+        else {
+          return SizedBox(
+            child: CircularProgressIndicator(),
+            width: 60,
+            height: 60,
+          );
+        }
+      }
     );
   }
 }
-
