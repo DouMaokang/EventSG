@@ -25,8 +25,7 @@ class VenueDetailPage extends StatelessWidget{
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: new NetworkImage(
-                          'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                      image: AssetImage(venue.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -53,7 +52,7 @@ class VenueDetailPage extends StatelessWidget{
           ListTile(
             leading: CircleAvatar(
               radius: 20,
-              //backgroundImage: AssetImage(venue.owner.image),
+              backgroundImage: AssetImage(venue.owner.image),
             ),
             title: Text(
               venue.owner.userName,
@@ -139,11 +138,14 @@ class VenueDetailPage extends StatelessWidget{
             ),
           ),
           SizedBox(height: 16,),
+          /*
           EventLocation(
             venueName: venue.venueName,
             venueAddress: venue.address,
             postalCode: venue.postalCode,
           ),
+
+           */
           SizedBox(height: 16,),
         ],
         ),

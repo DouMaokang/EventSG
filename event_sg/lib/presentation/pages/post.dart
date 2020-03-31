@@ -35,11 +35,16 @@ class _PostPageState extends State<PostPage> {
             title: Text("Post"),
           ),
         ),
-        body: Column(
+
+      body:
+      SingleChildScrollView(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
 
+
+            SizedBox(height: 70,),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -154,6 +159,7 @@ class _PostPageState extends State<PostPage> {
           ],
         ),
       ),
+    )
     );
   }
 }
