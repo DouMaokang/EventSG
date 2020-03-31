@@ -1,13 +1,13 @@
 import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/presentation/pages/home.dart';
-import 'package:event_sg/presentation/pages/notification.dart';
+import 'package:event_sg/presentation/pages/notifications.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-
+import 'globals/login.dart';
 import 'blocs/blocs.dart';
 
 
@@ -54,13 +54,14 @@ class _AppState
 
     Homepage(),
     PostPage(),
-    Notifications(),
+    Notifications(userId : Login().getUserId()),
     UserAccount()
 
   ];
 
 
   int _selectedIndex = 0;
+
 
   Widget _bottomNavigationBar(int selectedIndex) => SizedBox(
     child: BottomNavigationBar(
@@ -97,6 +98,7 @@ class _AppState
       onTap: _onItemTapped,
       type: BottomNavigationBarType.fixed, // We need to add this line when having > 3 icons.
     ),
+
   );
 
   void _onItemTapped(int index) {

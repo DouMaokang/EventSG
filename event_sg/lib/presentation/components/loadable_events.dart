@@ -20,10 +20,8 @@ class _LoadableEventsState extends State<LoadableEvents> {
 
   var items = List<Event>();
 
-
   @override
   void initState() {
-
     super.initState();
     if (perPage <= widget.eventList.length) {
       setState(() {
