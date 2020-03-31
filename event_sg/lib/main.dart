@@ -2,6 +2,7 @@ import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notifications.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
+import 'package:event_sg/presentation/pages/user_login.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,15 @@ void main() {
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
+
+
   runApp(EventSG(eventRepository: eventRepository,));
 }
 
 class EventSG extends StatelessWidget {
+
+
+
   final EventRepository eventRepository;
 
   EventSG({ Key key,
@@ -30,14 +36,28 @@ class EventSG extends StatelessWidget {
       : assert(eventRepository != null),
         super(key: key);
 
+  _test() async {
+    await Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd");
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-      ),
+//      initialRoute: '/',
+//      routes: {
+//        // When navigating to the "/" route, build the FirstScreen widget.
+//        '/': (context) => UserLogin(),
+//        // When navigating to the "/second" route, build the SecondScreen widget.
+//      },
+//      debugShowCheckedModeBanner: false,
+//      theme: ThemeData(
+//        fontFamily: 'Roboto',
+//      ),
       home: App(),
     );
   }
@@ -80,7 +100,7 @@ class _AppState
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
-          title: Text('Notification',
+          title: Text('Notifications',
             style: TextStyle(fontSize: 13),
           ),
         ),
@@ -114,6 +134,9 @@ class _AppState
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
       body: MultiBlocProvider(

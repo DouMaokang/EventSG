@@ -31,7 +31,22 @@ class UserApiClient {
       print('Caught error: $e');
       throw Exception('error getting user data!');
     }
+  }
 
+  Future<List<String>> getInterestedCategories(String userId) async {
+    final userUrl = '$baseUrl/user/getCategories/$userId';
+    try {
+      final userResponse = await httpClient.get(userUrl);
+      List data = jsonDecode(userResponse.body);
+      final categories = List<String>();
+      for (var i = 0; i < data.length; i++){
+        categories.add(data[i]);
+      }
+      return categories;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting user data!');
+    }
 
   }
 

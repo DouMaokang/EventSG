@@ -46,7 +46,7 @@ class _LoadableEventsState extends State<LoadableEvents> {
           Container(
             child: FlatButton(
               child: Text("Load More",
-                style: TextStyle(color: Colors.blue, fontSize: 14),),
+                style: TextStyle(color: Colors.blue, fontSize: 16),),
               onPressed: () {
                 setState(() {
                   if ((present + perPage) > widget.eventList.length) {
@@ -63,7 +63,7 @@ class _LoadableEventsState extends State<LoadableEvents> {
             ),
           )
               :
-          new EventListItem(event: widget.eventList[index]);
+          new EventListItem(event: widget.eventList[index], goingToEventDetailsPage: true,);
         },
       );
     } else {
@@ -72,7 +72,7 @@ class _LoadableEventsState extends State<LoadableEvents> {
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         itemBuilder: (context, int index) {
-          return new EventListItem(event: widget.eventList[index]);
+          return new EventListItem(event: widget.eventList[index], goingToEventDetailsPage: true);
         },
         itemCount: widget.eventList.length,
       );

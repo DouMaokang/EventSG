@@ -83,18 +83,15 @@ class _EventTopBarState extends State<EventTopBar> {
 
                   if (state is AddReviewAdded) {
                     return IconButton(
-                        icon: const Icon(Icons.add_circle_outline),
+                        icon: const Icon(Icons.comment),
                         onPressed: () {
-                          Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
-                          // BlocProvider.of<EventSavedBloc>(context).add(UnSaveEvent(eventId: widget.eventId, userId: widget.userId));
+                          Toast.show("You have added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
                         }
                     );
                   } else {
                     return IconButton(
-                        icon: const Icon(Icons.add_circle_outline),
+                        icon: const Icon(Icons.comment),
                         onPressed: () {
-                          // Toast.show("Event Saved", context, duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
-                          // BlocProvider.of<AddReviewBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
                           Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context)=>ReviewAddingPage(eventId: widget.eventId)),

@@ -25,7 +25,6 @@ class EventApiClient {
     try {
       final eventResponse = await httpClient.get(eventUrl);
       List eventData = jsonDecode(eventResponse.body);
-      print(eventData);
       List<Event> events = eventData.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -39,7 +38,6 @@ class EventApiClient {
     try {
       final eventResponse = await httpClient.get(eventUrl);
       List eventData = jsonDecode(eventResponse.body);
-      print(eventData);
       List<Event> events = eventData.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -53,7 +51,6 @@ class EventApiClient {
     try{
       final response = await httpClient.get(eventUrl);
       List eventData = jsonDecode(response.body);
-      print(eventData);
       List<Event> events = eventData.map((value) => Event.fromJson(value)).toList();
       return events;
     } catch(e) {
@@ -68,7 +65,6 @@ class EventApiClient {
     try {
       final eventResponse = await httpClient.get(eventUrl);
       Map eventData = jsonDecode(eventResponse.body);
-      print(eventData);
       final event = Event.fromJson(eventData);
       return event;
     } catch (e) {
@@ -83,7 +79,6 @@ class EventApiClient {
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
-      print(data);
       List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -98,7 +93,20 @@ class EventApiClient {
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
-      print(data);
+      List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
+      return events;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
+  }
+
+  /// Returns a list of upcoming events (in 7 days) of a particular user.
+  Future<List<Event>> getSavedEvents({@required String userId}) async {
+    final url = '$baseUrl/event/all_saved_events/userId=$userId';
+    try {
+      final response = await httpClient.get(url);
+      List data = jsonDecode(response.body);
       List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -113,7 +121,6 @@ class EventApiClient {
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
-      print(data);
       List<Event> events = data.map((value) =>  Event.fromJson(value)).toList();
       return events;
     } catch (e) {
@@ -124,7 +131,7 @@ class EventApiClient {
 
   /// Returns a list of organized events by a user.
   Future<List<Event>> getOrganizedEvents({@required String userId}) async {
-    final url = '$baseUrl/event/organizer/$userId';
+    final url = '$baseUrl/event/organizer/userId=$userId';
     try {
       final response = await httpClient.get(url);
       List data = jsonDecode(response.body);
