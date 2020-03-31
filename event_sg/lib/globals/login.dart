@@ -15,13 +15,7 @@ class Login {
 
   String _userId = "d79595a8-412c-46ad-9bf6-043015e947fd"; // change to ""
 
-
-
-  bool _isLoggedIn = true; // change to false
-
-  String _invalidUSerMsg = "INVALID USER";
-  String _wrongPasswordMsg = "WRONG PASSWORD";
-  String _successMsg = "SUCCESS";
+  bool _isLoggedIn = false; // change to false
 
   factory Login() {
     return _login;
@@ -31,19 +25,9 @@ class Login {
 
   /// Changes the userId based on http response if the user is found.
   /// Else, throw an error.
-  Future<bool> logIn({@required String email, @required String password}) async {
-    final checkPasswordUrl = "${Urls.apiUrlBase}/user/login/$email/$password";
-    final passwordResponse = await http.get(checkPasswordUrl);
-    String userId = jsonDecode(passwordResponse.body);
-    if (userId.length != Uuid().v4().length) {
-      print("wrong password");
-      return false;
-    }
-    print("Login succeeded!");
-    _isLoggedIn = true;
+  logIn(String userId) {
     _userId = userId;
-    return true;
-
+    _isLoggedIn = true;
   }
 
   /// Changes the login status to false.

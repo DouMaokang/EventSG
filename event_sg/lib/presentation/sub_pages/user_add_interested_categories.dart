@@ -1,4 +1,6 @@
 import 'package:event_sg/globals/event_categories.dart';
+import 'package:event_sg/globals/urls.dart';
+import 'package:event_sg/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/blocs.dart';
@@ -75,7 +77,7 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
   void _submit() async {
     print(selectedItems);
     String userId = Login().getUserId();
-    String url ='http://127.0.0.1:8080/api/user/addCategory/$userId/';
+    String url ='${Urls.apiUrlBase}/user/addCategory/$userId/';
 
 
     for (var i = 0; i < selectedItems.length; i++) {
@@ -101,7 +103,10 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
             new FlatButton(
               child: new Text("Done"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Homepage()),
+                );
               },
             ),
           ],

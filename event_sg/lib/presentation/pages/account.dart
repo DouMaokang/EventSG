@@ -83,7 +83,6 @@ class UserAccount extends StatelessWidget {
 //                        Navigator.push(
 //                            context,
 //                            MaterialPageRoute(builder: (context) => EventsCreated()));
-                        Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd");
                       },
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
