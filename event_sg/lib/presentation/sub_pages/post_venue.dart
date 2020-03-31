@@ -1,4 +1,5 @@
 import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -81,17 +82,12 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
   void _submit() async {
     print(jsonMap);
     if(_formKey.currentState.validate()){
-      String url ='http://127.0.0.1:8080/api/venue/add';
+      String url ='${Urls.apiUrlBase}/venue/add';
       String response = await apiRequest(url, jsonMap);
       if(response!="")
         _showDialog();
       else
         _showSuccessDialog();
-//        else
-//          Navigator.push(
-//            context,
-//            MaterialPageRoute(builder: (context) => Homepage()),
-//          );
     }
   }
 
@@ -230,7 +226,7 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       inputFormatters: <TextInputFormatter>[
         WhitelistingTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
-        labelText: "Venue Area (square meter..)",
+        labelText: "Venue Area (m\u00b2)",
         hintText: "e.g 100",
       ),
       textInputAction: TextInputAction.done,
