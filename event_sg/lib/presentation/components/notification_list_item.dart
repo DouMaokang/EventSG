@@ -147,15 +147,15 @@ class _NotificationListItemState extends State<NotificationListItem> {
 
   String _subtitleController(String type) {
     if (type == "event") {
-      return "The event organizer you liked is going to hold a new event!";
+      return "The event organizer you liked is going to hold a new event";
     } else if (type == "venue") {
-      return "An event organizer would like to rent your venue.";
+      return "An event organizer would like to rent your venue";
     } else if (type == "registration") {
-      return "A user has registered your event.";
+      return "A user has registered your event";
     } else if (type == "deregistration") {
-      return "A user has cancelled his registration for you event.";
+      return "A user has cancelled his registration for you event";
     } else if (type == "review") {
-      return "A new review is provided for your event.";
+      return "A new review is provided for your event";
     }
   }
 

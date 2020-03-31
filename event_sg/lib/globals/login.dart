@@ -26,7 +26,7 @@ class Login {
 
   /// Changes the userId based on http response if the user is found.
   /// Else, throw an error.
-  logIn({@required String email, @required String password}) async {
+  Future<bool> logIn({@required String email, @required String password}) async {
     final url = "${Urls.apiUrlBase}/user/login/$email/$password";
     final response = await http.get(url);
     String userId = jsonDecode(response.body);
@@ -35,8 +35,10 @@ class Login {
     if (userId.length == Uuid().v4().length) {
       _isLoggedIn = true;
       print("Logged in!");
+      return true;
     } else {
-      throw("Authentication Failed!");
+      print("Login failed!");
+      return false;
     }
 
   }

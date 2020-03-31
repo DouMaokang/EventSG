@@ -70,7 +70,7 @@ class _EventTopBarState extends State<EventTopBar> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add_circle_outline),
+            icon: const Icon(Icons.comment),
             onPressed: () {
               print(widget.userId);
               if (_hasReviewed) {
