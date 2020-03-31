@@ -9,8 +9,11 @@ class Login {
 
   static final Login _login = Login._internal();
   // TODO: change this!
+
   String _userId = "8cb99803-e4e9-4955-9c6d-b442b9385b51"; // change to ""
+
   bool _isLoggedIn = true; // change to false
+
 
   factory Login() {
     return _login;
@@ -52,5 +55,6 @@ class Login {
       throw("Error: user not logged in!");
     }
   }
+
 
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:bloc/bloc.dart';
+import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/models/models.dart';
 import 'package:event_sg/repositories/repositories.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +24,13 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
     EventListEvent event,
   ) async* {
     // TODO: Add Logic
-    if (event is GetAllEvents) {
+    if (event is InitializeEventList) {
       yield EventListLoading();
       try {
-        final List<Event> eventList = await eventRepository.getAllEvents();
-        yield EventListLoaded(eventList: eventList);
+        print("inside event list bloc: ${Login().getUserId()}");
+        final List<Event> upcomingEventList = await eventRepository.getUpcomingEvents(Login().getUserId());
+        final List<Event> recommendedEventList = await eventRepository.getRecommendedEvents(Login().getUserId());
+        yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList);
       } catch (_) {
         yield EventListError();
       }

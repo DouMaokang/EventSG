@@ -8,7 +8,7 @@ class EventFooter extends StatelessWidget {
       child: Center(
         child: Column(
           children: <Widget>[
-            Text("@All Right Reserved"),
+            Text("@All Rights Reserved", style: TextStyle(fontWeight: FontWeight.w200),),
           ],
         ),
       ),

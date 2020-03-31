@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/blocs.dart';
-import 'package:event_sg/presentation/sub_pages/search_result_page.dart';
-import 'package:event_sg/repositories/event_repository.dart';
-import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
+import 'package:event_sg/repositories/repositories.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_sg/presentation/components/components.dart';
 
-import '../components/components.dart';
 
 class SearchPage extends StatelessWidget {
   final EventRepository eventRepository = EventRepository(
@@ -44,8 +43,8 @@ class _SearchBarState extends State<SearchBar> {
 
   List<String> interestList = ["None", "Cooking", "Art", "Nature",
     "Volunteer", "School"];
-  List<String> distanceList = ["None","< 1km", "< 5km"];
-  List<String> dateList = ["None","Weekday", "Weekend"];
+//  List<String> distanceList = ["None","< 1km", "< 5km"];
+  List<String> dateList = ["None","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   Map<String, String> selectedItems = {"Categories":"", "Distance":"", "Date":""};
   String query = "";
   final _textController = TextEditingController();
@@ -74,30 +73,36 @@ class _SearchBarState extends State<SearchBar> {
       }
     },
     child: new SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: <Widget>[
-              new TextField(
-                  controller: _textController,
-                  autofocus: true,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                    hintText: 'Enter a search term',),
-                  onEditingComplete: () {
-                    this.query = _textController.text;
-                    FocusScope.of(context).unfocus();
-                  }),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: new TextField(
+
+                    controller: _textController,
+                    autofocus: true,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _textController.clear();
+                          }),
+                      hintText: 'Enter a keyword',),
+                    onEditingComplete: () {
+                      this.query = _textController.text;
+                      FocusScope.of(context).unfocus();
+                    }),
+              ),
+              SizedBox(height: 16,),
               _buildSelect("Categories", interestList),
-              _buildSelect("Distance", distanceList),
+//              _buildSelect("Distance", distanceList),
               _buildSelect("Date", dateList),
+
               new Container(
-                margin: EdgeInsets.all(2),
+                margin: EdgeInsets.all(16),
                 child: FlatButton(
                   child: Text('Search'),
                   color: Colors.blueAccent,
@@ -112,16 +117,15 @@ class _SearchBarState extends State<SearchBar> {
 
   _buildSelect(String name, List<String> categoryList) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(name, style: TextStyle(
-            color: Colors.grey,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 15,),
               textAlign: TextAlign.left),
-          MultiSelectChip(
+          SingleSelectChip(
             categoryList,
             onSelectionChanged: (selectedChoice) {
               setState(() {
@@ -129,7 +133,8 @@ class _SearchBarState extends State<SearchBar> {
                 });
             },
           ),
-          new Divider()
+          new Divider(),
+          SizedBox(height: 4,),
         ],
       ),
     );

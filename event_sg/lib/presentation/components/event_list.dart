@@ -50,8 +50,8 @@ class EventListItem extends StatelessWidget {
             );
           },
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 16),
-            height: 110,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            height: 90,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -61,12 +61,9 @@ class EventListItem extends StatelessWidget {
               children: <Widget>[
                 Container(
                   height: double.infinity,
-                  width: 110,
+                  width: 90,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.amberAccent,
-                    ),
+//
                     borderRadius: BorderRadius.circular(2.0),
                     image: DecorationImage(
                       // TODO: request an image through http calls
@@ -82,12 +79,13 @@ class EventListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 6),
+                        padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
                         child: Text(
                           DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
                           style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal
+
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -98,38 +96,30 @@ class EventListItem extends StatelessWidget {
                         child: Text(
                           this.event.title,
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           softWrap: true,
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 7,
-                                child: Text(
-                                  // TODO: add venue attribute in Event model.
-                                  event.venue.venueName,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: true,
-                                ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(Icons.location_city, size: 14,),
+                            SizedBox(width: 6,),
+                            Text(
+                              event.venue.venueName,
+                              style: TextStyle(
+                                fontSize: 13,
                               ),
-//                              Expanded(
-//                                flex: 3,
-//
-//                              )
-
-                            ],
-                          ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: true,
+                            ),
+                          ],
                         ),
                       ),
                     ],),
@@ -143,31 +133,5 @@ class EventListItem extends StatelessWidget {
 
   }
 
-  /*
-  Widget _buildFavoriteButton(BuildContext context) {
 
-    final bloc = BlocProvider.of<EventSavedBloc>(context);
-    return StreamBuilder<List<Event>>(
-      stream: bloc.favoritesStream,
-      initialData: bloc.favorites,
-      builder: (context, snapshot) {
-        List<Event> favorites =
-        (snapshot.connectionState == ConnectionState.waiting)
-            ? bloc.favorites
-            : snapshot.data;
-        bool isFavorite = favorites.contains(event);
-
-        return FlatButton.icon(
-          // 2
-          onPressed: () => bloc.toggleRestaurant(event),
-          textColor: isFavorite ? Theme
-              .of(context)
-              .accentColor : null,
-          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
-          label: Text('Favorite'),
-        );
-      },
-    );
-  }
-  */
 }

@@ -10,8 +10,9 @@ class EventListEmpty extends EventListState {}
 class EventListLoading extends EventListState {}
 
 class EventListLoaded extends EventListState {
-  final List<Event> eventList;
-  const EventListLoaded({@required this.eventList}) : assert(eventList != null);
+  final List<Event> upcomingEventList;
+  final List<Event> recommendedEventList;
+  const EventListLoaded({@required this.upcomingEventList, @required this.recommendedEventList});
 }
 
 class EventListError extends EventListState {}

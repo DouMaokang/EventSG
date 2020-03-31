@@ -27,4 +27,15 @@ class Venue {
         venueName: json['venueName']
     );
   }
+
+  Map<String,dynamic> toJson()=>{
+    'venueId':venueId,
+    'address':address,
+    'postalCode':postalCode,
+    'ownerId':ownerId,
+    'rentalFee':rentalFee,
+    'area':area,
+    'description':description,
+    'venueName':venueName,
+  };
 }

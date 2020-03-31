@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class MultiSelectChip extends StatefulWidget {
+class SingleSelectChip extends StatefulWidget {
   final List<String> categoryList;
-  final Function(List<String>) onSelectionChanged;
+  final Function(String) onSelectionChanged;
 
-  MultiSelectChip(this.categoryList,{this.onSelectionChanged});
+  SingleSelectChip(this.categoryList,{this.onSelectionChanged});
   @override
-  _MultiSelectChipState createState() => _MultiSelectChipState();
+  _SingleSelectChipState createState() => _SingleSelectChipState();
 }
 
-class _MultiSelectChipState extends State<MultiSelectChip> {
+class _SingleSelectChipState extends State<SingleSelectChip> {
   // this function will build and return the choice list
 //  List<String> selectedChoices = List();
-  List<String> selectedChoices = List();
+  String selectedChoice = "";
 
   _buildChoiceList() {
     List<Widget> choices = List();
@@ -23,14 +23,12 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
           label: Text(item, style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12),),
-          selected: selectedChoices.contains(item),
+          selected: selectedChoice == item,
           onSelected: (selected) {
-            setState(() {
-              selectedChoices.contains(item)
-                  ? selectedChoices.remove(item)
-                  : selectedChoices.add(item);
-              widget.onSelectionChanged(selectedChoices);
-            });},
+          setState(() {
+          selectedChoice = item;
+          widget.onSelectionChanged(selectedChoice);
+        });},
         ),
       ));
     });

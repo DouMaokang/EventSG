@@ -11,17 +11,13 @@ import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
 import 'package:event_sg/globals/login.dart';
 
-class EventTopBar extends StatefulWidget implements PreferredSizeWidget {
+class EventTopBar extends StatefulWidget {
 
   final eventId;
   final userId;
 
   EventTopBar({@required this.eventId, @required this.userId});
 
-
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   _EventTopBarState createState() => _EventTopBarState();
@@ -46,6 +42,9 @@ class _EventTopBarState extends State<EventTopBar> {
 
   @override
   void initState() {
+    print("inside top bar: ${widget.eventId}");
+    print("inside top bar: ${widget.userId}");
+
     _checkHasSaved(eventId: widget.eventId, userId: widget.userId);
     _checkHasReviewed(eventId: widget.eventId, userId: widget.userId);
     super.initState();
@@ -54,6 +53,7 @@ class _EventTopBarState extends State<EventTopBar> {
 
   @override
   Widget build(BuildContext context) {
+
     _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
@@ -126,7 +126,8 @@ class _EventTopBarState extends State<EventTopBar> {
   }
 
   _checkHasSaved({String eventId, String userId}) async {
-    bool result = await eventRepository.hasSavedEvent(eventId: eventId, userId: userId);
+    bool result = await eventRepository.checkHasLikedEvent(eventId: eventId, userId: userId);
+    print("checkHasSaved result: ${result.toString()}");
     setState(() {
       _hasSaved = result;
     });
