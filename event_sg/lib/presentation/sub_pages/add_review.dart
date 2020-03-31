@@ -1,4 +1,5 @@
 import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/globals/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,21 +124,11 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
                           }
                       ),
                     ),
-
-                    // -------------------------------------------
-////                  OutlineButton(
-////                    highlightedBorderColor: Colors.black,
-////                    onPressed:  _submit,
-////                    child: const Text('Add'),
-//                  // -------------------------------------------
-//                  ),
                   ],
                 ),
               ],
             ),
           )
-
-
       ),
     );
   }
@@ -147,7 +138,7 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
     jsonMap["eventId"] = widget.eventId;
     print(jsonMap);
     if(_formKey.currentState.validate()){
-      String url ='http://127.0.0.1:8080/api/review/add';
+      String url ='${Urls.apiUrlBase}/review/add';
       String response = await apiRequest(url, jsonMap);
       if(response!="")
         _showDialog();
