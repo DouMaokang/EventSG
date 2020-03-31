@@ -16,7 +16,8 @@ class NotificationDefined {
     this.type,
     this.timeCreated,
     this.eventId,
-    this.userId});
+    this.userId
+  });
 
 
   factory NotificationDefined.fromJson(Map<String, dynamic> json) {

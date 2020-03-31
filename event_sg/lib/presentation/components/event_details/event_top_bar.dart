@@ -42,12 +42,9 @@ class _EventTopBarState extends State<EventTopBar> {
 
   @override
   void initState() {
-    print("inside top bar: ${widget.eventId}");
-    print("inside top bar: ${widget.userId}");
-
+    super.initState();
     _checkHasSaved(eventId: widget.eventId, userId: widget.userId);
     _checkHasReviewed(eventId: widget.eventId, userId: widget.userId);
-    super.initState();
   }
 
 
@@ -75,7 +72,6 @@ class _EventTopBarState extends State<EventTopBar> {
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
             onPressed: () {
-              _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
               print(widget.userId);
               if (_hasReviewed) {
                 Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
@@ -127,13 +123,13 @@ class _EventTopBarState extends State<EventTopBar> {
 
   _checkHasSaved({String eventId, String userId}) async {
     bool result = await eventRepository.checkHasLikedEvent(eventId: eventId, userId: userId);
-    print("checkHasSaved result: ${result.toString()}");
     setState(() {
       _hasSaved = result;
     });
   }
 
   _checkHasReviewed({String eventId, String userId}) async {
+    print(reviewRepository.hasReviewed(eventId: eventId, userId: userId));
     bool result = await reviewRepository.hasReviewed(eventId: eventId, userId: userId);
     setState(() {
       _hasReviewed = result;
