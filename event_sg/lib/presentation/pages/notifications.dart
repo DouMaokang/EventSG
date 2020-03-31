@@ -76,10 +76,8 @@ class _NotificationsState extends State<Notifications> {
         ),
       );
     } else {
-      return Container(
-        child: Column(
-            children: notificationList
-        ),
+      return Column(
+          children: notificationList
       );
     }
   }
@@ -95,21 +93,19 @@ class _NotificationsState extends State<Notifications> {
           ),
           // body: _buildSuggestions(),
           body: SingleChildScrollView(
-            child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: FutureBuilder(
-                      future: myFutureList,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData)
-                          return new Container();
-                        List<NotificationDefined> notifications = snapshot.data;
-                        return Container(
-                          child: _buildNotifications(notifications),
-                        );
-                      }
-                  ),
-                )
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: FutureBuilder(
+                  future: myFutureList,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return new Container();
+                    List<NotificationDefined> notifications = snapshot.data;
+                    return Container(
+                      child: _buildNotifications(notifications),
+                    );
+                  }
+              ),
             ),
           )
         );
