@@ -39,6 +39,14 @@ class _UserAccountState extends State<UserAccount> {
               alignment: Alignment.center,
               child: const Text('Profile')
           ),
+          /*  actions: <Widget>[
+           IconButton(
+             icon: const Icon(Icons.turned_in_not),
+             tooltip: 'Show saved events',
+             onPressed: () {
+             },
+           ),
+         ], */
         ),
       ),
       body: SingleChildScrollView(
@@ -81,6 +89,7 @@ class _UserAccountState extends State<UserAccount> {
                 ),
               ),
 
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 6.0),
                 child: Column(
@@ -120,6 +129,9 @@ class _UserAccountState extends State<UserAccount> {
                             context,
                             MaterialPageRoute(builder: (context) => EventsCreatedPage()));
                         // Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd"); todo error here
+//                        Navigator.push(
+//                            context,
+//                            MaterialPageRoute(builder: (context) => EventsCreated()));
                       },
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
@@ -165,6 +177,7 @@ class _UserAccountState extends State<UserAccount> {
                       title: Text('Log out',),
                       selected: true,
                       onTap: (){},
+
                     ),
                   ],
                 ),

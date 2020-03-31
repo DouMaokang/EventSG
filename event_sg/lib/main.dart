@@ -36,9 +36,6 @@ class EventSG extends StatelessWidget {
       : assert(eventRepository != null),
         super(key: key);
 
-  _test() async {
-    await Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd");
-  }
 
   // This widget is the root of your application.
   @override
@@ -48,17 +45,18 @@ class EventSG extends StatelessWidget {
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
-//      initialRoute: '/',
-//      routes: {
-//        // When navigating to the "/" route, build the FirstScreen widget.
-//        '/': (context) => UserLogin(),
-//        // When navigating to the "/second" route, build the SecondScreen widget.
-//      },
-//      debugShowCheckedModeBanner: false,
-//      theme: ThemeData(
-//        fontFamily: 'Roboto',
-//      ),
-      home: App(),
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => UserLogin(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+      },
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+      ),
+
+
+//      home: App(),
     );
   }
 }
@@ -74,7 +72,7 @@ class _AppState
 
     Homepage(),
     PostPage(),
-    Notifications(userId : Login().getUserId()),
+    Notifications(),
     UserAccount()
 
   ];

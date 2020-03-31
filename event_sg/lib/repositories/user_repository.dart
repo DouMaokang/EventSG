@@ -15,4 +15,5 @@ class UserRepository {
   Future<List<String>> getInterestedCategories(String userId) async {
     return userApiClient.getInterestedCategories(userId);
   }
+
 }

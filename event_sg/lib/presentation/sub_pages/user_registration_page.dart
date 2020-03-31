@@ -156,7 +156,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _showSuccessDialog() {
     // flutter defined function
-    Login().logIn(email: jsonMap["email"], password: jsonMap["password"]);
     showDialog(
       context: context,
       builder: (BuildContext context) {

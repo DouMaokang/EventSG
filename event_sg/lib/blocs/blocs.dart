@@ -24,3 +24,7 @@ export 'event_saved_state.dart';
 export 'add_review_bloc.dart';
 export 'add_review_event.dart';
 export 'add_review_state.dart';
+
+export 'user_login_bloc.dart';
+export 'user_login_event.dart';
+export 'user_login_state.dart';

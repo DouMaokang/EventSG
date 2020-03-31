@@ -2,6 +2,11 @@ import 'dart:async';
 
 import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/api_clients/event_api_client.dart';
+
+import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/globals/login.dart';
+
+
 import 'package:event_sg/models/models.dart';
 import 'package:event_sg/presentation/components/notification_list_item.dart';
 import 'package:event_sg/repositories/event_repository.dart';
@@ -11,10 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Notifications extends StatefulWidget {
+
   String userId;
-  Notifications({Key key, @required this.userId}) :
-        assert(userId != null),
-        super(key: key);
+
 
   @override
   _NotificationsState createState() => _NotificationsState();
@@ -37,7 +41,10 @@ class _NotificationsState extends State<Notifications> {
   void initState() {
     super.initState();
     // assign this variable your Future
-    myFutureList = notificationRepository.getNotificationList(widget.userId);
+
+    myFutureList = notificationRepository.getNotificationList(Login().getUserId());
+
+
   }
 
   Widget _buildNotifications(List<NotificationDefined> notifications) {
