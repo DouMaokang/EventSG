@@ -27,7 +27,6 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
     if (event is InitializeEventList) {
       yield EventListLoading();
       try {
-        print("inside event list bloc: ${Login().getUserId()}");
         final List<Event> upcomingEventList = await eventRepository.getUpcomingEvents(Login().getUserId());
         final List<Event> recommendedEventList = await eventRepository.getRecommendedEvents(Login().getUserId());
         final List<Event> allEvents = await eventRepository.getAllEvents();

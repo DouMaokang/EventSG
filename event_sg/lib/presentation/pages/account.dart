@@ -1,3 +1,4 @@
+import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
@@ -5,16 +6,8 @@ import '../sub_pages/events_created.dart';
 import '../sub_pages/events_saved.dart';
 
 /// This is the stateful widget that the main application instantiates.
-class UserAccount extends StatefulWidget {
-  const UserAccount({Key key}) : super(key: key);
+class UserAccount extends StatelessWidget {
 
-
-  @override
-  _UserAccountState createState() => _UserAccountState();
-}
-
-
-class _UserAccountState extends State<UserAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,9 +80,10 @@ class _UserAccountState extends State<UserAccount> {
                       title: Text('Events Created'),
                       trailing: Icon(Icons.chevron_right),
                       onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => EventsCreated()));
+//                        Navigator.push(
+//                            context,
+//                            MaterialPageRoute(builder: (context) => EventsCreated()));
+                        Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd");
                       },
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),

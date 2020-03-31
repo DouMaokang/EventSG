@@ -99,7 +99,7 @@ class VenueDetailPage extends StatelessWidget{
               style: TextStyle(fontSize: 16),
             ),
             subtitle: Text(
-              venue.owner.contactNumber,
+              venue.owner.contactNumber.toString(),
               style: TextStyle(fontSize: 14),
             ),
           ),

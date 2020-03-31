@@ -53,6 +53,7 @@ class VenueApiClient {
       final eventResponse = await httpClient.get(eventUrl);
       Map eventData = jsonDecode(eventResponse.body);
       print(eventData);
+      print("hahaha");
       Venue venue = Venue.fromJson(eventData);
       return venue;
     } catch (e) {

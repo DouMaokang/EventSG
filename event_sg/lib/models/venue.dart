@@ -18,6 +18,7 @@ class Venue {
     this.rentalFee, this.area, this.description, this.venueName, this.image});
 
   factory Venue.fromJson(Map<String, dynamic> json) {
+    print(json);
     return Venue(
         venueId: json['venue']['venueId'],
         address: json['venue']['address'],
