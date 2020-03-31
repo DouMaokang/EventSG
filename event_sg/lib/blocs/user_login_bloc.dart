@@ -24,17 +24,26 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
     UserLoginEvent event,
   ) async* {
     if (event is UserLoginClicked) {
+      yield UserLoginProcessing();
       print(("${Urls.apiUrlBase}/user/login/${event.email}/${event.password}"));
-      final response = await http.get("${Urls.apiUrlBase}/user/login/${event.email}/${event.password}");
-      String userId = jsonDecode(response.body);
-      print(userId);
-      if (userId.length != Uuid().v4().length) {
-        print("wrong password");
-        yield UserNotLoggedIn();
-      } else {
-        print("Login succeeded!");
-        Login().logIn(userId);
-        yield UserLoginValidated();
+      try {
+        final response = await http.get(
+            "${Urls.apiUrlBase}/user/login/${event.email}/${event.password}");
+
+        String userId = jsonDecode(response.body);
+        print(userId);
+        if (userId.length != Uuid()
+            .v4()
+            .length) {
+          print("wrong password");
+          yield UserLoginFailed();
+        } else {
+          print("Login succeeded!");
+          Login().logIn(userId);
+          yield UserLoginValidated();
+        }
+      } catch (_) {
+        yield UserLoginFailed();
       }
     }
   }

@@ -34,8 +34,11 @@ class _MyVenuesState extends State<MyVenues> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Venues')),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text('My Venues')),
+      ),
       body: FutureBuilder<List<Venue>>(
         future: myVenues,
         builder: (context, snapshot) {

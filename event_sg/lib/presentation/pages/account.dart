@@ -35,9 +35,10 @@ class _UserAccountState extends State<UserAccount> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(44.0),
         child: AppBar(
+          centerTitle: true,
           title: Align (
               alignment: Alignment.center,
-              child: const Text('Profile')
+              child: const Text('Profile', textAlign: TextAlign.center,)
           ),
           /*  actions: <Widget>[
            IconButton(

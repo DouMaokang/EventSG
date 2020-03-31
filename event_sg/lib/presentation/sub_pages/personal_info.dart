@@ -32,10 +32,13 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Personal Information",
-          style: TextStyle(fontSize: 18.0),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text(
+            "Personal Information",
+            style: TextStyle(fontSize: 18.0),
+          ),
         ),
       ),
       body: FutureBuilder<User>(

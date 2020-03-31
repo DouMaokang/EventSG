@@ -135,21 +135,24 @@ class _AppState
 
 
 
-    return Scaffold(
-      bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<SingleEventBloc>(
-            create: (contextA) => SingleEventBloc(eventRepository: eventRepository),
-          ),
-          BlocProvider<EventListBloc>(
-            create: (contextB) => EventListBloc(eventRepository: eventRepository),
-          ),
-          BlocProvider<SearchBloc>(
-            create: (contextC) => SearchBloc(eventRepository: eventRepository),
-          ),
-        ],
-        child: pages[_selectedIndex],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider<SingleEventBloc>(
+              create: (contextA) => SingleEventBloc(eventRepository: eventRepository),
+            ),
+            BlocProvider<EventListBloc>(
+              create: (contextB) => EventListBloc(eventRepository: eventRepository),
+            ),
+            BlocProvider<SearchBloc>(
+              create: (contextC) => SearchBloc(eventRepository: eventRepository),
+            ),
+          ],
+          child: pages[_selectedIndex],
+        ),
       ),
     );
   }
