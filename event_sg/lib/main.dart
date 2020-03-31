@@ -134,6 +134,7 @@ class _AppState
   Widget build(BuildContext context) {
 
 
+    print(Login().getUserId());
 
     return WillPopScope(
       onWillPop: () async => false,

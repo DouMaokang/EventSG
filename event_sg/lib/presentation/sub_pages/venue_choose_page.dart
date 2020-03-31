@@ -11,7 +11,7 @@ class VenueChoosePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('Venue List'),),
+      appBar: PreferredSize(child: AppBar(title: Text('Venue List'),), preferredSize: Size.fromHeight(44.0),),
       body: FutureBuilder<List<Venue>>(
         future: venueChooseBloc.getAllVenues(),
         builder: (BuildContext context, AsyncSnapshot<List<Venue>> snapshot) {

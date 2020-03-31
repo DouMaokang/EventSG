@@ -1,3 +1,4 @@
+import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       key: _formKey,
       autovalidate: true,
       child: Scaffold(
-          appBar: AppBar(title: Text("Create Account")),
+          appBar: PreferredSize(child: AppBar(title: Text("Create Account")), preferredSize: Size.fromHeight(44.0),),
           body: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
@@ -120,7 +121,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void _submit() async {
     print(jsonMap);
     if(_formKey.currentState.validate()){
-      String url ='http://127.0.0.1:8080/api/user/add';
+      String url ='${Urls.apiUrlBase}/api/user/add';
       String response = await apiRequest(url, jsonMap);
       if(response!="")
         _showDialog();

@@ -39,7 +39,7 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
     return Form(
       key: _formKey,
       child: Scaffold(
-          appBar: AppBar(title: Text("Post a Venue")),
+          appBar: PreferredSize(child: AppBar(title: Text("Post Venue")), preferredSize: Size.fromHeight(44.0),),
           body: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {FocusScope.of(context).requestFocus(new FocusNode());},
@@ -48,6 +48,19 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               children: <Widget>[
+                SizedBox(height: 28,),
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    "Venue Details",
+                    //textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+                SizedBox(height: 18,),
                 venueNameInput(),
                 const SizedBox(height: 16.0),
                 addressInput(),
@@ -61,17 +74,19 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
                 descriptionInput(),
                 const SizedBox(height: 16.0),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    OutlineButton(
-                      highlightedBorderColor: Colors.black,
-                      onPressed:  _submit,
-                      child: const Text('Post'),
+                FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    color: Colors.blue,
+                    child: Text(
+                      "Post",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
-                  ],
+                    onPressed: _submit,
                 ),
+                SizedBox(height: 36,)
               ],
             )
           ),

@@ -165,7 +165,7 @@ class Homepage extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      "The following events are recomended for you based on your interests",
+                      "The following events are recommended for you based on your interests",
                       style: TextStyle(color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
