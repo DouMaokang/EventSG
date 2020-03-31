@@ -95,11 +95,12 @@ class VenueDetailPage extends StatelessWidget{
           ListTile(
             leading: Icon(Icons.location_on),
             title: Text(
-              'Owner Contact Number',
+              'Owner Contact Number & Email',
               style: TextStyle(fontSize: 16),
             ),
             subtitle: Text(
-              venue.owner.contactNumber,
+              '',
+              //'65-'+venue.owner.phoneNum.toString()+' '*8+venue.owner.email,
               style: TextStyle(fontSize: 14),
             ),
           ),
