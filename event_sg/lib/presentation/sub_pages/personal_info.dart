@@ -11,8 +11,8 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-
-  String userId = "d3980cd7-48c5-42a5-8353-02a70c51af45";
+  String userId = Login().getUserId();
+//  String userId = "d3980cd7-48c5-42a5-8353-02a70c51af45";
   final UserRepository userRepository = UserRepository(
       userApiClient: UserApiClient(httpClient: http.Client())
   );
@@ -24,7 +24,6 @@ class _UserInfoState extends State<UserInfo> {
   @override
   void initState() {
     // TODO: implement initState
-//    userId = Login().getUserId();
     super.initState();
     userInfo = userRepository.getUserById(userId);
     categories = userRepository.getInterestedCategories(userId);
