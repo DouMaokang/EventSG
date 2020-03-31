@@ -44,6 +44,7 @@ class _NotificationsState extends State<Notifications> {
     super.initState();
     // assign this variable your Future
     myFutureList = notificationRepository.getNotificationList(widget.userId);
+
   }
 
   Widget _buildNotifications(List<NotificationDefined> notifications) {
@@ -51,35 +52,64 @@ class _NotificationsState extends State<Notifications> {
     for(var i = 0; i < notifications.length; i++){
       notificationList.add(NotificationListItem(notification: notifications[i]));
     }
-    return Container(
-      child: Column(
+
+
+
+
+    if (notificationList.length == 0) {
+      return Center(
+        heightFactor: 6,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.error_outline, size: 46,),
+            SizedBox(height: 24,),
+            Text(
+              "You don't have any notifications",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18
+              ),
+            ),
+
+          ],
+        ),
+      );
+    } else {
+      return Column(
           children: notificationList
-      ),
-    );
+      );
+    }
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
+      backgroundColor: Colors.white,
+
           appBar: AppBar(
             title: Text('Notifications'),
           ),
           // body: _buildSuggestions(),
           body: SingleChildScrollView(
-            child: Center(
-                child: FutureBuilder(
-                    future: myFutureList,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData)
-                        return new Container();
-                      List<NotificationDefined> notifications = snapshot.data;
-                      print(notifications);
-                      return Container(
-                        child: _buildNotifications(notifications),
-                      );
-                    }
-                )
+
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: FutureBuilder(
+                  future: myFutureList,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return new Container();
+                    List<NotificationDefined> notifications = snapshot.data;
+                    return Container(
+                      child: _buildNotifications(notifications),
+                    );
+                  }
+              ),
+
             ),
           )
         );

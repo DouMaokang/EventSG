@@ -44,8 +44,7 @@ class _EventFeedbackPageState extends State<EventFeedbackPage> {
                   child: Column(
                     children: <Widget>[
                       FeedbackHeader(
-                        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
-                        eventName: event.title,
+                        event: event,
                       ),
                       Column(
                         children: <Widget>[
