@@ -24,6 +24,9 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = true;
+  bool postClicked = false;
+
+
   Map jsonMap = {
     "userName": "",
     "firstName": "",
@@ -40,9 +43,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
+      autovalidate: true,
       child: Scaffold(
           appBar: AppBar(title: Text("Create an account")),
-          body: ListView(
+          body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -64,7 +73,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               const SizedBox(height: 16.0),
               organizationInput(),
               const SizedBox(height: 16.0),
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Row(
@@ -88,13 +96,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 children: <Widget>[
                   OutlineButton(
                     highlightedBorderColor: Colors.black,
-                    onPressed: _submittable() ? _submit : null,
+                    onPressed:() {
+                      postClicked = true;
+                      if (_submittable())
+                        _submit();
+                    },
                     child: const Text('Register'),
                   ),
                 ],
               ),
             ],
-          )),
+          ))),
     );
   }
 
@@ -141,7 +153,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
     );
   }
-
 
   void _showSuccessDialog() {
     // flutter defined function
@@ -190,15 +201,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget userNameInput() {
+    final _textController = TextEditingController();
     return TextFormField(
+      controller: _textController,
       keyboardType: TextInputType.text ,
       decoration: InputDecoration(
         labelText: "Username",
         hintText: "e.g Morgan",
       ),
       textInputAction: TextInputAction.done,
-      onChanged: (name)=> jsonMap["userName"] = name,
+      onChanged: (name) {
+        jsonMap["userName"] = name;
+      },
       validator: (username){
+        if(postClicked!=true && username.length==0)
+          return null;
         Pattern pattern =
             r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
         RegExp regex = new RegExp(pattern);
@@ -207,7 +224,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         }
         else
           return null;
-      },
+      }
     );
   }
 
@@ -271,7 +288,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
         hintText: "e.g abc@gmail.com",
       ),
       textInputAction: TextInputAction.done,
-      validator:(email)=>EmailValidator.validate(email)? null:"Invalid email address",
+      validator:(email){
+        if(postClicked==false && email.length==0)
+          {
+            return null;
+          }
+        else{
+          if(EmailValidator.validate(email))
+            return null;
+          else
+            return "Invalid email address";
+        }
+      },
       onChanged: (name)=> jsonMap["email"] = name,
     );
   }
@@ -286,6 +314,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
       textInputAction: TextInputAction.done,
       validator: (password){
+        if(postClicked!=true && password.length==0)
+          return null;
         Pattern pattern =
             r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
         RegExp regex = new RegExp(pattern);
@@ -312,9 +342,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
               lastDate: DateTime(2100));
         },
         validator: (chosenDate) {
+          if(postClicked!=true && chosenDate == null)
+            return null;
           var now = new DateTime.now();
-          if(chosenDate.isBefore(now) == false) {
-            return "Invalid date! Birthday date should be in the past.";
+          if(chosenDate!=null){
+            if(chosenDate.isBefore(now) == false) {
+              return "Invalid date! Birthday date should be in the past.";
+            }
           }
           return null;
         },
@@ -328,6 +362,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         inputFormatters: <TextInputFormatter>[
           WhitelistingTextInputFormatter.digitsOnly],
         validator: (phoneNum){
+          if(postClicked!=true && phoneNum == "")
+            return null;
           if(phoneNum.trim().length!=8){
             return "Invalid phone number. Length should = 8.";
           }
