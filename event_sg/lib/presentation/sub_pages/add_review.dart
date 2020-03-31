@@ -45,6 +45,45 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             children: <Widget>[
               const SizedBox(height: 36.0),
+              Container(
+                decoration: BoxDecoration(color: Colors.blue[50]),
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "Thanks for attending our event!",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                          ),
+                        ),
+                        SizedBox(width: 6,),
+                        Icon(Icons.event, color: Colors.black, size: 20),
+                      ],
+                    ),
+                  ),
+
+                  subtitle: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          "Your feedback is much appreciated. Please leave a review here!",
+                          style: TextStyle(color: Colors.black),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          softWrap: true,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 26.0),
               Center(
                 child: starBar(),
               ),

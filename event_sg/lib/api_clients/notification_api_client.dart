@@ -7,7 +7,9 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationApiClient {
+
   static const baseUrl = '${Urls.apiUrlBase}/notification';
+
   final http.Client httpClient;
 
   NotificationApiClient({

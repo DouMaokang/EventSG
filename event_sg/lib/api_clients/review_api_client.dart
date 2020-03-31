@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 
 
 class ReviewApiClient {
+
   static const baseUrl = '${Urls.apiUrlBase}/review';
+
   final http.Client httpClient;
 
   ReviewApiClient({
