@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:event_sg/globals/urls.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,23 @@ class Login {
   static final Login _login = Login._internal();
   // TODO: change this!
 
+
+  // yt's String _userId = "8cb99803-e4e9-4955-9c6d-b442b9385b51"; // change to ""
+
+
   // String _userId = "4a37270f-10ff-45fc-b407-debfc9256ecd"; // change to ""
 
 
-  String _userId = "d79595a8-412c-46ad-9bf6-043015e947fd"; // change to ""
+
+   String _userId = "d79595a8-412c-46ad-9bf6-043015e947fd"; // change to ""
+
+
+  bool _isLoggedIn = true; // change to false
 
   String _invalidUSerMsg = "INVALID USER";
   String _wrongPasswordMsg = "WRONG PASSWORD";
   String _successMsg = "SUCCESS";
 
-  bool _isLoggedIn = true; // change to false
   factory Login() {
     return _login;
   }

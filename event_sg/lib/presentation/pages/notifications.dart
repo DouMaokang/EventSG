@@ -45,7 +45,6 @@ class _NotificationsState extends State<Notifications> {
     // assign this variable your Future
     myFutureList = notificationRepository.getNotificationList(widget.userId);
 
-
   }
 
   Widget _buildNotifications(List<NotificationDefined> notifications) {
@@ -53,6 +52,7 @@ class _NotificationsState extends State<Notifications> {
     for(var i = 0; i < notifications.length; i++){
       notificationList.add(NotificationListItem(notification: notifications[i]));
     }
+
 
 
 
@@ -86,13 +86,16 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
       backgroundColor: Colors.white,
+
           appBar: AppBar(
             title: Text('Notifications'),
           ),
           // body: _buildSuggestions(),
           body: SingleChildScrollView(
+
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: FutureBuilder(
@@ -106,6 +109,7 @@ class _NotificationsState extends State<Notifications> {
                     );
                   }
               ),
+
             ),
           )
         );

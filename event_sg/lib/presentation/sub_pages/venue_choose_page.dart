@@ -38,28 +38,125 @@ Widget buildVenueList(List<Venue> venues,BuildContext context) {
 }
 Widget buildVenueWidget(Venue venue,BuildContext context) {
 
-
-  return Container (
-  padding: EdgeInsets.all(16.0),
-  child: Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VenueDetailPage(venue: venue)),
+      );
+    },
+    child: Container(
+      padding: EdgeInsets.all(16.0),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      height: 130,
+      width: double.infinity,
+      decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Row(
         children: <Widget>[
           Container(
-            width: 150,
-            height: 150,
-
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new NetworkImage(
+            height: double.infinity,
+            width: 120,
+            decoration: BoxDecoration(
+  //
+              borderRadius: BorderRadius.circular(2.0),
+              image: DecorationImage(
+                image: NetworkImage(
                     'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          SizedBox(width: 10,),
+          SizedBox(width: 16,),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                /*
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                  child: Text(
+                    DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: true,
+                  ),
+                ),
+                 */
+                  Text(
+                    venue.venueName,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                  ),
+                  Text(
+                    venue.area.toString()+'m2'+' '*8+'\$'+venue.rentalFee.toString()+' per hour',
+                    style:TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(Icons.location_city, size: 14,),
+                      SizedBox(width: 6,),
+                      Text(
+                        venue.address,
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+/*
+  return Container (
+  padding: EdgeInsets.all(16.0),
+  //
+  child: Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: <Widget>[
+  //
+  Container(
+  width: 150,
+  height: 150,
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  decoration: new boxdecoration(
+  image: new decorationimage(
+  image: new networkimage(
+  'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+  fit: BoxFit.cover,
+  ),
+  ),
+  ),
+  SizedBox(width: 10,),
+
+  Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
             children:<Widget>[
                   Text(
                     venue.venueName+'\n',
@@ -106,4 +203,6 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
             ],
           ),
         );
+
+ */
 }

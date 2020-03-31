@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class EventLocation extends StatefulWidget {
   // Define the center of the in-app map display.
   final String venueName;
@@ -11,14 +10,11 @@ class EventLocation extends StatefulWidget {
   final int postalCode;
   EventLocation({this.venueName, this.venueAddress, this.postalCode});
 
-
   @override
   _EventLocationState createState() => _EventLocationState();
 }
 
 class _EventLocationState extends State<EventLocation> {
-
-
   @override
   void initState() {
     _convertAddressToLatLng(widget.venueAddress);
@@ -42,7 +38,8 @@ class _EventLocationState extends State<EventLocation> {
                   Align(
                     child: Text(
                       "Location",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     alignment: Alignment.topLeft,
                   ),
@@ -66,8 +63,7 @@ class _EventLocationState extends State<EventLocation> {
                         snippet: widget.venueAddress,
                         onTap: () {
                           _launchGoogleMapPlace();
-                        }
-                    ),
+                        }),
                     position: _venueLatLng,
                   )
                 }),
@@ -77,11 +73,15 @@ class _EventLocationState extends State<EventLocation> {
             ),
           ],
         ),
-        SizedBox(height: 8,),
+        SizedBox(
+          height: 8,
+        ),
         Center(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -94,7 +94,9 @@ class _EventLocationState extends State<EventLocation> {
                       },
                     ),
                   ),
-                  SizedBox(width: 16,),
+                  SizedBox(
+                    width: 16,
+                  ),
                   CircleAvatar(
                     backgroundColor: Colors.grey[200],
                     child: IconButton(
@@ -104,7 +106,9 @@ class _EventLocationState extends State<EventLocation> {
                       },
                     ),
                   ),
-                  SizedBox(width: 16,),
+                  SizedBox(
+                    width: 16,
+                  ),
                   CircleAvatar(
                     backgroundColor: Colors.grey[200],
                     child: IconButton(
@@ -124,8 +128,10 @@ class _EventLocationState extends State<EventLocation> {
   }
 
   _getCurrentLocation() async {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    List<Placemark> p = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    List<Placemark> p = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = p[0];
     setState(() {
       _currentAddress = "${place.name}, ${place.postalCode}, ${place.country}";
@@ -133,8 +139,10 @@ class _EventLocationState extends State<EventLocation> {
   }
 
   _launchGoogleMapPlace() async {
-    String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
-    final url = "https://www.google.com/maps/search/?api=1&query=$destinationUrl";
+    String destinationUrl = Uri.encodeComponent(
+        "${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
+    final url =
+        "https://www.google.com/maps/search/?api=1&query=$destinationUrl";
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: true);
     } else {
@@ -143,14 +151,15 @@ class _EventLocationState extends State<EventLocation> {
   }
 
   _launchGoogleMapRoute({String travelMode}) async {
-
     String originUrl = Uri.encodeComponent(_currentAddress);
     // TODO: change address format
-    String destinationUrl = Uri.encodeComponent("${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
+    String destinationUrl = Uri.encodeComponent(
+        "${widget.venueName}, ${widget.venueAddress}, ${widget.postalCode}, Singapore");
     String travelModeUrl = Uri.encodeComponent(travelMode);
 
     // This launches google map.
-    final url = "https://www.google.com/maps/dir/?api=1&origin=$originUrl&destination=$destinationUrl&travelmode=$travelModeUrl";
+    final url =
+        "https://www.google.com/maps/dir/?api=1&origin=$originUrl&destination=$destinationUrl&travelmode=$travelModeUrl";
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: true);
     } else {
@@ -158,18 +167,18 @@ class _EventLocationState extends State<EventLocation> {
     }
   }
 
-  _convertAddressToLatLng(String address) async
-  {
+  _convertAddressToLatLng(String address) async {
     // TODO: Change address format
     try {
-      List<Placemark> p = await Geolocator().placemarkFromAddress("Singapore ${widget.postalCode}");
+      List<Placemark> p = await Geolocator()
+          .placemarkFromAddress("Singapore ${widget.postalCode}");
       Placemark place = p[0];
       setState(() {
-        _venueLatLng = LatLng(place.position.latitude, place.position.longitude);
+        _venueLatLng =
+            LatLng(place.position.latitude, place.position.longitude);
       });
     } catch (e) {
       throw 'Could not translate $address';
     }
   }
-
 }
