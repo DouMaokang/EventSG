@@ -99,8 +99,8 @@ class VenueDetailPage extends StatelessWidget{
               style: TextStyle(fontSize: 16),
             ),
             subtitle: Text(
-              '',
-              //'65-'+venue.owner.phoneNum.toString()+' '*8+venue.owner.email,
+              '65-'+venue.owner.phoneNum.toString()+' '*8+venue.owner.email,
+              venue.owner.phoneNum.toString(),
               style: TextStyle(fontSize: 14),
             ),
           ),

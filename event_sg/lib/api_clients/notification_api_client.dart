@@ -17,7 +17,7 @@ class NotificationApiClient {
   }) : assert(httpClient != null);
 
   Future<List<NotificationDefined>> getNotificationList(String userId) async {
-    final notificationUrl = '$baseUrl/notification/$userId';
+    final notificationUrl = '$baseUrl/$userId';
     try {
 
       final notificationResponse = await httpClient.get(notificationUrl);
