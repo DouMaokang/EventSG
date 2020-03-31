@@ -46,87 +46,87 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
     return Form(
       key: _formKey,
       child: Scaffold(
-          appBar: AppBar(title: Text("Add a Review")),
-          body: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {FocusScope.of(context).requestFocus(new FocusNode());},
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              children: <Widget>[
-                const SizedBox(height: 36.0),
-                Container(
-                  decoration: BoxDecoration(color: Colors.blue[50]),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          appBar: AppBar(title: Text("Add Review")),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {FocusScope.of(context).requestFocus(new FocusNode());},
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: <Widget>[
+                  const SizedBox(height: 36.0),
+                  Container(
+                    decoration: BoxDecoration(color: Colors.blue[50]),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Thanks for attending our event!",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20
+                      title: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Thanks for attending our event",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 6,),
-                          Icon(Icons.event, color: Colors.black, size: 20),
+                            SizedBox(width: 6,),
+                            Icon(Icons.event_available, color: Colors.black, size: 20),
+                          ],
+                        ),
+                      ),
+
+                      subtitle: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Your feedback is much appreciated. Please leave a review here.",
+                              style: TextStyle(color: Colors.black),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          )
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 26.0),
+                  Center(
+                    child: starBar(),
+                  ),
+                  contentInput(),
+                  const SizedBox(height: 34.0),
 
-                    subtitle: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            "Your feedback is much appreciated. Please leave a review here!",
-                            style: TextStyle(color: Colors.black),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        )
-                      ],
+                  BlocProvider<AddReviewBloc>(
+                    create: (context) => AddReviewBloc(reviewRepository: reviewRepository),
+
+                    child: BlocBuilder<AddReviewBloc, AddReviewState>(
+                      // ignore: missing_return
+                        builder: (context, state) {
+                          return FlatButton(
+                              padding: EdgeInsets.symmetric(vertical: 18),
+                              color: Colors.blue,
+                              child: Text(
+                                "Submit",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              onPressed: () {
+                                BlocProvider.of<AddReviewBloc>(context).add(AddReview());
+                              }
+                          );
+                        }
                     ),
                   ),
-                ),
-                const SizedBox(height: 26.0),
-                Center(
-                  child: starBar(),
-                ),
-                contentInput(),
-                const SizedBox(height: 26.0),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    BlocProvider<AddReviewBloc>(
-                      create: (context) => AddReviewBloc(reviewRepository: reviewRepository),
-
-                      child: BlocBuilder<AddReviewBloc, AddReviewState>(
-                        // ignore: missing_return
-                          builder: (context, state) {
-                            return OutlineButton(
-                                child: Text("Add"),
-                                highlightedBorderColor: Colors.black,
-                                onPressed: () {
-                                  // Toast.show("Event Saved", context, duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
-                                  // BlocProvider.of<AddReviewBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
-                                  _submit();
-                                  BlocProvider.of<AddReviewBloc>(context).add(AddReview());
-                                }
-                            );
-                          }
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           )
       ),
@@ -155,7 +155,7 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Error"),
-          content: new Text("There is an unknown error!."),
+          content: new Text("There is an unknown error!"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -178,18 +178,58 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Success"),
-          content: new Text("Review added!"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Done"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          elevation: 2,
+          backgroundColor: Colors.white,
+
+          title: Text(
+            'Review Comfirmation',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+            child: ListBody(
+              children: <Widget>[
+                Text('Thanks for taking time to give us your review'),
+                SizedBox(height: 8,),
+                Text('Please click confirm button to send the review'),
+              ],
+            ),
+          ),
+          actions: [
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();},
+              },
+            ),
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                'Confirm',
+                style: TextStyle(fontWeight: FontWeight.bold),),
+              color: Colors.blue,
+              onPressed: () {
+                _submit();
+                BlocProvider.of<AddReviewBloc>(context).add(AddReview());
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
             ),
           ],
         );
+
       },
     );
   }

@@ -22,15 +22,18 @@ class SearchPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Search"),
       ),
-      body: BlocProvider<SearchBloc>(
-        create: (contextC) => SearchBloc(eventRepository: eventRepository),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SearchBar(),
-            ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: BlocProvider<SearchBloc>(
+          create: (contextC) => SearchBloc(eventRepository: eventRepository),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SearchBar(),
+              ],
+            )
           )
-        )
+        ),
       )
     );
   }
@@ -77,7 +80,6 @@ class _SearchBarState extends State<SearchBar> {
       }
     },
     child: new SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: <Widget>[
               Padding(
@@ -105,15 +107,22 @@ class _SearchBarState extends State<SearchBar> {
 //              _buildSelect("Distance", distanceList),
               _buildSelect("Date", dateList),
 
-              new Container(
-                margin: EdgeInsets.all(16),
+              SizedBox(
+                width: double.infinity,
                 child: FlatButton(
-                  child: Text('Search'),
-                  color: Colors.blueAccent,
-                  textColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 18),
+                    color: Colors.blue,
+                    child: Text(
+                      "Search",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
                   onPressed: () {
                       _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
-                  }))
+                  }),
+              )
             ]
             )
     ));
