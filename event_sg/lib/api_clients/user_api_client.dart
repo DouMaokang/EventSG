@@ -47,6 +47,7 @@ class UserApiClient {
       print('Caught error: $e');
       throw Exception('error getting user data!');
     }
+
   }
 
 }

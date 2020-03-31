@@ -1,14 +1,17 @@
 import 'package:event_sg/globals/login.dart';
-import 'package:event_sg/presentation/pages/home.dart';
+import 'package:event_sg/globals/urls.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/repositories/repositories.dart';
+import 'package:event_sg/api_clients/api_clients.dart';
+import 'package:http/http.dart' as http;
+
 
 void main(){
   runApp(ReviewAddingPage());
@@ -23,6 +26,11 @@ class ReviewAddingPage extends StatefulWidget {
 }
 
 class _ReviewAddingPageState extends State<ReviewAddingPage> {
+
+  final ReviewRepository reviewRepository = ReviewRepository(
+      reviewApiClient: ReviewApiClient(httpClient: http.Client())
+  );
+
   String eventId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _rating = 0.0;
@@ -39,31 +47,89 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
       key: _formKey,
       child: Scaffold(
           appBar: AppBar(title: Text("Add a Review")),
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-            children: <Widget>[
-              const SizedBox(height: 36.0),
-              Center(
-                child: starBar(),
-              ),
-              contentInput(),
-              const SizedBox(height: 26.0),
+          body: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {FocusScope.of(context).requestFocus(new FocusNode());},
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              children: <Widget>[
+                const SizedBox(height: 36.0),
+                Container(
+                  decoration: BoxDecoration(color: Colors.blue[50]),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  OutlineButton(
-                    highlightedBorderColor: Colors.black,
-                    onPressed:  _submit,
-                    child: const Text('Add'),
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "Thanks for attending our event!",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20
+                            ),
+                          ),
+                          SizedBox(width: 6,),
+                          Icon(Icons.event, color: Colors.black, size: 20),
+                        ],
+                      ),
+                    ),
+
+                    subtitle: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            "Your feedback is much appreciated. Please leave a review here!",
+                            style: TextStyle(color: Colors.black),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: true,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ],
-          )),
+                ),
+                const SizedBox(height: 26.0),
+                Center(
+                  child: starBar(),
+                ),
+                contentInput(),
+                const SizedBox(height: 26.0),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    BlocProvider<AddReviewBloc>(
+                      create: (context) => AddReviewBloc(reviewRepository: reviewRepository),
+
+                      child: BlocBuilder<AddReviewBloc, AddReviewState>(
+                        // ignore: missing_return
+                          builder: (context, state) {
+                            return OutlineButton(
+                                child: Text("Add"),
+                                highlightedBorderColor: Colors.black,
+                                onPressed: () {
+                                  // Toast.show("Event Saved", context, duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+                                  // BlocProvider.of<AddReviewBloc>(context).add(SaveEvent(eventId: widget.eventId, userId: widget.userId));
+                                  _submit();
+                                  BlocProvider.of<AddReviewBloc>(context).add(AddReview());
+                                }
+                            );
+                          }
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+      ),
     );
   }
 
@@ -72,7 +138,7 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
     jsonMap["eventId"] = widget.eventId;
     print(jsonMap);
     if(_formKey.currentState.validate()){
-      String url ='http://127.0.0.1:8080/api/review/add';
+      String url ='${Urls.apiUrlBase}/review/add';
       String response = await apiRequest(url, jsonMap);
       if(response!="")
         _showDialog();
