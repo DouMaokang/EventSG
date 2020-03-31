@@ -45,7 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       key: _formKey,
       autovalidate: true,
       child: Scaffold(
-          appBar: AppBar(title: Text("Create an account")),
+          appBar: AppBar(title: Text("Create Account")),
           body: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
@@ -84,27 +84,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     GestureDetector(
                       onTap: () => _setAgreedToTOS(!_agreedToTOS),
                       child: const Text(
-                        'I agree to the Terms of Services & Privacy Policy',
+                        'I agree to the Terms of Services Policy',
                       ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  OutlineButton(
-                    highlightedBorderColor: Colors.black,
-                    onPressed:() {
-                      postClicked = true;
-                      if (_submittable())
-                        _submit();
-                    },
-                    child: const Text('Register'),
+
+              FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  color: Colors.blue,
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
-                ],
+                onPressed:() {
+                  postClicked = true;
+                  if (_submittable())
+                    _submit();
+                },
               ),
+              SizedBox(height: 36,)
             ],
           ))),
     );
