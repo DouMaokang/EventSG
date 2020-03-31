@@ -33,7 +33,9 @@ class ReviewApiClient {
     final url = '$baseUrl/has_reviewed/$eventId/$userId';
     try {
       final response = await httpClient.get(url);
+      // print( response.body);
       bool data = jsonDecode(response.body);
+
       if (data) {
         return true; // has added review
       } else {

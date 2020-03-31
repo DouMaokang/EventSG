@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
+import 'package:event_sg/globals/login.dart';
 
 class EventTopBar extends StatefulWidget implements PreferredSizeWidget {
 
@@ -53,7 +54,7 @@ class _EventTopBarState extends State<EventTopBar> {
 
   @override
   Widget build(BuildContext context) {
-    _checkHasReviewed(eventId: widget.eventId, userId: widget.userId);
+    _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: AppBar(
@@ -74,7 +75,8 @@ class _EventTopBarState extends State<EventTopBar> {
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
             onPressed: () {
-              _checkHasReviewed(eventId: widget.eventId, userId: widget.userId);
+              _checkHasReviewed(eventId: widget.eventId, userId: Login().getUserId());
+              print(widget.userId);
               if (_hasReviewed) {
                 Toast.show("You have already added a review", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.TOP); // remove if you want
               } else {
