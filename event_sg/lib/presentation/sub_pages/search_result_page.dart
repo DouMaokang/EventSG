@@ -33,7 +33,7 @@ class SearchResultPage extends StatelessWidget {
                 Icon(Icons.error_outline, size: 46,),
                 SizedBox(height: 24,),
                 Text(
-                    "Sorry, We didn't find any events",
+                    "Sorry, we didn't find any events",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 18
