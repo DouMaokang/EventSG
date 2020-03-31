@@ -2,7 +2,7 @@ class User {
   String userId;
   String userName;
   String organization;
-  String contactNumber;
+  int contactNumber;
   String image;
   String email;
 
