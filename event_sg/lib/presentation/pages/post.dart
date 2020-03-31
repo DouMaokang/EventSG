@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_event.dart';
-import 'package:event_sg/presentation/sub_pages/post_event2.dart';
+import 'package:event_sg/presentation/sub_pages/post_event_page.dart';
 import 'package:event_sg/presentation/sub_pages/post_venue.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _PostPageState extends State<PostPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context)=>VenuePostingPage()),
+                        MaterialPageRoute(builder: (context)=>EventPostPage()),
                       );
                     },
                     contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
