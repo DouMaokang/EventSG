@@ -29,6 +29,10 @@ class EventRepository {
     return eventApiClient.getUpcomingEvents(userId: userId);
   }
 
+  Future<List<Event>> getSavedEvents(String userId) async {
+    return eventApiClient.getSavedEvents(userId: userId);
+  }
+
   Future<List<Event>> searchEventByTitle(String keyword) async {
     return eventApiClient.searchEventByTitle(keyword);
   }

@@ -1,274 +1,97 @@
+
+import 'package:event_sg/api_clients/api_clients.dart';
+import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/models/event.dart';
+import 'package:event_sg/presentation/components/event_list.dart';
+import 'package:event_sg/presentation/components/loadable_events.dart';
+import 'package:event_sg/repositories/event_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter/services.dart';
-
-
-/// This is the stateful widget that the main application instantiates.
-class EventsRegistered extends StatefulWidget {
-
-  @override
-  _EventsRegisteredState createState() => _EventsRegisteredState();
-}
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:event_sg/blocs/blocs.dart';
 
 
-class _EventsRegisteredState extends State<EventsRegistered> {
-  final TextStyle textstyle =
-  TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-  final InputDecoration decoration = InputDecoration(border: OutlineInputBorder(),);
+class EventsRegisteredPage extends StatelessWidget {
+  String userId = Login().getUserId();
+  EventsRegisteredPage({Key key}) : super(key: key);
+  final EventRepository eventRepository = EventRepository(
+      eventApiClient: EventApiClient(httpClient: http.Client())
+  );
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: 'Return to previous page',
-          onPressed: () {
-            Navigator.pop(
-              context,
-            );
-          },
-        ),
-        title: Align(
-            alignment: Alignment.centerLeft,
-            child: const Text('Edit/View Profile')
-        ),
-
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "Events Registered",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
+    return BlocProvider<EventListBloc>(
+      create: (contextB) => EventListBloc(eventRepository: eventRepository),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(44.0),
+          child: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  Navigator.pop(
+                      context
+                  );
+                },
               ),
-              SizedBox(height: 20),
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new NetworkImage('http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Container(
-
-                      width: 150,
-                      height: 150,
-                      padding: const EdgeInsets.all(5.0),
-
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: " Event 1\n \n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.location_on,color: Colors.blue, size: 14),
-
-
-                            ),
-                            TextSpan(
-                              text: " Marina Bay Sands\n\n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            ),
-                            TextSpan(
-                              text: " 5 April, 2020\n 15:00 - 18:30",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            )
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              title: Text(
+                "Registered Events",
               ),
-              SizedBox(height: 20),
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new NetworkImage('http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Container(
-
-                      width: 150,
-                      height: 150,
-                      padding: const EdgeInsets.all(5.0),
-
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: " Event 2\n \n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.location_on,color: Colors.blue, size: 14),
-
-
-                            ),
-                            TextSpan(
-                              text: " Marina Bay Sands\n\n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            ),
-                            TextSpan(
-                              text: " 6 April, 2020\n 15:00 - 18:30",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            )
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    BlocProvider.of<EventListBloc>(context)
+                        .add(InitializeEventList());
+                  },
                 ),
-              ),
-              SizedBox(height: 20),
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new NetworkImage('http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Container(
-
-                      width: 150,
-                      height: 150,
-                      padding: const EdgeInsets.all(5.0),
-
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: " Event 3\n \n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.location_on,color: Colors.blue, size: 14),
-
-
-                            ),
-                            TextSpan(
-                              text: " Marina Bay Sands\n\n",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            ),
-                            TextSpan(
-                              text: " 7 April, 2020\n 15:00 - 18:30",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            )
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-
-
-
-
-
-
-
-
-              /*  new Container(
-                     height: MediaQuery.of(context).size.height / 2,
-                     margin: const EdgeInsets.only(right: 10, left: 100),
-                     child: TextFormField(
-                       decoration: InputDecoration(
-                           border: OutlineInputBorder(),
-                           labelText: 'User Name(*)'
-                       ),
-
-                     ),
-
-
-                   ),*/
-
-
-
-
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-            ],
+              ]
           ),
+        ),
+        body: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          children: <Widget>[
+            BlocBuilder<EventListBloc, EventListState>(
+              // ignore: missing_return
+              builder: (context, state) {
+                if (state is EventListEmpty) {
+                  BlocProvider.of<EventListBloc>(context)
+                      .add(InitializeEventList());
+                  return Center(
+                    child: Text(
+                      'Events not loaded!',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  );
+                } else if (state is EventListLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is EventListLoaded) {
+                  return BlocProvider<SingleEventBloc>(
+                    create: (context) => SingleEventBloc(eventRepository: eventRepository),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (context, int index) {
+                        return new EventListItem(event: state.registeredEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
+                      },
+                      itemCount: state.registeredEventList.length,
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      'Something went wrong!',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

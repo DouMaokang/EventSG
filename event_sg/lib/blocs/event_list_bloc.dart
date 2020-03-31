@@ -30,7 +30,10 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
         final List<Event> upcomingEventList = await eventRepository.getUpcomingEvents(Login().getUserId());
         final List<Event> recommendedEventList = await eventRepository.getRecommendedEvents(Login().getUserId());
         final List<Event> allEvents = await eventRepository.getAllEvents();
-        yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList, allEvents: allEvents);
+        final List<Event> createdEventList = await eventRepository.getOrganizedEvents(Login().getUserId());
+        final List<Event> registeredEventList = await eventRepository.getRegisteredEvents(Login().getUserId());
+        final List<Event> savedEventList = await eventRepository.getSavedEvents(Login().getUserId());
+        yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList, allEvents: allEvents, registeredEventList: registeredEventList, createdEventList: createdEventList, savedEventList: savedEventList);
       } catch (_) {
         yield EventListError();
       }
