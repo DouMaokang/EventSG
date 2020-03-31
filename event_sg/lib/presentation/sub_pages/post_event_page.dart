@@ -9,13 +9,13 @@ import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-class EventPostSecond extends StatefulWidget {
-  const EventPostSecond({Key key}) : super(key: key);
+class EventPostPage extends StatefulWidget {
+  const EventPostPage({Key key}) : super(key: key);
 
   @override
-  _EventPostSecondState createState() => _EventPostSecondState();
+  _EventPostPageState createState() => _EventPostPageState();
 }
-class _EventPostSecondState extends State<EventPostSecond> {
+class _EventPostPageState extends State<EventPostPage> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   final addressController=TextEditingController();
 

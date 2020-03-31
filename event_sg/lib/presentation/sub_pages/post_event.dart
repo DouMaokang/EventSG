@@ -1,7 +1,7 @@
 /*
 import 'package:email_validator/email_validator.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
-import 'package:event_sg/presentation/sub_pages/post_event2.dart';
+import 'package:event_sg/presentation/sub_pages/post_event_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
