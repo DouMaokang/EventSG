@@ -201,11 +201,7 @@ class _UserInfoState extends State<UserInfo> {
             return Text("Error");
           }
           else{
-            return SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            );
+            return Center(child: CircularProgressIndicator());
           }
         }
       )
@@ -229,11 +225,7 @@ class _UserInfoState extends State<UserInfo> {
           return Text("Error");
         }
         else {
-          return SizedBox(
-            child: CircularProgressIndicator(),
-            width: 60,
-            height: 60,
-          );
+          return Center(child: CircularProgressIndicator());
         }
       }
     );
