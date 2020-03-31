@@ -220,7 +220,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
         RegExp regex = new RegExp(pattern);
         if (!regex.hasMatch(username.trim())){
-          return 'Invalid username. Need at least 1 letter & 1 number. Length >= 6 ';
+          return 'Username should have at least 6 characters and contain \nat least 1 letter & 1 number. ';
         }
         else
           return null;
@@ -320,7 +320,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
         RegExp regex = new RegExp(pattern);
         if (!regex.hasMatch(password)){
-          return 'Invalid password. Need at least 1 letter & 1 number. Length >= 6 ';
+          return 'Username should have at least 6 characters and contain \nat least 1 letter & 1 number.';
         }
         else
           return null;
@@ -347,12 +347,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
           var now = new DateTime.now();
           if(chosenDate!=null){
             if(chosenDate.isBefore(now) == false) {
-              return "Invalid date! Birthday date should be in the past.";
+              return "Birthday date should be before the current date.";
             }
           }
           return null;
         },
-        onChanged: (date)=> jsonMap["birthday"] = date.toString().substring(0, 10));
+        onChanged: (date){
+          if(date.toString().length>=10)
+            jsonMap["birthday"] = date.toString().substring(0, 10);
+        });
   }
 
   Widget numberInput(){
@@ -365,7 +368,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           if(postClicked!=true && phoneNum == "")
             return null;
           if(phoneNum.trim().length!=8){
-            return "Invalid phone number. Length should = 8.";
+            return "Invalid phone number. There should be 8 digits.";
           }
           return null;
         },
