@@ -30,7 +30,8 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
         print("inside event list bloc: ${Login().getUserId()}");
         final List<Event> upcomingEventList = await eventRepository.getUpcomingEvents(Login().getUserId());
         final List<Event> recommendedEventList = await eventRepository.getRecommendedEvents(Login().getUserId());
-        yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList);
+        final List<Event> allEvents = await eventRepository.getAllEvents();
+        yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList, allEvents: allEvents);
       } catch (_) {
         yield EventListError();
       }

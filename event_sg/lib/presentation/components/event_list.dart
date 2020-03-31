@@ -43,7 +43,7 @@ class EventListItem extends StatelessWidget {
                         create: (context) => SingleEventBloc(eventRepository: eventRepository),
                         child: BlocBuilder<SingleEventBloc, SingleEventState>(
                             builder: (context, state) {
-                              return EventFeedbackPage(eventId: event.eventId);}
+                              return EventDetailsPage(eventId: event.eventId);}
                         )
                     )
                 )
@@ -66,8 +66,7 @@ class EventListItem extends StatelessWidget {
 //
                     borderRadius: BorderRadius.circular(2.0),
                     image: DecorationImage(
-                      // TODO: request an image through http calls
-                      image: NetworkImage("https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg"),
+                      image: AssetImage(event.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -85,7 +84,6 @@ class EventListItem extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.normal
-
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
