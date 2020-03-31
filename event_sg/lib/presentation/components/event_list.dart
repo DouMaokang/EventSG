@@ -22,9 +22,10 @@ class EventListItem extends StatelessWidget {
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
 
+  final bool goingToEventDetailsPage;
   final Event event;
 
-  EventListItem({ Key key, @required this.event })
+  EventListItem({ Key key, @required this.event, @required this.goingToEventDetailsPage})
       : assert(event != null),
         super(key: key);
 
@@ -35,19 +36,28 @@ class EventListItem extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>
-                    BlocProvider<SingleEventBloc>(
-                        create: (context) => SingleEventBloc(eventRepository: eventRepository),
-                        child: BlocBuilder<SingleEventBloc, SingleEventState>(
-                            builder: (context, state) {
-                              return EventDetailsPage(eventId: event.eventId);}
-                        )
-                    )
-                )
-            );
+            if (goingToEventDetailsPage) {
+              BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      BlocProvider<SingleEventBloc>(
+                          create: (context) => SingleEventBloc(eventRepository: eventRepository),
+                          child: BlocBuilder<SingleEventBloc, SingleEventState>(
+                              builder: (context, state) {
+                                return EventDetailsPage(eventId: event.eventId);}
+                          )
+                      )
+                  )
+              );
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      EventFeedbackPage(eventId: event.eventId))
+              );
+            }
+
           },
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 8),

@@ -12,9 +12,9 @@ import 'package:http/http.dart' as http;
 import 'package:event_sg/blocs/blocs.dart';
 
 
-class EventsSavedPage extends StatelessWidget {
+class ProfileEventFeedback extends StatelessWidget {
   String userId = Login().getUserId();
-  EventsSavedPage({Key key}) : super(key: key);
+  ProfileEventFeedback({Key key}) : super(key: key);
   final EventRepository eventRepository = EventRepository(
       eventApiClient: EventApiClient(httpClient: http.Client())
   );
@@ -36,7 +36,7 @@ class EventsSavedPage extends StatelessWidget {
                 },
               ),
               title: Text(
-                "My Saved Events",
+                "Event Feedbacks",
               ),
               actions: <Widget>[
                 IconButton(
@@ -76,9 +76,9 @@ class EventsSavedPage extends StatelessWidget {
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
                       itemBuilder: (context, int index) {
-                        return new EventListItem(event: state.savedEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
+                        return new EventListItem(event: state.createdEventList[index], goingToEventDetailsPage: false, key: UniqueKey(),);
                       },
-                      itemCount: state.savedEventList.length,
+                      itemCount: state.createdEventList.length,
                     ),
                   );
                 } else {

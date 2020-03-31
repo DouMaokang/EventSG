@@ -3,10 +3,14 @@ import 'package:event_sg/presentation/components/event_details/event_details_wid
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
+import 'package:event_sg/globals/urls.dart';
 
-class VenueDetailPage extends StatelessWidget{
+class OwnerVenueDetailPage extends StatelessWidget{
   final Venue venue;
-  VenueDetailPage({Key key,@required this.venue}):super(key:key);
+  OwnerVenueDetailPage({Key key,@required this.venue}):super(key:key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +25,11 @@ class VenueDetailPage extends StatelessWidget{
               decoration: BoxDecoration(color: Colors.white),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+                const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: new NetworkImage(
-                          'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
+                      image: AssetImage(venue.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -53,7 +56,7 @@ class VenueDetailPage extends StatelessWidget{
           ListTile(
             leading: CircleAvatar(
               radius: 20,
-              //backgroundImage: AssetImage(venue.owner.image),
+              backgroundImage: AssetImage(venue.owner.image),
             ),
             title: Text(
               venue.owner.userName,
@@ -83,7 +86,7 @@ class VenueDetailPage extends StatelessWidget{
             leading: Icon(Icons.timer),
             title: Text('Area & Rental Fee'),
             subtitle: Text(
-              venue.area.toString() + 'm2'+' '*8+'\$' + venue.rentalFee.toString() + ' per hour',
+              venue.area.toString() + "m\u00b2"+' '*8+'\$' + venue.rentalFee.toString() + ' per hour',
               style: TextStyle(fontSize: 14),
             ),
           ),
@@ -95,11 +98,11 @@ class VenueDetailPage extends StatelessWidget{
           ListTile(
             leading: Icon(Icons.location_on),
             title: Text(
-              'Owner Contact Number & Email',
+              'Owner Contact Number',
               style: TextStyle(fontSize: 16),
             ),
             subtitle: Text(
-              '65-'+venue.owner.phoneNum.toString()+' '*8+venue.owner.email,
+              venue.owner.phoneNum.toString(),
               style: TextStyle(fontSize: 14),
             ),
           ),
@@ -112,7 +115,7 @@ class VenueDetailPage extends StatelessWidget{
                     child: Text(
                       "Description",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     alignment: Alignment.topLeft,
                   ),
@@ -144,28 +147,91 @@ class VenueDetailPage extends StatelessWidget{
             venueAddress: venue.address,
             postalCode: venue.postalCode,
           ),
-          SizedBox(height: 16,),
+          SizedBox(height: 16),
+//          new FlatButton(
+//            padding: EdgeInsets.symmetric(vertical: 10),
+//            color: Colors.blue,
+//            child: Text(
+//              "Delete",
+//              style: TextStyle(
+//                color: Colors.white,
+//                fontSize: 16,
+//              ),
+//            ),
+//            onPressed:() {
+//              _showConfirmDialog(context);
+//            },
+
         ],
         ),
       ),
-
-      bottomNavigationBar:Container(
-        child:FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          color: Colors.blue,
-          child: Text(
-            "Book it!",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-          ),
-          onPressed: () {
-            Navigator.pop(context, venue);
-            Navigator.pop(context, venue);
-          },
-        )
-      ),
     );
   }
+
+//  void _showConfirmDialog(BuildContext context) {
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        // return object of type Dialog
+//        return AlertDialog(
+//          title: new Text("Confirmation"),
+//          content: new Text("Do you want to delete this button?"),
+//          actions: <Widget>[
+//            // usually buttons at the bottom of the dialog
+//            new FlatButton(
+//              child: new Text("Cancel"),
+//              onPressed: () {
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//            new FlatButton(
+//              child: new Text("Confirm"),
+//              onPressed: () {
+//                _deleteVenue(context);
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
+//  }
+
+//  void _showDeletedDialog(BuildContext context) {
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        // return object of type Dialog
+//        return AlertDialog(
+//          title: new Text("Deleted"),
+//          content: new Text("The venue: ${venue.venueName} has been deleted!"),
+//          actions: <Widget>[
+//            // usually buttons at the bottom of the dialog
+//            new FlatButton(
+//              child: new Text("Done"),
+//              onPressed: () {
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
+//  }
+//
+//  void _deleteVenue(BuildContext context) async{
+//    String url = '${Urls.apiUrlBase}/venue/delete/${venue.venueId}';
+//    String response = await apiDeleteRequest(url);
+//    _showDeletedDialog(context);
+//  }
+//
+//  Future<String> apiDeleteRequest(String url) async {
+//    HttpClient httpClient = new HttpClient();
+//    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url));
+//    HttpClientResponse response = await request.close();
+//    String reply = await response.transform(utf8.decoder).join();
+//    httpClient.close();
+//    return reply;
+//  }
+
 }

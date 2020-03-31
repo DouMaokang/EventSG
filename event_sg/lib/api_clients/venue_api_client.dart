@@ -33,7 +33,7 @@ class VenueApiClient {
   }
 
   Future<List<Venue>> getVenueByOwnerId(String ownerId) async {
-    final eventUrl = '$baseUrl/ownerId/$ownerId';
+    final eventUrl = '$baseUrl/venue/ownerId/$ownerId';
     try {
       final eventResponse = await httpClient.get(eventUrl);
       List eventData = jsonDecode(eventResponse.body);

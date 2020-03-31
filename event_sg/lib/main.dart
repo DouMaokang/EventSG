@@ -98,7 +98,7 @@ class _AppState
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
-          title: Text('Notification',
+          title: Text('Notifications',
             style: TextStyle(fontSize: 13),
           ),
         ),

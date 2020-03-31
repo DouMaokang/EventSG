@@ -174,8 +174,6 @@ class _UserLoginState extends State<UserLogin> {
                                   }
                                 });
 
-
-
                               },
                               color: Colors.blueAccent,
                             ),

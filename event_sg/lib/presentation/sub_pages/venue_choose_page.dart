@@ -75,11 +75,11 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                /*
+
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
                   child: Text(
-                    DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
+                    venue.area.toString()+'m2'+' '*8+'\$'+venue.rentalFee.toString()+' per hour',
                     style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.normal
@@ -89,7 +89,6 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
                     softWrap: true,
                   ),
                 ),
-                 */
                   Text(
                     venue.venueName,
                     style: TextStyle(
@@ -97,14 +96,6 @@ Widget buildVenueWidget(Venue venue,BuildContext context) {
                         fontWeight: FontWeight.w600),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    softWrap: true,
-                  ),
-                  Text(
-                    venue.area.toString()+'m2'+' '*8+'\$'+venue.rentalFee.toString()+' per hour',
-                    style:TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
                     softWrap: true,
                   ),
                 Padding(

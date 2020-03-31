@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class FeedbackTopBar extends StatelessWidget implements PreferredSizeWidget {
+class FeedbackTopBar extends StatefulWidget {
+
+
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  _FeedbackTopBarState createState() => _FeedbackTopBarState();
+}
+
+
+class _FeedbackTopBarState extends State<FeedbackTopBar> {
 
   @override
   Widget build(BuildContext context) {
