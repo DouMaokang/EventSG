@@ -6,5 +6,3 @@ abstract class EventListEvent {
 }
 
 class InitializeEventList extends EventListEvent {}
-
-class RefreshEventList extends EventListEvent {}

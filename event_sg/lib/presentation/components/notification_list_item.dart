@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:intl/intl.dart';
 import '../sub_pages/event_feedback.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,28 +48,14 @@ class _NotificationListItemState extends State<NotificationListItem> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: myFutureEvent,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return new Container();
-        Event event = snapshot.data;
-        return new Card(
-            color: Colors.white,
-            child: ListTile(
-              //leading: Image.asset(notification.image), // todo event image
-                title: Text(
-                  event.title,
-                  style: _biggerFont,
-                ),
-                subtitle: Text(
-                    _subtitleController(widget.notification.type)
-                ),
-                trailing: Row(
-                    children:
-                    <Widget>[Icon(Icons.arrow_forward_ios)],
-                    mainAxisSize: MainAxisSize.min
-                ),
-                isThreeLine: true,
+        future: myFutureEvent,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center();
+          Event event = snapshot.data;
+          return SizedBox(
+            height: 100,
+            child: GestureDetector(
                 onTap: () {
                   if (widget.notification.type == "review") {
                     Navigator.push(
@@ -99,10 +86,48 @@ class _NotificationListItemState extends State<NotificationListItem> {
                         )
                     );
                   }
-                }
-            )
-        );
-      }
+                },
+              child: Card(
+
+                  elevation: 0.3,
+                  color: Colors.blue[50],
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                          title: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  event.title,
+                                  style: TextStyle(
+                                      fontSize: 16
+                                  ),
+                                ),
+                                Text(
+                                  "${DateFormat('dd/MM/yyyy').format(widget.notification.timeCreated)}",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                    color: Colors.grey[600]
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          subtitle: Text(
+                              _subtitleController(widget.notification.type),
+                            style: TextStyle(fontSize: 15),
+                          ),
+
+                      ),
+
+                    ],
+                  )
+              ),
+            ),
+          );
+        }
     );
   }
 
@@ -111,17 +136,17 @@ class _NotificationListItemState extends State<NotificationListItem> {
     if (type == "event") {
       return "The event organizer you liked is going to hold a new event!";
     } else if (type == "venue") {
-      return "An event organizer would like to rent your venue. Please contact him.";
+      return "An event organizer would like to rent your venue.";
     } else if (type == "registration") {
-      return "A user has registered this event.";
+      return "A user has registered your event.";
     } else if (type == "deregistration") {
-      return "A user has deregistered this event.";
+      return "A user has cancelled his registration for you event.";
     } else if (type == "review") {
-      return "A new review is provided for this event. Please check out.";
+      return "A new review is provided for your event.";
     }
   }
 
-  final _biggerFont = const TextStyle(fontSize: 18.0, color: Colors.black);
+
 
 
 
