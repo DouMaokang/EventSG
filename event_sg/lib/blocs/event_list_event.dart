@@ -6,3 +6,6 @@ abstract class EventListEvent {
 }
 
 class GetAllEvents extends EventListEvent {}
+
+class GetCreatedEvents extends EventListEvent {}
+//class GetEventByOrganizer extends EventListEvent{}

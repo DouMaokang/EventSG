@@ -1,8 +1,28 @@
+import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/blocs/blocs.dart';
+import 'package:event_sg/models/models.dart';
+import 'package:event_sg/presentation/sub_pages/event_details.dart';
+import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+
+import '../../models/event.dart';
+import '../../models/event.dart';
+import '../../models/event.dart';
+
 
 
 /// This is the stateful widget that the main application instantiates.
 class MyVenues extends StatefulWidget {
+  final Event event;
+
+
+
+  MyVenues({ Key key, @required this.event })
+      : assert(event != null),
+        super(key: key);
 
   @override
   _MyVenuesState createState() => _MyVenuesState();
@@ -10,290 +30,137 @@ class MyVenues extends StatefulWidget {
 
 
 class _MyVenuesState extends State<MyVenues> {
-  final TextStyle textstyle =
-  TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-  final InputDecoration decoration = InputDecoration(
-    border: OutlineInputBorder(),);
+  Event event;
+  final EventRepository eventRepository = EventRepository(
+    // Add all required repositories here.
+    eventApiClient: EventApiClient(httpClient: http.Client()),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: 'Return to previous page',
-          onPressed: () {
-            Navigator.pop(
-              context,
+
+    return BlocBuilder<SingleEventBloc, SingleEventState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            BlocProvider.of<SingleEventBloc>(context).add(SingleEventClicked(eventId: event.eventId));
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    BlocProvider<SingleEventBloc>(
+                        create: (context) => SingleEventBloc(eventRepository: eventRepository),
+                        child: BlocBuilder<SingleEventBloc, SingleEventState>(
+                            builder: (context, state) {
+                              return EventDetailsPage(eventId: event.eventId);}
+                        )
+                    )
+                )
             );
           },
-        ),
-        title: Align(
-            alignment: Alignment.centerLeft,
-            child: const Text('Edit/View Profile')
-        ),
-
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "My Venues",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 16),
+            height: 110,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  height: double.infinity,
+                  width: 110,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.amberAccent,
+                    ),
+                    borderRadius: BorderRadius.circular(2.0),
+                    image: DecorationImage(
+                      // TODO: request an image through http calls
+                      image: NetworkImage("https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg"),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new InkWell(onTap: (){},
-
-                      child: new Container(
-                        width: 150,
-                        height: 175,
-
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                            image: new NetworkImage(
-                                'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                            fit: BoxFit.cover,
+                SizedBox(width: 16,),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 6),
+                        child: Text(
+                          DateFormat('dd/MM/yyyy hh:mm a').format(this.event.startTime).toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
                         ),
                       ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    new InkWell(onTap: (){},
-                      child:new Container(
-
-                        width: 150,
-                        height: 160,
-                        padding: const EdgeInsets.all(5.0),
-
-                        alignment: Alignment.centerLeft,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: " Venue 1\n \n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-
+                      Container(
+                        child: Text(
+                          this.event.title,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          softWrap: true,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 7,
+                                child: Text(
+                                  // TODO: add venue attribute in Event model.
+                                  event.venue.venueName,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
                               ),
-                              WidgetSpan(
-                                child: Icon(Icons.location_on, color: Colors.blue,
-                                    size: 14),
+                              Expanded(
+                                flex: 3,
+                                child: IconButton(
+                                  alignment: Alignment.centerRight,
+                                  padding: EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                  iconSize: 20,
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                  ),
+                                  onPressed: () {},
+                                ),
 
-
-                              ),
-                              TextSpan(
-                                text: " Marina Bay Sands\n\n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "5 April, 2020\n15:00 - 18:30\n700 sq m",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "\n\nAvailable",
-                                style: TextStyle(
-                                    color: Colors.green, fontSize: 14),
                               )
 
                             ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
-
+                    ],),
                 ),
-              ),
-              SizedBox(height: 20),
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new InkWell(onTap: (){},
-                      child: new Container(
-                        width: 150,
-                        height: 160,
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                            image: new NetworkImage(
-                                'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    new InkWell(onTap: (){},
-                      child: new Container(
-
-                        width: 150,
-                        height: 160,
-                        padding: const EdgeInsets.all(5.0),
-
-                        alignment: Alignment.centerLeft,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Venue 2\n \n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-
-                              ),
-                              WidgetSpan(
-                                child: Icon(Icons.location_on, color: Colors.blue,
-                                    size: 14),
-
-
-                              ),
-                              TextSpan(
-                                text: " Marina Bay Sands\n\n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "6 April, 2020\n15:00 - 18:30\n700 sq m",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "\n\nRented",
-                                style: TextStyle(
-                                    color: Colors.red, fontSize: 14),
-                              )
-
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-              ),
-
-              SizedBox(height: 20),
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-              new Container(
-
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new InkWell(onTap: (){},
-                      child: new Container(
-                        width: 150,
-                        height: 165,
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                            image: new NetworkImage(
-                                'http://www.obrienprinting.com/wp-content/uploads/2013/09/logo-icon.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    new InkWell(onTap: (){},
-                      child: new Container(
-
-                        width: 150,
-                        height: 165,
-                        padding: const EdgeInsets.all(5.0),
-
-                        alignment: Alignment.centerLeft,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Venue 3\n \n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-
-                              ),
-                              WidgetSpan(
-                                child: Icon(Icons.location_on, color: Colors.blue,
-                                    size: 14),
-
-
-                              ),
-                              TextSpan(
-                                text: " Marina Bay Sands\n\n",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "7 April, 2020\n15:00 - 18:30\n700 sq m",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              ),
-                              TextSpan(
-                                text: "\n\nAvailable",
-                                style: TextStyle(
-                                    color: Colors.green, fontSize: 14),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-
-              Divider(height: 1, indent: 16, endIndent: 16,),
-
-
-            ],
+              ],),
           ),
-        ),
-      ),
-    );
-  }
-}
+        );
+      },
 
+    );
+
+  }
+
+
+
+
+}

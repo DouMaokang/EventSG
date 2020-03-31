@@ -1,4 +1,6 @@
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
+import 'package:event_sg/presentation/sub_pages/user_login.dart';
+import 'package:event_sg/presentation/sub_pages/user_logout.dart';
 import 'package:flutter/material.dart';
 
 import '../sub_pages/events_created.dart';
@@ -23,14 +25,14 @@ class _UserAccountState extends State<UserAccount> {
             alignment: Alignment.centerLeft,
             child: const Text('Profile Page')
         ),
-        /*  actions: <Widget>[
+         actions: <Widget>[
          IconButton(
            icon: const Icon(Icons.turned_in_not),
            tooltip: 'Show saved events',
            onPressed: () {
            },
          ),
-       ], */
+       ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -111,7 +113,7 @@ class _UserAccountState extends State<UserAccount> {
                             MaterialPageRoute(builder: (context) => EventsRegistered()));
                       },
                     ),
-                   /* Divider(height: 0, indent: 16, endIndent: 16,),
+                    Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.save_alt),
                       title: Text('Events Saved'),
@@ -119,9 +121,9 @@ class _UserAccountState extends State<UserAccount> {
                       onTap: (){
                         Navigator.push(
                             context,
-                           MaterialPageRoute(builder: (context) => EventSaved()));
+                           MaterialPageRoute(builder: (context) => EventsSaved()));
                       },
-                    ),*/
+                    ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.place),
@@ -137,12 +139,22 @@ class _UserAccountState extends State<UserAccount> {
                     ListTile(
                       title: Text('Add account'),
                       selected: true,
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UserLogin()));
+
+
+                      },
                     ),
                     ListTile(
                       title: Text('Log out',),
                       selected: true,
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UserLogout()));
+                        },
 
                     ),
                   ],

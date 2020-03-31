@@ -122,6 +122,15 @@ class EventListItem extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 3,
+                                child: IconButton(
+                                  alignment: Alignment.centerRight,
+                                  padding: EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                  iconSize: 20,
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                  ),
+                                  onPressed: () {},
+                                ),
 
                               )
 
@@ -140,31 +149,4 @@ class EventListItem extends StatelessWidget {
 
   }
 
-  /*
-  Widget _buildFavoriteButton(BuildContext context) {
-
-    final bloc = BlocProvider.of<EventSavedBloc>(context);
-    return StreamBuilder<List<Event>>(
-      stream: bloc.favoritesStream,
-      initialData: bloc.favorites,
-      builder: (context, snapshot) {
-        List<Event> favorites =
-        (snapshot.connectionState == ConnectionState.waiting)
-            ? bloc.favorites
-            : snapshot.data;
-        bool isFavorite = favorites.contains(event);
-
-        return FlatButton.icon(
-          // 2
-          onPressed: () => bloc.toggleRestaurant(event),
-          textColor: isFavorite ? Theme
-              .of(context)
-              .accentColor : null,
-          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
-          label: Text('Favorite'),
-        );
-      },
-    );
-  }
-  */
 }

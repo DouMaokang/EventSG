@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   expandable: ^4.1.2
   flutter_spinkit: ^4.1.2
   http: ^0.12.0+4
@@ -48,6 +49,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/image/event_sg_icon.png
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -76,6 +76,23 @@ class EventApiClient {
     }
   }
 
+  Future<Event> getEventByOrganizer(String eventId) async {
+    final eventUrl = '$baseUrl/event/$eventId';
+
+    try {
+      final eventResponse = await httpClient.get(eventUrl);
+      Map eventData = jsonDecode(eventResponse.body);
+      print(eventData);
+      final event = Event.fromJson(eventData);
+      return event;
+    } catch (e) {
+      print('Caught error: $e');
+      throw Exception('error getting event data!');
+    }
+  }
+
+
+
   /// Returns a list of recommended events based on a user's interests.
   Future<List<Event>> getRecommendedEvents() async {
     return null;
@@ -85,6 +102,10 @@ class EventApiClient {
   Future<List<Event>> getPopularEvents() async {
     return null;
   }
+
+
+
+
 
 }
 
