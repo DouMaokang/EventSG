@@ -1,8 +1,15 @@
+
+import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
 import '../sub_pages/events_created.dart';
 import '../sub_pages/events_saved.dart';
+
+
+
+
+
 
 /// This is the stateful widget that the main application instantiates.
 ///
@@ -20,9 +27,19 @@ class UserLogin extends StatefulWidget {
 
 class _UserLoginState extends State<UserLogin> {
 
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+  final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+  bool click=false;
   @override
   Widget build(BuildContext context) {
-
+    final emailController=TextEditingController();
+    final passwordController=TextEditingController();
+    String _password;
+    String _email;
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +55,9 @@ class _UserLoginState extends State<UserLogin> {
 
       body: SingleChildScrollView(
         child: Center(
+          child: Form(
+            key:_formKey,
+            autovalidate: true,
           child: Column(
             children: <Widget>[
 
@@ -53,12 +73,25 @@ class _UserLoginState extends State<UserLogin> {
               ),
 
               SizedBox(height: 16,),
+
+
+
+
               new Container(
                 margin: const EdgeInsets.only(right: 10, left: 10),
                 child: TextFormField(
+                  controller: emailController,
+                  onSaved: (value)=> _email =value,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    Pattern pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                    RegExp regex = new RegExp(pattern);
+                    if (!regex.hasMatch(value)) return 'Invalid email format';
+                    else return null;
+                  },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'User Name(*)'
+                      labelText: 'Email Address(*)'
                   ),
 
                 ),
@@ -66,9 +99,18 @@ class _UserLoginState extends State<UserLogin> {
 
               ),
               SizedBox(height: 16,),
+
+
               new Container(
                 margin: const EdgeInsets.only(right: 10, left: 10),
                 child: TextFormField(
+                  controller:passwordController,
+                  validator:(value) {
+                    if (!click || Login().login(email:emailController.text,password:value)) return null;
+                    else return 'Invalid email or password';
+                  },
+                  onSaved: (value) => _password = value,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password(*)'
@@ -78,6 +120,7 @@ class _UserLoginState extends State<UserLogin> {
 
 
               ),
+
 
               SizedBox(height: 16,),
               ButtonBar(
@@ -91,7 +134,16 @@ class _UserLoginState extends State<UserLogin> {
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        click=true;
+                        if (_formKey.currentState.validate()) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Homepage()));
+                        }
+
+                      },
                       color: Colors.blueAccent,
 
                     ),
@@ -134,7 +186,9 @@ class _UserLoginState extends State<UserLogin> {
                           color: Colors.blueAccent,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       color: Colors.white,
 
                     ),
@@ -152,7 +206,7 @@ class _UserLoginState extends State<UserLogin> {
                   ],
                 ),
               ),
-
+            ),
           ),
         );
 

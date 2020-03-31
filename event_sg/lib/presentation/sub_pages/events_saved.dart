@@ -1,3 +1,5 @@
+
+/*
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/models/models.dart';
@@ -69,7 +71,7 @@ class _EventsSavedState extends State<EventsSaved> {
             builder: (context, state) {
               if (state is EventListEmpty) {
                 BlocProvider.of<EventListBloc>(context)
-                    .add(GetSavedEvents(userId));
+                   // .add(GetSavedEvents(userId));
                 return Text("Empty");
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
@@ -104,3 +106,4 @@ class _EventsSavedState extends State<EventsSaved> {
 
 
 }
+*/

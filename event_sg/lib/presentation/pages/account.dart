@@ -91,6 +91,7 @@ class _UserAccountState extends State<UserAccount> {
                             MaterialPageRoute(builder: (context) => UserInfo()));
                       },
                     ),
+                    /*
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.create),
@@ -124,6 +125,7 @@ class _UserAccountState extends State<UserAccount> {
                            MaterialPageRoute(builder: (context) => EventsSaved()));
                       },
                     ),
+                    */
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
                       leading: Icon(Icons.place),

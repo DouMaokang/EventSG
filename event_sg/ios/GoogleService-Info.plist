@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>584655368189-0rissbouhru9ae84oln69hevb8ih4cem.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.584655368189-0rissbouhru9ae84oln69hevb8ih4cem</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDfye3GR2JdtmiCA41Z8lbVIsmmwk23yRk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>584655368189</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.eventSg</string>
+	<key>PROJECT_ID</key>
+	<string>ace-it-cbbeb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ace-it-cbbeb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:584655368189:ios:cb7a0382a28a97f3dab394</string>
+	<key>DATABASE_URL</key>
+	<string>https://ace-it-cbbeb.firebaseio.com</string>
+</dict>
+</plist>

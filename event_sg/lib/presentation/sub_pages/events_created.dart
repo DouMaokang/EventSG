@@ -1,3 +1,5 @@
+/*
+
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/models/models.dart';
@@ -32,7 +34,7 @@ class EventsCreated extends StatefulWidget {
 
 class _EventsCreatedState extends State<EventsCreated> {
   final userId=Login.getUserId();
-  
+
   final EventRepository eventRepository = EventRepository(
     // Add all required repositories here.
     eventApiClient: EventApiClient(httpClient: http.Client()),
@@ -98,4 +100,4 @@ class _EventsCreatedState extends State<EventsCreated> {
     );
   }
 }
-
+*/

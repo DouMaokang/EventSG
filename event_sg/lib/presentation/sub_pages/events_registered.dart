@@ -1,3 +1,5 @@
+/*
+
 import 'package:event_sg/api_clients/api_clients.dart';
 import 'package:event_sg/api_clients/event_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
@@ -114,3 +116,5 @@ class _EventsRegisteredState extends State<EventsRegistered> {
 
 
 }
+
+ */
