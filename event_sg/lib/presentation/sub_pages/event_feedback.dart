@@ -32,7 +32,13 @@ class _EventFeedbackPageState extends State<EventFeedbackPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        appBar: FeedbackTopBar(),
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(44.0),
+            child: BlocProvider<EventSavedBloc>(
+              create: (context) => EventSavedBloc(eventRepository: eventRepository),
+              child: FeedbackTopBar(),
+            )
+        ),
         body: new FutureBuilder(
           future: eventRepository.getEventById(widget.eventId),
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {

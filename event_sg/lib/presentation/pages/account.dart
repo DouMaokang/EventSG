@@ -1,4 +1,5 @@
 import 'package:event_sg/globals/login.dart';
+import 'package:event_sg/presentation/sub_pages/profile_event_feedback.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:flutter/material.dart';
 
@@ -76,14 +77,26 @@ class UserAccount extends StatelessWidget {
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: Text('Events Saved'),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => EventsSavedPage()));
+                        // Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd"); todo error here
+                      },
+                    ),
+                    Divider(height: 0, indent: 16, endIndent: 16,),
+                    ListTile(
                       leading: Icon(Icons.create),
                       title: Text('Events Created'),
                       trailing: Icon(Icons.chevron_right),
                       onTap: (){
-//                        Navigator.push(
-//                            context,
-//                            MaterialPageRoute(builder: (context) => EventsCreated()));
-                        Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => EventsCreatedPage()));
+                        // Login().logIn(email: "doum0001@gasadha.com", password: "dashjkdhasd"); todo error here
                       },
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
@@ -94,7 +107,18 @@ class UserAccount extends StatelessWidget {
                       onTap: (){
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => EventsRegistered()));
+                            MaterialPageRoute(builder: (context) => EventsRegisteredPage()));
+                      },
+                    ),
+                    Divider(height: 0, indent: 16, endIndent: 16,),
+                    ListTile(
+                      leading: Icon(Icons.rate_review),
+                      title: Text('Event Feedbacks'),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileEventFeedback()));
                       },
                     ),
                    /* Divider(height: 0, indent: 16, endIndent: 16,),

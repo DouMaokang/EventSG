@@ -13,7 +13,10 @@ class EventListLoaded extends EventListState {
   final List<Event> upcomingEventList;
   final List<Event> recommendedEventList;
   final List<Event> allEvents;
-  const EventListLoaded({@required this.upcomingEventList, @required this.recommendedEventList, @required this.allEvents});
+  final List<Event> createdEventList;
+  final List<Event> registeredEventList;
+  final List<Event> savedEventList;
+  const EventListLoaded({@required this.upcomingEventList, @required this.recommendedEventList, @required this.allEvents, @required this.registeredEventList, @required this.createdEventList, @required this.savedEventList});
 }
 
 class EventListError extends EventListState {}

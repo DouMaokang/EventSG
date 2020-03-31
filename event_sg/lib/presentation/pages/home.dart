@@ -120,11 +120,12 @@ class Homepage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemBuilder: (context, int index) {
-                      return new EventListItem(event: state.upcomingEventList[index], key: UniqueKey(),);
+                      return new EventListItem(event: state.upcomingEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
                     },
                     itemCount: state.upcomingEventList.length,
                   ),
                 );
+
               } else {
                 return Center(
                   child: Text(
@@ -199,7 +200,7 @@ class Homepage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.recommendedEventList[index], key: UniqueKey(),);
+                    return new EventListItem(event: state.recommendedEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
                   },
                   itemCount: state.recommendedEventList.length,
                 );
