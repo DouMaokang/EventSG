@@ -26,6 +26,7 @@ class PostEventBloc {
   EventRepository eventRepository = EventRepository(
     eventApiClient: EventApiClient(httpClient: http.Client()),
   );
+  String userId=Login().getUserId();
 
 
   String name,description,maxCapacity,address,postal;
@@ -91,7 +92,8 @@ class PostEventBloc {
           endTime: DateTime(date.year,date.month,date.day,end.hour,end.minute),
           venue: venue,
           status: 'posted',
-          organizerId: Login().getUserId());
+          organizerId: userId,
+      );
       eventRepository.postEvent(event);
     }
   }
@@ -104,7 +106,8 @@ class PostEventBloc {
         startTime: (date!=null && start!=null)?DateTime(date.year,date.month,date.day,start.hour,start.minute):null,
         endTime: (date!=null && end!=null)?DateTime(date.year,date.month,date.day,end.hour,end.minute):null,
         venue: venue,
-        organizerId: Login().getUserId());
+        organizerId: userId,
+    );
     eventRepository.saveDraftEvent(event);
   }
 

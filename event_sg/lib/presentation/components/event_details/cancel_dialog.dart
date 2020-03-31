@@ -6,6 +6,8 @@ import 'package:event_sg/repositories/registration_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:toast/toast.dart';
 
 
 class CancelDialog extends StatelessWidget {
@@ -16,7 +18,8 @@ class CancelDialog extends StatelessWidget {
   );
 
 
-  String eventTitle, eventDateTime;
+  String eventTitle;
+  DateTime eventDateTime;
   String eventId, userId;
   final RegistrationBloc registrationBloc;
 
@@ -44,11 +47,12 @@ class CancelDialog extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
         child: ListBody(
           children: <Widget>[
-            Text('You\'re cancelling your registration for\n${this.eventTitle}'),
-            Text('Event date & Time: ${this.eventDateTime}'),
+            Text('Event: ${this.eventTitle}'),
+            SizedBox(height: 8,),
+            Text('Event Time: ${DateFormat('dd/MM/yyyy hh:mm a').format(this.eventDateTime).toString()}'),
           ],
         ),
       ),
@@ -74,6 +78,7 @@ class CancelDialog extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),),
           color: Colors.blue,
           onPressed: () {
+            Toast.show("Registration Cancelled", context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER, backgroundColor: Colors.red[400]);
             registrationBloc.add(
                 CancelRegistration(eventId: eventId, userId: userId));
             Navigator.of(context).pop();

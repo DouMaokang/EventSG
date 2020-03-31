@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/presentation/sub_pages/post_event.dart';
-import 'package:event_sg/presentation/sub_pages/post_event2.dart';
+import 'package:event_sg/presentation/sub_pages/post_event_page.dart';
 import 'package:event_sg/presentation/sub_pages/post_venue.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -32,52 +32,123 @@ class _PostPageState extends State<PostPage> {
           title: Text("Post"),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
 
-              SizedBox(height: 175,),
-              FlatButton(
-                child: Text(
-                  " Event Post ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                height: 168,
+                decoration: BoxDecoration(color: Colors.blue[50]),
+                child: Center(
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+
+                        MaterialPageRoute(builder: (context)=>EventPostPage()),
+                      );
+                    },
+                    contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
+
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "Events",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28
+                            ),
+                          ),
+                          SizedBox(width: 6,),
+                          Icon(Icons.local_activity, color: Colors.black, size: 28),
+                        ],
+                      ),
+                    ),
+
+                    subtitle: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            "Post an awesome event",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: true,
+                          ),
+                        )
+                      ],
+                    ),
+
+                    trailing: Icon(Icons.chevron_right, size: 28,),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>EventPostSecond()),
-                  );
-                },
-                color: Colors.green,
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               ),
-
-              SizedBox(height: 30,),
-              FlatButton(
-                child: Text(
-                  " Venue Post ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>VenuePostingPage()),
-                  );
-                },
-                color: Colors.purple,
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-              ),
-
-            ],
+            ),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                height: 168,
+                decoration: BoxDecoration(color: Colors.blue[50]),
+                child: Center(
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=>VenuePostingPage()),
+                      );
+                    },
+                    contentPadding: EdgeInsets.fromLTRB(16, 0, 4, 0),
+
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "Venues",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28
+                            ),
+                          ),
+                          SizedBox(width: 6,),
+                          Icon(Icons.weekend, color: Colors.black, size: 28),
+                        ],
+                      ),
+                    ),
+
+                    subtitle: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            "List an exclusive venue",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            softWrap: true,
+                          ),
+                        )
+                      ],
+                    ),
+
+                    trailing: Icon(Icons.chevron_right, size: 28,),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+        ],
       ),
     );
   }

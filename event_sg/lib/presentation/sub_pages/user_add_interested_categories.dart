@@ -1,3 +1,4 @@
+import 'package:event_sg/globals/event_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:event_sg/blocs/blocs.dart';
@@ -20,7 +21,7 @@ class AddInterestedCategoryPage extends StatefulWidget {
 
 class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
 
-  List<String> interestList = ["None", "Cooking", "Art", "Nature", "Volunteer", "School"];
+  List<String> interestList = EventCategories.eventCategories;
   List<String> selectedItems = List();
 
 

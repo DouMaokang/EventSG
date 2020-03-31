@@ -48,13 +48,34 @@ class EventDetailsPage extends StatelessWidget {
         if (state is SingleEventEmpty) {
           singleEventBloc.add(
               SingleEventClicked(eventId: this.eventId));
-          return Center(child: CircularProgressIndicator());
+          return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(44.0),
+                  child: BlocProvider<EventSavedBloc>(
+                    create: (context) => EventSavedBloc(eventRepository: eventRepository),
+                    child: EventTopBar(),
+                  )
+              ),
+              body:  Center(child: CircularProgressIndicator())
+          );
         } else if (state is SingleEventLoading) {
-          return Center(child: CircularProgressIndicator());
+          return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(44.0),
+                  child: EventTopBar()
+              ),
+              body:  Center(child: CircularProgressIndicator())
+          );
         } else if (state is SingleEventError) {
-          return Text(
-            'Something went wrong!',
-            style: TextStyle(color: Colors.red),
+          return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(44.0),
+                  child: BlocProvider<EventSavedBloc>(
+                    create: (context) => EventSavedBloc(eventRepository: eventRepository),
+                    child: EventTopBar(),
+                  )
+              ),
+              body:  Center(child: Text("Something went wrong."))
           );
         } else if (state is SingleEventLoaded) {
           // final singleEvent = state.event;
@@ -70,32 +91,41 @@ class EventDetailsPage extends StatelessWidget {
                   ),
                 )
             ),
-            body: SingleChildScrollView(
-              child: Center(
-                child:  Column(
-                  children: <Widget>[
-                    EventHeader(
-                      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSy-W7gF6wc8shk2xxKWEt_JSLPiYG3G7c6kibQveo-RICfiCUp',
-                      eventName: state.event.title,),
-                    SizedBox(height: 4,),
-                    OrganizerAvatar(organizer: state.event.organizer),
-                    EventRegistration(
-                      startTime: state.event.startTime,
-                      endTime: state.event.endTime,
-                      registrationDeadline: state.event.registrationDeadline,
-                      capacity: state.event.capacity,
-                      numOfParticipants: state.event.numOfParticipants,
-                    ),
-                    SizedBox(height: 16,),
-                    EventDescription(description: state.event.description),
-                    SizedBox(height: 24,),
-                    EventLocation(
-                      venueName: state.event.venue.venueName,
-                      venueAddress: state.event.venue.address,
-                      postalCode: state.event.venue.postalCode,
-                    ),
-                    EventFooter(),
-                  ],
+            body: RefreshIndicator(
+              backgroundColor: Colors.blue,
+              color: Colors.white,
+              // ignore: missing_return
+              onRefresh: () {
+                singleEventBloc.add(
+                    SingleEventClicked(eventId: this.eventId));
+              },
+              child: SingleChildScrollView(
+                child: Center(
+                  child:  Column(
+                    children: <Widget>[
+                      EventHeader(
+                        image: state.event.image,
+                        eventName: state.event.title,),
+                      SizedBox(height: 4,),
+                      OrganizerAvatar(organizer: state.event.organizer),
+                      EventRegistration(
+                        startTime: state.event.startTime,
+                        endTime: state.event.endTime,
+                        registrationDeadline: state.event.registrationDeadline,
+                        capacity: state.event.capacity,
+                        numOfParticipants: state.event.numOfParticipants,
+                      ),
+                      SizedBox(height: 16,),
+                      EventDescription(description: state.event.description),
+                      SizedBox(height: 24,),
+                      EventLocation(
+                        venueName: state.event.venue.venueName,
+                        venueAddress: state.event.venue.address,
+                        postalCode: state.event.venue.postalCode,
+                      ),
+                      EventFooter(),
+                    ],
+                  ),
                 ),
               ),
             ),
