@@ -185,88 +185,99 @@ class _UserLoginState extends State<UserLogin> {
                     } else if (state is UserLoginProcessing) {
                       return Center(child: CircularProgressIndicator());
                     } else if (state is UserLoginValidated) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 2,
-                        backgroundColor: Colors.white,
+                      return Center(
+                        child: Column(
+                          children: <Widget>[
+                            DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.white),
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.fromLTRB(12, 32, 12, 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/app-icon.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    height: 200,
+                                  ),
+                                )),
 
-                        title: Text(
-                          'Confirm Registration',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        content: SingleChildScrollView(
-                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                          child: ListBody(
-                            children: <Widget>[
-                              Text('Succeeded'),
-                              SizedBox(height: 8,),
-                              Text('go to home page'),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                            child: Text(
-                              'Confirm',
-                              style: TextStyle(fontWeight: FontWeight.bold),),
-                            color: Colors.blue,
-                            onPressed: () {
+                            SizedBox(
+                              height: 8,
+                            ),
 
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => App()),
-                              );
-                            },
-                          ),
-                        ],
+                            FlatButton(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              color: Colors.blue,
+                              child: Text(
+                                "Enter Home",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => App()),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       );
 
-                    } else {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 2,
-                        backgroundColor: Colors.white,
 
-                        title: Text(
-                          'Confirm Registration',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    } else {
+
+                      return Center(
+                        child: Column(
+                          children: <Widget>[
+                            DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.white),
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.fromLTRB(12, 32, 12, 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/app-icon.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    height: 200,
+                                  ),
+                                )),
+
+                            SizedBox(
+                              height: 8,
+                            ),
+
+                            FlatButton(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              color: Colors.blue,
+                              child: Text(
+                                "Back to Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => UserLogin()),
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                        content: SingleChildScrollView(
-                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                          child: ListBody(
-                            children: <Widget>[
-                              Text('Failed'),
-                              SizedBox(height: 8,),
-                              Text('go back to login'),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                            child: Text(
-                              'Confirm',
-                              style: TextStyle(fontWeight: FontWeight.bold),),
-                            color: Colors.blue,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => UserLogin()),
-                              );
-                            },
-                          ),
-                        ],
                       );
 
                     }

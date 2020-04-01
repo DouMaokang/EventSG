@@ -19,8 +19,11 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Search"),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text("Search"),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
