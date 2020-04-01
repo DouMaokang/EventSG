@@ -4,6 +4,7 @@ import 'package:event_sg/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -24,6 +25,7 @@ class VenuePostingPage extends StatefulWidget {
 class _VenuePostingPageState extends State<VenuePostingPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool postClicked = false;
   Map jsonMap = {
     "address": "",
     "postalCode": "",
@@ -38,6 +40,7 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
+      autovalidate: true,
       child: Scaffold(
           appBar: PreferredSize(child: AppBar(title: Text("Post Venue")), preferredSize: Size.fromHeight(44.0),),
           body: GestureDetector(
@@ -46,13 +49,13 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
             child: ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               children: <Widget>[
                 SizedBox(height: 28,),
                 Container(
                   width: double.infinity,
                   child: Text(
-                    "Venue Details",
+                    "  Venue Details",
                     //textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 24,
@@ -84,7 +87,10 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
                         fontSize: 18,
                       ),
                     ),
-                    onPressed: _submit,
+                    onPressed: () {
+                      postClicked = true;
+                      _submit();
+                    },
                 ),
                 SizedBox(height: 36,)
               ],
@@ -174,17 +180,17 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       ),
       textInputAction: TextInputAction.done,
       onChanged: (name)=> jsonMap["venueName"] = name,
-// todo add regex?
-//      validator: (venueName){
-//        Pattern pattern =
-//            r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
-//        RegExp regex = new RegExp(pattern);
-//        if (!regex.hasMatch(venueName.trim())){
-//          return 'Invalid venue Name. Need at least 1 letter & 1 number. Length >= 6 ';
-//        }
-//        else
-//          return null;
-//      },
+      validator: (venueName){
+        if ( postClicked != true && venueName.length == 0 ){
+          return null;
+        }
+        else if (venueName.length == 0){
+          return "Venue name cannot be empty.";
+        } else {
+          return null;
+        }
+
+      },
     );
   }
 
@@ -198,6 +204,16 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       ),
       textInputAction: TextInputAction.done,
       onChanged: (name)=> jsonMap["address"] = name,
+      validator: (address){
+        if ( postClicked != true && address.length == 0 ){
+          return null;
+        }
+        else if (address.length == 0){
+          return "Venue address cannot be empty.";
+        } else {
+          return null;
+        }
+      },
     );
   }
 
@@ -211,10 +227,12 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
         hintText: "e.g 637634",
       ),
       validator: (postalCode) {
-        if(postalCode.trim().length!=6){
+        if(postalCode.trim().length!=6 && postalCode.trim().length>0 && postClicked != true){
           return "Invalid postal code. Length should = 6.";
         }
-        return null;
+        else
+          return null;
+
       },
       textInputAction: TextInputAction.done,
       onChanged: (name)=> jsonMap["postalCode"] = int.parse(name),
@@ -231,7 +249,18 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
         hintText: "e.g 200",
       ),
       textInputAction: TextInputAction.done,
+      validator: (rentalFee){
+        if ( postClicked != true && rentalFee.length == 0 ){
+          return null;
+        }
+        else if (rentalFee.length == 0){
+          return "Venue rental fee cannot be empty.";
+        } else {
+          return null;
+        }
+      },
       onChanged: (name)=> jsonMap["rentalFee"] = double.parse(name),
+
     );
   }
 
@@ -246,6 +275,16 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       ),
       textInputAction: TextInputAction.done,
       onChanged: (name)=> jsonMap["area"] = double.parse(name),
+      validator: (area){
+        if ( postClicked != true && area.length == 0 ){
+          return null;
+        }
+        else if (area.length == 0){
+          return "Venue area cannot be empty.";
+        } else {
+          return null;
+        }
+      },
     );
   }
 
@@ -261,6 +300,16 @@ class _VenuePostingPageState extends State<VenuePostingPage> {
       ),
       textInputAction: TextInputAction.done,
       onChanged: (name)=> jsonMap["description"] = name,
+      validator: (description){
+        if ( postClicked != true && description.length == 0 ){
+          return null;
+        }
+        else if (description.length == 0){
+          return "Venue description cannot be empty.";
+        } else {
+          return null;
+        }
+      },
     );
   }
 }

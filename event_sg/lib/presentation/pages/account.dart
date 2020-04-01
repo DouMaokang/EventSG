@@ -171,11 +171,6 @@ class _UserAccountState extends State<UserAccount> {
                     ),
                     Divider(height: 0, indent: 16, endIndent: 16,),
                     ListTile(
-                      title: Text('Add account'),
-                      selected: true,
-                      onTap: (){},
-                    ),
-                    ListTile(
                       title: Text('Log out',),
                       selected: true,
                       onTap: (){
