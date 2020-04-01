@@ -99,18 +99,18 @@ class _UserLoginState extends State<UserLogin> {
                                 SizedBox(
                                   height: 16,
                                 ),
-                                ButtonBar(
-                                    mainAxisSize: MainAxisSize.min, children: [
-                                  FlatButton(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 10),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: FlatButton(
+                                    padding: EdgeInsets.symmetric(vertical: 12),
+                                    color: Colors.blue,
                                     child: Text(
                                       "Login",
                                       style: TextStyle(
                                         color: Colors.white,
+                                        fontSize: 18,
                                       ),
                                     ),
-                                    // ignore: missing_return
                                     onPressed: () {
                                       BlocProvider.of<UserLoginBloc>(context)
                                           .add(
@@ -119,28 +119,14 @@ class _UserLoginState extends State<UserLogin> {
                                               password: passwordController
                                                   .text));
 
-                                      // ignore: missing_return
-//                                  Timer(Duration(seconds: 2), () {
-//                                    if (_formKey.currentState.validate()) {
-//                                      if (state is UserLoginValidated) {
-//                                        Navigator.push(
-//                                            context,
-//                                            MaterialPageRoute(
-//                                                builder: (context) => App()));
-//                                      }
-//                                    }
-//                                  });
-
                                     },
-                                    color: Colors.blueAccent,
                                   ),
-                                ]),
+                                ),
                                 SizedBox(
                                   height: 60,
                                 ),
                                 Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                                   child: Container(
                                     width: double.infinity,
                                     child: Text(
@@ -154,29 +140,28 @@ class _UserLoginState extends State<UserLogin> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                ButtonBar(
-                                    mainAxisSize: MainAxisSize.min, children: [
-                                  FlatButton(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 10),
-                                    child: Text(
-                                      "Register",
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: FlatButton(
+                                      color: Colors.white,
+                                      child: Text(
+                                        "Register",
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 18,
+                                        ),
                                       ),
+                                      onPressed: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => RegistrationPage()),
+                                        );
+                                      },
                                     ),
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => RegistrationPage()),
-                                      );
-                                    },
-                                    color: Colors.white,
                                   ),
-                                ]),
+                                ),
                               ],
                             ),
                           ),
@@ -187,6 +172,8 @@ class _UserLoginState extends State<UserLogin> {
                     } else if (state is UserLoginValidated) {
                       return Center(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             DecoratedBox(
                                 decoration: BoxDecoration(
@@ -207,25 +194,30 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 8,
+                              height: 56,
                             ),
 
-                            FlatButton(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              color: Colors.blue,
-                              child: Text(
-                                "Enter Home",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: FlatButton(
+                                  color: Colors.blue,
+                                  child: Text(
+                                    "Enter Home",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => App()),
+                                    );
+                                  },
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => App()),
-                                );
-                              },
                             ),
                           ],
                         ),
@@ -236,6 +228,8 @@ class _UserLoginState extends State<UserLogin> {
 
                       return Center(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             DecoratedBox(
                                 decoration: BoxDecoration(
@@ -256,25 +250,31 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 8,
+                              height: 56,
                             ),
 
-                            FlatButton(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              color: Colors.blue,
-                              child: Text(
-                                "Back to Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: FlatButton(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  color: Colors.pink[200],
+                                  child: Text(
+                                    "Back to Login",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => UserLogin()),
+                                    );
+                                  },
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => UserLogin()),
-                                );
-                              },
                             ),
                           ],
                         ),
