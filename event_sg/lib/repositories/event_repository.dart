@@ -54,7 +54,8 @@ class EventRepository {
     return eventApiClient.getOrganizedEvents(userId: userId);
   }
   
-  Future<bool> postEvent(Event event) async {
+  Future<void> postEvent(Event event) async {
+    print('post was called in repo');
     return eventApiClient.postEvent(event);
   }
 

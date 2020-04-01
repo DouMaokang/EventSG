@@ -141,14 +141,12 @@ class VenueDetailPage extends StatelessWidget{
             ),
           ),
           SizedBox(height: 16,),
-          /*
           EventLocation(
             venueName: venue.venueName,
             venueAddress: venue.address,
             postalCode: venue.postalCode,
           ),
 
-           */
           SizedBox(height: 16,),
         ],
         ),
