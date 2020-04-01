@@ -31,7 +31,7 @@ class PostEventBloc {
   String userId=Login().getUserId();
 
 
-  String name,description,maxCapacity,address;
+  String name,description,maxCapacity,address,category;
   DateTime date,start,end,ddl;
   Venue venue;
 //  Venue venue=Venue(venueId:'123',address:'here',postalCode: 123456);
@@ -47,6 +47,7 @@ class PostEventBloc {
   void setDDL(text) {ddl=text;}
   void setAddress(text) {if (text.length==0) text=null; address=text;}
   void setVenue(venue) {this.venue=venue;}
+  void setCategory(value) {this.category=value;}
 
 
   /*
@@ -70,9 +71,10 @@ class PostEventBloc {
     print('end $end');
     print('address $address');
     print('capacity $maxCapacity');
+    print('category $category');
     print('ddl $ddl');
     //add logic of date and time period
-    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null && description!=null) {
+    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null && description!=null && category!=null) {
       print('good');
       return true;
     }
@@ -93,6 +95,7 @@ class PostEventBloc {
           venue: venue,
           status: 'posted',
           organizerId: userId,
+          category: category
       );
       postEventDialog(context, event);
       eventRepository.postEvent(event);
