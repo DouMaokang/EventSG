@@ -88,6 +88,6 @@ class Event {
         'capacity': capacity,
         'category': category,
         'status': status,
-        'venue': (venue == null) ? null : venue.toJson(),
+        'venueId': venue.venueId,
       };
 }
