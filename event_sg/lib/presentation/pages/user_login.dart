@@ -194,7 +194,7 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 84,
+                              height: 156,
                             ),
 
                             Padding(
@@ -251,7 +251,7 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 84,
+                              height: 156,
 
                               child: Column(
                                 children: <Widget>[

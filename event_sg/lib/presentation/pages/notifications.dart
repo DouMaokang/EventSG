@@ -83,36 +83,39 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
 
 
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
 
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(44.0),
-          child: AppBar(
-            title: Align (
-                alignment: Alignment.center,
-                child: const Text('Notifications')
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(44.0),
+            child: AppBar(
+              title: Align (
+                  alignment: Alignment.center,
+                  child: const Text('Notifications')
+              ),
             ),
           ),
-        ),
-          body: SingleChildScrollView(
+            body: SingleChildScrollView(
 
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              child: FutureBuilder(
-                  future: myFutureList,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      return new Container();
-                    List<NotificationDefined> notifications = snapshot.data;
-                    return Container(
-                      child: _buildNotifications(notifications),
-                    );
-                  }
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: FutureBuilder(
+                    future: myFutureList,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData)
+                        return new Container();
+                      List<NotificationDefined> notifications = snapshot.data;
+                      return Container(
+                        child: _buildNotifications(notifications),
+                      );
+                    }
+                ),
+
               ),
-
-            ),
-          )
-        );
+            )
+          ),
+    );
   }
 }
