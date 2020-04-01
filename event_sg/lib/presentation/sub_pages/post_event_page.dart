@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:event_sg/api_clients/event_api_client.dart';
+import 'package:event_sg/globals/event_categories.dart';
 import 'package:event_sg/models/models.dart';
+import 'package:event_sg/presentation/components/components.dart';
 import 'package:event_sg/presentation/sub_pages/venue_choose_page.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,14 @@ class _EventPostPageState extends State<EventPostPage> {
 
   PostEventBloc postEventBloc=new PostEventBloc();
 
+  List<String> interestList = List();
+  @override
+  void initState() {
+    super.initState();
+    EventCategories.eventCategories.forEach((element) => interestList.add(element));
+    interestList.add("None");
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,7 +74,7 @@ class _EventPostPageState extends State<EventPostPage> {
       if (postEventBloc.address==null) setState(() {
         _elevation=10;
       });
-      if (_formKey.currentState.validate() && postEventBloc.address!=null) {
+      if (_formKey.currentState.validate() && postEventBloc.address!=null && postEventBloc.category!=null) {
         postEventBloc.post(context);
         setState(() {
           postColor = true;
@@ -378,8 +388,37 @@ class _EventPostPageState extends State<EventPostPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 6,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        //height: 48,
+                        child: TextFormField(
+                          enabled: false,
+                          textAlignVertical: TextAlignVertical.center,
+                          obscureText:false,
+                          decoration: InputDecoration(
+                              disabledBorder: InputBorder.none,//venueChoosed?UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)):InputBorder.none,
+                              contentPadding: EdgeInsets.all(10.0),
+                              labelText: 'Please choose a category',
+                              labelStyle:TextStyle(
+                                  color:Colors.black
+                              )
+                          ),
+                        ),
+                      ),
+                    ),
 
-                    SizedBox(height: 38,),
+                    SingleSelectChip(
+                      interestList,
+                      onSelectionChanged: (selectedChoice) {
+                        postEventBloc.setCategory(selectedChoice);
+                        if (postEventBloc.check()) setState(() {postColor=true;});
+                        else setState(() {postColor=false;});
+                      },
+                    ),
+
+                    SizedBox(height: 16,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Container(
