@@ -17,11 +17,22 @@ class OrganizerAvatar extends StatelessWidget {
         radius: 20,
         backgroundImage: AssetImage(organizer.image),
       ),
-      title: Text(
-        this.organizer.userName,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            this.organizer.userName,
+            style: TextStyle(
+                fontFamily: 'Raleway',
+                fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+      subtitle: Text(
+        this.organizer.email,
         style: TextStyle(
-          fontFamily: 'Raleway',
-            fontSize: 16, fontWeight: FontWeight.w500),
+            fontFamily: 'Raleway',
+            fontSize: 16,),
       ),
     );
   }
