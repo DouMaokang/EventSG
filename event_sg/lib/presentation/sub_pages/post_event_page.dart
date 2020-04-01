@@ -58,17 +58,20 @@ class _EventPostPageState extends State<EventPostPage> {
       }
     };
     var _onPressed = () {
-      postClicked = true;
+      setState(() {
+        postClicked = true;
+      });
       if (postEventBloc.address==null) setState(() {
         _elevation=10;
       });
-      if (_formKey.currentState.validate()) {
+      if (_formKey.currentState.validate() && postEventBloc.address!=null) {
         postEventBloc.post(context);
         setState(() {
           postColor = true;
         });
         //dialog
       }
+
       Timer(Duration(milliseconds: 1500), () {
         setState(() {
           postClicked = false;
@@ -76,6 +79,7 @@ class _EventPostPageState extends State<EventPostPage> {
         });
         if (_formKey.currentState != null) _formKey.currentState.validate();
       });
+
     };
 
     int countChar(var s) {

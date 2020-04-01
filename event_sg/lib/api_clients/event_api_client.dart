@@ -183,7 +183,7 @@ class EventApiClient {
     }
   }
 
-  Future<bool> postEvent(Event event) async {
+  Future<void> postEvent(Event event) async {
     final url = '$baseUrl/event/add';
     print('post was called in api');
 

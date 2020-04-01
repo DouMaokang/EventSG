@@ -1,6 +1,7 @@
 import 'package:event_sg/api_clients/registration_api_client.dart';
 import 'package:event_sg/blocs/blocs.dart';
 import 'package:event_sg/blocs/event_list_bloc.dart';
+import 'package:event_sg/blocs/post_event_bloc.dart';
 import 'package:event_sg/blocs/registration_bloc.dart';
 import 'package:event_sg/models/event.dart';
 import 'package:event_sg/repositories/registration_repository.dart';
@@ -23,7 +24,7 @@ class PostEventDialog extends StatelessWidget {
 
 
  */
-bool postEventDialog(BuildContext context,Event event) {
+void postEventDialog(BuildContext context,Event event) {
     showDialog(context: context,
     builder:(BuildContext context)
     {
@@ -35,7 +36,7 @@ bool postEventDialog(BuildContext context,Event event) {
         backgroundColor: Colors.white,
 
         title: Text(
-          'Confirm Event Posting',
+          'Event Posting Succeed!',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -51,6 +52,7 @@ bool postEventDialog(BuildContext context,Event event) {
           ),
         ),
         actions: [
+          /*
           FlatButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5)),
@@ -61,21 +63,22 @@ bool postEventDialog(BuildContext context,Event event) {
             ),
             onPressed: () {
               Navigator.pop(context);
-              return false;
+              result.i=false;
             },
           ),
+
+           */
           FlatButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5)),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'Confirm',
+              'Done',
               style: TextStyle(fontWeight: FontWeight.bold),),
-            color: Colors.blue,
+            color: Colors.white,
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
-              return true;
             },
           ),
         ]

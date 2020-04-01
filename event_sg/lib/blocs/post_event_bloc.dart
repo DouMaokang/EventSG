@@ -34,6 +34,7 @@ class PostEventBloc {
   String name,description,maxCapacity,address;
   DateTime date,start,end,ddl;
   Venue venue;
+//  Venue venue=Venue(venueId:'123',address:'here',postalCode: 123456);
   //bool nameValidation,dateValidation,startValidation,endValidation;
   //bool locationValidation;
 
@@ -79,7 +80,8 @@ class PostEventBloc {
     return false;
   }
 
-  Future<void> post(BuildContext context) async {
+  void post(BuildContext context) {
+    print('in function');
     if (check()) {
       Event event = Event(
           title:name,
@@ -92,10 +94,8 @@ class PostEventBloc {
           status: 'posted',
           organizerId: userId,
       );
-      print('okkk');
-      bool result=postEventDialog(context, event);
-      if (result==true) eventRepository.postEvent(event);
-      else print('cancelled');
+      postEventDialog(context, event);
+      eventRepository.postEvent(event);
     }
   }
 
@@ -129,3 +129,4 @@ class PostEventBloc extends Bloc<PostEventEvent,PostEventState> {
 }
 
  */
+//class Wrapper{bool i;}
