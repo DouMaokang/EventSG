@@ -409,13 +409,16 @@ class _EventPostPageState extends State<EventPostPage> {
                       ),
                     ),
 
-                    SingleSelectChip(
-                      interestList,
-                      onSelectionChanged: (selectedChoice) {
-                        postEventBloc.setCategory(selectedChoice);
-                        if (postEventBloc.check()) setState(() {postColor=true;});
-                        else setState(() {postColor=false;});
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: SingleSelectChip(
+                        interestList,
+                        onSelectionChanged: (selectedChoice) {
+                          postEventBloc.setCategory(selectedChoice);
+                          if (postEventBloc.check()) setState(() {postColor=true;});
+                          else setState(() {postColor=false;});
+                        },
+                      ),
                     ),
 
                     SizedBox(height: 16,),
