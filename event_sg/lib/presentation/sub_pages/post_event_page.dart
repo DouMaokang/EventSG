@@ -293,7 +293,7 @@ class _EventPostPageState extends State<EventPostPage> {
                             if (value==null) {return 'Registration Deadline is mandatory';}
                             var _date=postEventBloc.date,_start=postEventBloc.start;
                             if (_date!=null && _start==null && value.isAfter(DateTime(_date.year,_date.month,_date.day,23,59))) return 'Registration should end before the event starts';
-                            if (_date!=null && _start!=null && value.isAfter(DateTime(_date.year,_date.month,_date.day,_start.minute,_start.second))) return 'Registration should end before the event starts';
+                            if (_date!=null && _start!=null && value.isAfter(DateTime(_date.year,_date.month,_date.day,_start.hour,_start.minute))) return 'Registration should end before the event starts';
                             return null;
                           },
                           onChanged: (text) {
