@@ -31,20 +31,30 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(child: AppBar(title: Text("Choose your interest")), preferredSize: Size.fromHeight(44.0),),
+      appBar: PreferredSize(child: AppBar(title: Text("Choose your interests")), preferredSize: Size.fromHeight(44.0),),
       body: new SingleChildScrollView(
             child: Column(
                 children: <Widget>[
                   _buildSelect("Categories", interestList),
-                  new Container(
-                      margin: EdgeInsets.all(2),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SizedBox(
+                      width: double.infinity,
                       child: FlatButton(
-                          child: Text('Submit'),
-                          color: Colors.blueAccent,
-                          textColor: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          color: Colors.blue,
+                          child: Text(
+                            "Enter Home",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
                           onPressed: () {
                             _submit();
-                          }))
+                          }),
+                    ),
+                  )
                 ]
             )
         ));
@@ -104,7 +114,7 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
             new FlatButton(
               child: new Text("Done"),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => App()),
                 );

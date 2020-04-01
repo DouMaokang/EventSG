@@ -134,11 +134,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         _showDialog();
       else
         _showSuccessDialog();
-//        else
-//          Navigator.push(
-//            context,
-//            MaterialPageRoute(builder: (context) => Homepage()),
-//          );
     }
   }
 
@@ -193,7 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
       },
     );
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => AddInterestedCategoryPage()),
     );
@@ -334,7 +329,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
         RegExp regex = new RegExp(pattern);
         if (!regex.hasMatch(password)) {
-          return 'Username should have at least 6 characters and contain \nat least 1 letter & 1 number.';
+          return 'Password should have at least 6 characters and contain \nat least 1 letter & 1 number.';
         }
         else
           return null;
