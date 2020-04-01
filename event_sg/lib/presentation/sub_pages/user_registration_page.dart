@@ -134,11 +134,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         _showDialog();
       else
         _showSuccessDialog();
-//        else
-//          Navigator.push(
-//            context,
-//            MaterialPageRoute(builder: (context) => Homepage()),
-//          );
     }
   }
 
@@ -193,7 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
       },
     );
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => AddInterestedCategoryPage()),
     );

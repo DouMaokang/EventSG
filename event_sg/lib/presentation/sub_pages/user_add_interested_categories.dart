@@ -114,7 +114,7 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
             new FlatButton(
               child: new Text("Done"),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => App()),
                 );
