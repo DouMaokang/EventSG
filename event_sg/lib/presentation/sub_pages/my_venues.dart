@@ -57,11 +57,12 @@ class _MyVenuesState extends State<MyVenues> {
   }
 
   Widget buildVenueList(List<Venue> venues,BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+      child: Column(
       children: <Widget>[
         for (Venue venue in venues) buildVenueWidget(venue,context)
       ],
-    );
+    ));
   }
 
 
