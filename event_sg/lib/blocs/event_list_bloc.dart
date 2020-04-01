@@ -28,11 +28,23 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
       yield EventListLoading();
       try {
         final List<Event> upcomingEventList = await eventRepository.getUpcomingEvents(Login().getUserId());
+        print("1111111111111111111");
+
         final List<Event> recommendedEventList = await eventRepository.getRecommendedEvents(Login().getUserId());
+        print("2111111111111111111");
+
         final List<Event> allEvents = await eventRepository.getAllEvents();
+        print("3111111111111111111");
+
         final List<Event> createdEventList = await eventRepository.getOrganizedEvents(Login().getUserId());
+        print("4111111111111111111");
+
         final List<Event> registeredEventList = await eventRepository.getRegisteredEvents(Login().getUserId());
+        print("5111111111111111111");
+
         final List<Event> savedEventList = await eventRepository.getSavedEvents(Login().getUserId());
+        print("6111111111111111111");
+
         yield EventListLoaded(upcomingEventList: upcomingEventList, recommendedEventList: recommendedEventList, allEvents: allEvents, registeredEventList: registeredEventList, createdEventList: createdEventList, savedEventList: savedEventList);
       } catch (_) {
         yield EventListError();

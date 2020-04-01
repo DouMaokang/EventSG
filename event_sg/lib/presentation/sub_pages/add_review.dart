@@ -46,7 +46,7 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
     return Form(
       key: _formKey,
       child: Scaffold(
-          appBar: AppBar(title: Text("Add Review")),
+          appBar: PreferredSize(child: AppBar(title: Text("Add Review")), preferredSize: Size.fromHeight(44.0),),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GestureDetector(
@@ -119,6 +119,7 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
                                 ),
                               ),
                               onPressed: () {
+                                _submit();
                                 BlocProvider.of<AddReviewBloc>(context).add(AddReview());
                               }
                           );
@@ -221,8 +222,6 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
                 style: TextStyle(fontWeight: FontWeight.bold),),
               color: Colors.blue,
               onPressed: () {
-                _submit();
-                BlocProvider.of<AddReviewBloc>(context).add(AddReview());
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },

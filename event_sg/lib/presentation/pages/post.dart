@@ -24,20 +24,25 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     //PostEventBloc _postEventBloc=PostEventBloc();
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(44.0),
-        child: AppBar(
-          elevation: 1.0,
-          title: Text("Post"),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(44.0),
+          child: AppBar(
+            centerTitle: true,
+            elevation: 1.0,
+            title: Text("Post"),
+          ),
         ),
-      ),
+
       body:
       SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+
 
             SizedBox(height: 70,),
             Padding(
@@ -154,6 +159,7 @@ class _PostPageState extends State<PostPage> {
           ],
         ),
       ),
+    )
     );
   }
 }

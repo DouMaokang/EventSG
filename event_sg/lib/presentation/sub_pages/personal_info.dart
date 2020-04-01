@@ -32,10 +32,13 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Personal Information",
-          style: TextStyle(fontSize: 18.0),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text(
+            "Personal Information",
+            style: TextStyle(fontSize: 18.0),
+          ),
         ),
       ),
       body: FutureBuilder<User>(
@@ -155,11 +158,11 @@ class _UserInfoState extends State<UserInfo> {
                               size: 40,
                             ),
                             subtitle: Text(
-                              'Student',
+                              snapshot.data.occupation,
                               style:
                               TextStyle(color: Colors.black, fontSize: 18.0),
                             ),
-                            title: Text(snapshot.data.occupation, style: TextStyle(fontSize: 15)),
+                            title: Text("Occupation", style: TextStyle(fontSize: 15)),
                           )),
                       Card(
                           color: Colors.white,
@@ -172,11 +175,11 @@ class _UserInfoState extends State<UserInfo> {
                               size: 40,
                             ),
                             subtitle: Text(
-                              'NTU',
+                              snapshot.data.organization,
                               style:
                               TextStyle(color: Colors.black, fontSize: 18.0),
                             ),
-                            title: Text(snapshot.data.organization, style: TextStyle(fontSize: 15),),
+                            title: Text("Organization", style: TextStyle(fontSize: 15),),
                           )),
                       Card(
                           color: Colors.white,

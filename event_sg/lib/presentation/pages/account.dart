@@ -1,6 +1,7 @@
 import 'package:event_sg/api_clients/user_api_client.dart';
 import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/models/user.dart';
+import 'package:event_sg/presentation/pages/user_login.dart';
 import 'package:event_sg/presentation/sub_pages/profile_event_feedback.dart';
 import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/user_repository.dart';
@@ -35,9 +36,10 @@ class _UserAccountState extends State<UserAccount> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(44.0),
         child: AppBar(
+          centerTitle: true,
           title: Align (
               alignment: Alignment.center,
-              child: const Text('Profile')
+              child: const Text('Profile', textAlign: TextAlign.center,)
           ),
           /*  actions: <Widget>[
            IconButton(
@@ -176,7 +178,12 @@ class _UserAccountState extends State<UserAccount> {
                     ListTile(
                       title: Text('Log out',),
                       selected: true,
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserLogin()),
+                        );
+                      },
 
                     ),
                   ],

@@ -89,10 +89,13 @@ class _EventPostPageState extends State<EventPostPage> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Align (
-              alignment: Alignment(-0.3,0.0),
-              child: const Text('Post an Event')
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(44.0),
+          child: AppBar(
+            title: Align (
+                alignment: Alignment(-0.3,0.0),
+                child: const Text('Post an Event')
+            ),
           ),
         ),
         body: new GestureDetector(

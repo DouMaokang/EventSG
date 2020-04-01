@@ -16,8 +16,11 @@ class OwnerVenueDetailPage extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Venue Details"),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(44.0),
+        child: AppBar(
+          title: Text("Venue Details"),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(children: <Widget>[

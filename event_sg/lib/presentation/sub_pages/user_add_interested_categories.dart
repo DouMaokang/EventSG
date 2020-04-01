@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:event_sg/presentation/components/components.dart';
 import 'package:event_sg/globals/login.dart';
 import 'package:flutter/services.dart';
+import 'package:event_sg/main.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
@@ -105,7 +106,7 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Homepage()),
+                  MaterialPageRoute(builder: (context) => App()),
                 );
               },
             ),
