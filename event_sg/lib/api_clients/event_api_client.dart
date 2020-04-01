@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:event_sg/globals/login.dart';
 import 'package:event_sg/globals/urls.dart';
 import 'package:event_sg/models/models.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 
 // TODO: connect with the modified API
@@ -183,16 +186,29 @@ class EventApiClient {
     }
   }
 
-  Future<void> postEvent(Event event) async {
+  Future<bool> postEvent(Event event) async {
+    HttpClient httpClient = new HttpClient();
     final url = '$baseUrl/event/add';
-    print('post was called in api');
-
-    try {
-      final response = await httpClient.post(url,body: jsonEncode(event.toJson()));
-    } catch(e) {
-      print('Caught error: $e');
-      throw Exception('error posting event!');
-    }
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      "title": event.title,
+      "description": event.description,
+      "organizerId": Login().getUserId(),
+      "startTime": DateFormat('dd-MM-yyyy hh:mm:ss').format(event.startTime).toString(),
+      "endTime": DateFormat('dd-MM-yyyy hh:mm:ss').format(event.endTime).toString(),
+      "registrationDeadline": DateFormat('dd-MM-yyyy hh:mm:ss').format(event.registrationDeadline).toString(),
+      "numOfParticipants": 0,
+      "avgRating": 0.0,
+      "capacity": event.capacity,
+      "venueId": event.venue.venueId,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    // todo - should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    print(reply);
   }
 
   Future<bool> saveDraftEvent(Event event) async {
