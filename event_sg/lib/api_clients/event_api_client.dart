@@ -200,6 +200,7 @@ class EventApiClient {
       "registrationDeadline": DateFormat('dd-MM-yyyy hh:mm:ss').format(event.registrationDeadline).toString(),
       "numOfParticipants": 0,
       "avgRating": 0.0,
+      "category": event.category,
       "capacity": event.capacity,
       "venueId": event.venue.venueId,
     };
