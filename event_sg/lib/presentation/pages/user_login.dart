@@ -202,6 +202,7 @@ class _UserLoginState extends State<UserLogin> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: FlatButton(
+                                  padding: EdgeInsets.symmetric(vertical: 12),
                                   color: Colors.blue,
                                   child: Text(
                                     "Enter Home",
@@ -258,7 +259,7 @@ class _UserLoginState extends State<UserLogin> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: FlatButton(
-                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  padding: EdgeInsets.symmetric(vertical: 12),
                                   color: Colors.pink[200],
                                   child: Text(
                                     "Back to Login",
