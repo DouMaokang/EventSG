@@ -194,7 +194,7 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 56,
+                              height: 84,
                             ),
 
                             Padding(
@@ -251,7 +251,22 @@ class _UserLoginState extends State<UserLogin> {
                                 )),
 
                             SizedBox(
-                              height: 56,
+                              height: 84,
+
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(Icons.error_outline, size: 46,),
+                                  SizedBox(height: 24,),
+                                  Text(
+                                    "Sorry, this account is invalid",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18
+                                    ),
+                                  ),
+                                  SizedBox(height: 24,),
+                                ],
+                              ),
                             ),
 
                             Padding(
