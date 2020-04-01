@@ -31,7 +31,7 @@ class _AddInterestedCategoryPageState extends State<AddInterestedCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Choose your interest")),
+      appBar: PreferredSize(child: AppBar(title: Text("Choose your interest")), preferredSize: Size.fromHeight(44.0),),
       body: new SingleChildScrollView(
             child: Column(
                 children: <Widget>[

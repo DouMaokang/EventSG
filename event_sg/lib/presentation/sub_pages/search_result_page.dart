@@ -23,8 +23,11 @@ class SearchResultPage extends StatelessWidget {
     if (eventList == null || eventList.length == 0){
       return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: Text("Search Results"),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(44.0),
+            child: AppBar(
+              title: Text("Search Results"),
+            ),
           ),
           body: Center(
             child: Column(

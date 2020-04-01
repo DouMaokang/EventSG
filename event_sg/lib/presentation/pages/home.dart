@@ -113,18 +113,42 @@ class Homepage extends StatelessWidget {
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
-                return BlocProvider<SingleEventBloc>(
-                  create: (context) => SingleEventBloc(eventRepository: eventRepository),
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemBuilder: (context, int index) {
-                      return new EventListItem(event: state.upcomingEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
-                    },
-                    itemCount: state.upcomingEventList.length,
-                  ),
-                );
+
+                if (state.upcomingEventList.length == 0) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 24,),
+                        Text(
+                          "No events found",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18
+                          ),
+                        ),
+                        SizedBox(height: 24,),
+                      ],
+                    ),
+                  );
+                } else {
+                  return BlocProvider<SingleEventBloc>(
+                    create: (context) =>
+                        SingleEventBloc(eventRepository: eventRepository),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (context, int index) {
+                        return new EventListItem(event: state
+                            .upcomingEventList[index],
+                          goingToEventDetailsPage: true,
+                          key: UniqueKey(),);
+                      },
+                      itemCount: state.upcomingEventList.length,
+                    ),
+                  );
+                }
 
               } else {
                 return Center(
@@ -195,15 +219,40 @@ class Homepage extends StatelessWidget {
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemBuilder: (context, int index) {
-                    return new EventListItem(event: state.recommendedEventList[index], goingToEventDetailsPage: true, key: UniqueKey(),);
-                  },
-                  itemCount: state.recommendedEventList.length,
-                );
+
+                if (state.recommendedEventList.length == 0) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 24,),
+                        Text(
+                          "No events found",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18
+                          ),
+                        ),
+                        SizedBox(height: 24,),
+                      ],
+                    ),
+                  );
+                }
+
+                else {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, int index) {
+                      return new EventListItem(
+                        event: state.recommendedEventList[index],
+                        goingToEventDetailsPage: true,
+                        key: UniqueKey(),);
+                    },
+                    itemCount: state.recommendedEventList.length,
+                  );
+                }
               } else {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -275,7 +324,28 @@ class Homepage extends StatelessWidget {
               } else if (state is EventListLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is EventListLoaded) {
-                return LoadableEvents(eventList: state.allEvents,);
+
+                if (state.allEvents.length == 0) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 24,),
+                        Text(
+                          "No events found",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18
+                          ),
+                        ),
+                        SizedBox(height: 24,),
+
+                      ],
+                    ),
+                  );
+                }
+
+                else {return LoadableEvents(eventList: state.allEvents,);}
               } else {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
