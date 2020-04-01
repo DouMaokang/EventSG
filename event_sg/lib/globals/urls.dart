@@ -14,7 +14,7 @@ class Urls {
 
 
 
-  static const apiUrlBase = "http://192.168.31.72:8080/api";
+  static const apiUrlBase = "http://127.0.0.1:8080/api";
 
 
 }
