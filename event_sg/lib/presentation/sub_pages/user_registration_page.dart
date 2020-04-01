@@ -218,9 +218,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget userNameInput() {
-    final _textController = TextEditingController();
     return TextFormField(
-        controller: _textController,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           labelText: "Username",
