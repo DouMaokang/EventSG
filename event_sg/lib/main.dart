@@ -3,7 +3,6 @@ import 'package:event_sg/presentation/pages/home.dart';
 import 'package:event_sg/presentation/pages/notifications.dart';
 import 'package:event_sg/presentation/pages/pages.dart';
 import 'package:event_sg/presentation/pages/user_login.dart';
-import 'package:event_sg/presentation/sub_pages/sub_pages.dart';
 import 'package:event_sg/repositories/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

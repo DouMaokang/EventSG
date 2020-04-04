@@ -58,41 +58,46 @@ class _EventRegistrationBarState extends State<EventRegistrationBar> {
     return BlocBuilder<RegistrationBloc, RegistrationState>(
       builder: (context, state) {
         if (state is RegistrationNotMade) {
-          return FlatButton(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            color: Colors.blue,
-            child: Text(
-              "Register",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              color: Colors.blue,
+              child: Text(
+                "Register",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
               ),
+              onPressed: () {
+                if (widget.vacancy > 0) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          RegistrationDialog(
+                            eventTitle: widget.eventTitle,
+                            eventDateTime: widget.eventDateTime,
+                            userId: widget.userId,
+                            eventId: widget.eventId,
+                            registrationBloc: registrationBloc,
+                          )
+                  );
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          NoVacancyDialog()
+                  );
+                }
+              },
             ),
-            onPressed: () {
-              if (widget.vacancy > 0) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        RegistrationDialog(
-                          eventTitle: widget.eventTitle,
-                          eventDateTime: widget.eventDateTime,
-                          userId: widget.userId,
-                          eventId: widget.eventId,
-                          registrationBloc: registrationBloc,
-                        )
-                );
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        NoVacancyDialog()
-                );
-              }
-            },
           );
         } else if (state is RegistrationConfirmed) {
-          return FlatButton(
-            padding: EdgeInsets.symmetric(vertical: 20),
+          return Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: FlatButton(
+                padding: EdgeInsets.symmetric(vertical: 12),
             color: Colors.blue,
             child: Text(
               "Cancel Registration",
@@ -114,6 +119,7 @@ class _EventRegistrationBarState extends State<EventRegistrationBar> {
                       )
               );
             },
+          )
           );
 
           return Text("Confirmed");
