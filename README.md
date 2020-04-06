@@ -22,5 +22,5 @@ While the backend of EventSG is developed using Java's **Spring Boot** framework
   <img src="https://github.com/DouMaokang/EventSG/blob/master/doc/IMG_2299.PNG" width="250">
 </p>
 
-## Further development
+## Future development
 Our team is currently working on deploying the backend service to Google Cloud Platform and pulishing the app to Google Play and App Store
