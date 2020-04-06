@@ -23,4 +23,4 @@ While the backend of EventSG is developed using Java's **Spring Boot** framework
 </p>
 
 ## Further development
-Our team is currently 
+Our team is currently working on deploying the backend service to Google Cloud Platform and pulishing the app to Google Play and App Store
