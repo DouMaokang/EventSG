@@ -1,6 +1,8 @@
 # EventSG
 EventSG is a group project developed by a team of five for Software Engineering course in NTU
 
+[[Backend link]](https://github.com/DouMaokang/EventSG-backend)
+
 ## Description
 EventSG is an event posting & registration app targeting at individual and small-to-medium organizations in Singapore.
 Basic functionalities include:
