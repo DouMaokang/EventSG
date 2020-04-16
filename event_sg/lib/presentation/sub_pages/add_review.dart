@@ -66,12 +66,14 @@ class _ReviewAddingPageState extends State<ReviewAddingPage> {
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: Row(
                           children: <Widget>[
-                            Text(
-                              "Thanks for attending our event",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20
+                            Expanded(
+                              child: Text(
+                                "Thanks for attending our event",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20
+                                ),
                               ),
                             ),
                             SizedBox(width: 6,),

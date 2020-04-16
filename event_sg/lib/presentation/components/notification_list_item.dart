@@ -54,7 +54,7 @@ class _NotificationListItemState extends State<NotificationListItem> {
             return Center();
           Event event = snapshot.data;
           return SizedBox(
-            height: 100,
+            height: 110,
             child: GestureDetector(
                 onTap: () {
                   if (widget.notification.type == "review") {

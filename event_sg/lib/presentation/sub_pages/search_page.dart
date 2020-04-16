@@ -105,12 +105,12 @@ class _SearchBarState extends State<SearchBar> {
 //              _buildSelect("Distance", distanceList),
       _buildSelect("Date", dateList),
 
-      SizedBox(height: 30,),
+      SizedBox(height: 74,),
 
       SizedBox(
         width: double.infinity,
         child: FlatButton(
-            padding: EdgeInsets.symmetric(vertical: 16),
+            padding: EdgeInsets.symmetric(vertical: 12),
             color: Colors.blue,
             child: Text(
               "Search",
@@ -122,7 +122,8 @@ class _SearchBarState extends State<SearchBar> {
           onPressed: () {
               _searchBloc.add(FetchEvent(query: query, filters: selectedItems));
           }),
-      )
+      ),
+        SizedBox(height: 12,),
     ]
     ));
   }
