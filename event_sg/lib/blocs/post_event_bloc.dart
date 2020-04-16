@@ -63,6 +63,11 @@ class PostEventBloc {
     //
   }
    */
+  int countChar(var s) {
+    int count=0;
+    for (var c in s.split(" ")) if (c!='' && c!='\n') count++;
+    return count;
+  }
 
   bool check() {
     print('name $name');
@@ -74,7 +79,7 @@ class PostEventBloc {
     print('category $category');
     print('ddl $ddl');
     //add logic of date and time period
-    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null && description!=null && category!=null) {
+    if (name!=null && date!=null && ddl!=null && maxCapacity!=null && start!=null && end!=null && address!=null && category!=null && countChar(description)>=10) {
       print('good');
       return true;
     }
