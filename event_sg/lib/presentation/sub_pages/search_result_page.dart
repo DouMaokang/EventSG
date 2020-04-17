@@ -21,6 +21,7 @@ class SearchResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (eventList == null || eventList.length == 0){
+      print("imhere");
       return Scaffold(
           backgroundColor: Colors.white,
           appBar: PreferredSize(
@@ -103,7 +104,7 @@ class SearchResultPage extends StatelessWidget {
                       physics: ClampingScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return EventListItem(
-                          event: eventList[index],
+                          event: eventList[index], goingToEventDetailsPage: true,
                         );
                       }),
                 ],
