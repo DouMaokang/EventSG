@@ -1,18 +1,17 @@
 # EventSG
-EventSG is a group project developed by a team of five for Software Engineering course in NTU
-
+EventSG is a project developed by a team of five for Software Engineering course in NTU
 [[Backend link]](https://github.com/DouMaokang/EventSG-backend)
 
 ## Description
-EventSG is an event posting & registration app targeting at individual and small-to-medium organizations in Singapore.
+EventSG is an event posting app targeting at individuals and small-to-medium organizations in Singapore.
 Basic functionalities include:
 - Event browsing, searching and filtering
 - Event posting and event venue selecting
-- Notification for both organizers and participants
+- Notifications for both organizers and participants
 
 ## Tech Details
 The fronend of EventSG is developed using Google's **Flutter framework**. We have applied the "Business Logic Component" (**Bloc**) pattern for state management within the app.
-While the backend of EventSG is developed using Java's **Spring Boot** framework.
+The backend of EventSG is developed using Java's **Spring Boot** framework.
 
 ## Photo Gallery
 <p align="center">
@@ -25,4 +24,5 @@ While the backend of EventSG is developed using Java's **Spring Boot** framework
 </p>
 
 ## Future development
-Our team is currently working on deploying the backend service to Google Cloud Platform and pulishing the app to Google Play and App Store
+Our team is currently working on deploying the backend service to Google Cloud Platform and publishing the app to Google Play and App Store
+
