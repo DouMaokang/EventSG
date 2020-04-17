@@ -1,5 +1,6 @@
 # EventSG
 EventSG is a project developed by a team of five for Software Engineering course in NTU
+
 [[Backend link]](https://github.com/DouMaokang/EventSG-backend)
 
 ## Description
